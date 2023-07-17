@@ -23,7 +23,7 @@ _Godot 3 is not supported at the moment._
 
 ## Getting started
 
-[Getting started guide](https://docs.rivet.gg/general/examples/godot/starter)
+[Getting started guide](https://rivet.gg/learn/godot)
 
 ## Screenshots
 
