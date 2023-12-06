@@ -15,3 +15,8 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# devtools
+godot-plugin-refresher
+project.godot
+settings.cfg
