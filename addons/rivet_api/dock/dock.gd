@@ -31,15 +31,15 @@ func _poll_server_status():
 		server_pid = null
 	
 	# Update stop button
-	$StopServer.disabled = server_pid == null
-	if server_pid != null:
-		$StartServer.text = "Restart Server"
-		$ServerPID.text = "Process ID: %s" % server_pid
-		$ServerPID.visible = true
-	else:
-		$StartServer.text = "Start Server"
-		$StopServer.text = "Stop Server"
-		$ServerPID.visible = false
+	#$StopServer.disabled = server_pid == null
+	#if server_pid != null:
+		#$StartServer.text = "Restart Server"
+		#$ServerPID.text = "Process ID: %s" % server_pid
+		#$ServerPID.visible = true
+	#else:
+		#$StartServer.text = "Start Server"
+		#$StopServer.text = "Stop Server"
+		#$ServerPID.visible = false
 
 func server_run_args() -> PackedStringArray:
 	var project_path = ProjectSettings.globalize_path("res://")
