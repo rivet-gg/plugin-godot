@@ -37,4 +37,6 @@ _Godot 3 is not supported at the moment._
 3. Copy `project.godot` from `example-project` to `plugin-godot`
 4. (Optional) Add `godot-plugin-refresher` to the addons folder
     - it's only available for Godot 3, but here's [a guide on how to make it work with Godot 4](https://www.reddit.com/r/godot/comments/11wedn6/comment/jcxm6op/)
+5. Remove `example-project` folder
+6. Voila, you can now start coding!
 
