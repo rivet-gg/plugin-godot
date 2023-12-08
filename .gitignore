@@ -17,6 +17,5 @@ data_*/
 mono_crash.*.json
 
 # devtools
-godot-plugin-refresher
 project.godot
 settings.cfg
