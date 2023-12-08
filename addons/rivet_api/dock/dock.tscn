@@ -51,7 +51,8 @@ text = "Docs"
 layout_mode = 2
 text = "Discord"
 
-[node name="Button" type="Button" parent="VContainer"]
+[node name="LogInButton" type="Button" parent="VContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Sign in to Rivet"
 
