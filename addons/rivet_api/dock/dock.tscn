@@ -14,16 +14,16 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 16
 script = ExtResource("1_0b30x")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="LogoContainer" type="HBoxContainer" parent="VContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VContainer/LogoContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 4
@@ -31,45 +31,45 @@ texture = ExtResource("2_ysj07")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="LinksContainer" type="HBoxContainer" parent="VContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/HBoxContainer2"]
+[node name="HubLink" type="LinkButton" parent="VContainer/LinksContainer"]
 layout_mode = 2
 text = "Hub"
 
-[node name="LinkButton2" type="LinkButton" parent="VBoxContainer/HBoxContainer2"]
+[node name="DocsLink" type="LinkButton" parent="VContainer/LinksContainer"]
 layout_mode = 2
 text = "Docs"
 
-[node name="LinkButton3" type="LinkButton" parent="VBoxContainer/HBoxContainer2"]
+[node name="DiscordLink" type="LinkButton" parent="VContainer/LinksContainer"]
 layout_mode = 2
 text = "Discord"
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Button" type="Button" parent="VContainer"]
 layout_mode = 2
 text = "Sign in to Rivet"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+[node name="FieldContainer" type="HBoxContainer" parent="VContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="VContainer/FieldContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "API endpoint"
 
-[node name="TextEdit" type="TextEdit" parent="VBoxContainer/HBoxContainer3"]
+[node name="TextEdit" type="TextEdit" parent="VContainer/FieldContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "https://api.rivet.gg"
 scroll_fit_content_height = true
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
+[node name="InstructionsLink" type="LinkButton" parent="VContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Please manually install CLI [here]"
