@@ -1,9 +1,9 @@
 @tool extends Control
 
-const Rivet := preload("../rivet.gd")
+const CLI := preload("../scripts/rivet_cli.gd")
 
 func _ready():
 	%LogInButton.pressed.connect(_on_button_pressed)
 
 func _on_button_pressed():
-	Rivet.CLI.link()
+	CLI.link()
