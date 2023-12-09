@@ -20,10 +20,6 @@ var player_tokens = {}
 var player_token = null
 
 
-func _ready():
-	DotEnv.config()
-
-
 ## Determines if running as a dedicated server.
 func is_dedicated_server() -> bool:
 	return OS.get_cmdline_user_args().has("--server")
