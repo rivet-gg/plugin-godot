@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://l8cfdaru7ibw"]
+[gd_scene load_steps=2 format=3 uid="uid://l8cfdaru7ibw"]
 
-[ext_resource type="Script" path="res://addons/rivet/dock/dock.gd" id="1_pm3ru"]
-[ext_resource type="Texture2D" uid="uid://cebc1tvicnoux" path="res://addons/rivet/images/white-logo.svg" id="2_wyasq"]
+[ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/dock/login.tscn" id="1_srfxe"]
 
 [node name="Rivet" type="MarginContainer"]
 offset_top = 92.0
@@ -14,63 +13,5 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 8
 
-[node name="VContainer" type="VBoxContainer" parent="."]
+[node name="Login" parent="." instance=ExtResource("1_srfxe")]
 layout_mode = 2
-theme_override_constants/separation = 16
-script = ExtResource("1_pm3ru")
-
-[node name="LogoContainer" type="HBoxContainer" parent="VContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="VContainer/LogoContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("2_wyasq")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="HSeparator" type="HSeparator" parent="VContainer"]
-layout_mode = 2
-
-[node name="LinksContainer" type="HBoxContainer" parent="VContainer"]
-layout_mode = 2
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="HubLink" type="LinkButton" parent="VContainer/LinksContainer"]
-layout_mode = 2
-text = "Hub"
-
-[node name="DocsLink" type="LinkButton" parent="VContainer/LinksContainer"]
-layout_mode = 2
-text = "Docs"
-
-[node name="DiscordLink" type="LinkButton" parent="VContainer/LinksContainer"]
-layout_mode = 2
-text = "Discord"
-
-[node name="LogInButton" type="Button" parent="VContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Sign in to Rivet"
-
-[node name="FieldContainer" type="HBoxContainer" parent="VContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VContainer/FieldContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "API endpoint"
-
-[node name="TextEdit" type="TextEdit" parent="VContainer/FieldContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "https://api.rivet.gg"
-scroll_fit_content_height = true
-
-[node name="InstructionsLink" type="LinkButton" parent="VContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Please manually install CLI [here]"

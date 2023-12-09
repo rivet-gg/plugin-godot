@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bk1uwgw1hhq2p"]
+
+[node name="LinksContainer" type="HBoxContainer"]
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="HubLink" type="LinkButton" parent="."]
+layout_mode = 2
+text = "Hub"
+
+[node name="DocsLink" type="LinkButton" parent="."]
+layout_mode = 2
+text = "Docs"
+
+[node name="DiscordLink" type="LinkButton" parent="."]
+layout_mode = 2
+text = "Discord"
