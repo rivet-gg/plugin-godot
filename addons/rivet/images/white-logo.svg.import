@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cebc1tvicnoux"
-path="res://.godot/imported/white-logo.svg-6d646745f5838e00df961fd848efc396.ctex"
+path="res://.godot/imported/white-logo.svg-573e799fd39e8cb89bc8e36e6ad9780d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/rivet_api/images/white-logo.svg"
-dest_files=["res://.godot/imported/white-logo.svg-6d646745f5838e00df961fd848efc396.ctex"]
+source_file="res://addons/rivet/images/white-logo.svg"
+dest_files=["res://.godot/imported/white-logo.svg-573e799fd39e8cb89bc8e36e6ad9780d.ctex"]
 
 [params]
 

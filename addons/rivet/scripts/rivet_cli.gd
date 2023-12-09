@@ -7,8 +7,7 @@
 ## @tutorial:            https://the/tutorial1/url.com
 ## @tutorial(Tutorial2): https://the/tutorial2/url.com
 ## @experimental
-
-const RIVET_CLI_PATH_SETTING = "rivet/CLI_executable_path"
+const RivetEditorSettings = preload("rivet_editor_settings.gd")
 
 #region Utilities
 static func find_executable(program: String) -> String:
@@ -18,15 +17,15 @@ static func find_executable(program: String) -> String:
 	if OS.get_name() == "Windows":
 		code = OS.execute("where", [program], output, true)
 	else:
-		code = OS.execute("where", [program], output, true)
+		code = OS.execute("which", [program], output, true)
 	
 	if code == 1 or output.size() < 1:
 		return ""
 	return output[0].strip_escapes()
 
 static func find_rivet():
-	var editor_rivet_path = EditorInterface.get_editor_settings().get_setting(RIVET_CLI_PATH_SETTING)
-	if not editor_rivet_path.is_empty():
+	var editor_rivet_path = RivetEditorSettings.get_setting(RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	if not editor_rivet_path or not editor_rivet_path.is_empty():
 		return editor_rivet_path
 	printerr("Can't find path to Rivet CLI (in editor settings)")
 	
@@ -50,4 +49,5 @@ static func execute(args: PackedStringArray):
 	
 static func link():
 	# TODO(forest): please edit this part with appropiate command
-	var result = execute(["login"])
+	var result = execute(["-V"])
+	print(result)

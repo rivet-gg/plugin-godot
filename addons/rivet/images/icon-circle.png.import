@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cle7km6xt44im"
-path="res://.godot/imported/icon-circle.png-1a108df90c1753d1b786aba81e88418f.ctex"
+path="res://.godot/imported/icon-circle.png-ad959504104d5f2d6c4a4ce568b03d7e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/rivet_api/images/icon-circle.png"
-dest_files=["res://.godot/imported/icon-circle.png-1a108df90c1753d1b786aba81e88418f.ctex"]
+source_file="res://addons/rivet/images/icon-circle.png"
+dest_files=["res://.godot/imported/icon-circle.png-ad959504104d5f2d6c4a4ce568b03d7e.ctex"]
 
 [params]
 
