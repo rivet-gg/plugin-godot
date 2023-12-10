@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://l8cfdaru7ibw"]
 
-[ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/dock/login.tscn" id="1_srfxe"]
+[ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/devtools/dock/login.tscn" id="1_w1euq"]
 
 [node name="Rivet" type="MarginContainer"]
 offset_top = 92.0
@@ -13,5 +13,5 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 8
 
-[node name="Login" parent="." instance=ExtResource("1_srfxe")]
+[node name="Login" parent="." instance=ExtResource("1_w1euq")]
 layout_mode = 2

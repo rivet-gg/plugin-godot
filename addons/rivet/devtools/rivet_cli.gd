@@ -1,4 +1,4 @@
-@tool
+@tool extends RefCounted
 ## A brief description of the class's role and functionality.
 ##
 ## The description of the script, what it can do,
@@ -8,6 +8,10 @@
 ## @tutorial(Tutorial2): https://the/tutorial2/url.com
 ## @experimental
 const RivetEditorSettings = preload("rivet_editor_settings.gd")
+const RivetThread = preload("rivet_thread.gd")
+const RivetCliOutput = preload("rivet_cli_output.gd")
+
+var thread: RivetThread = RivetThread.new()
 
 #region Utilities
 static func find_executable(program: String) -> String:
@@ -39,15 +43,14 @@ static func find_rivet():
 		return rivet_cli_path
 	print(rivet_path, rivet_cli_path)
 	printerr("Can't find path to Rivet CLI (rivet-cli exec)")
-	
+#endregion
 
-static func execute(args: PackedStringArray):
+func run(args: PackedStringArray) -> RivetCliOutput:
 	var output = []
 	var code = OS.execute(find_rivet(), args, output, true)
-	return [code, output]
-#endregion
+	return RivetCliOutput.new(code, output)
 	
-static func link():
-	# TODO(forest): please edit this part with appropiate command
-	var result = execute(["-V"])
-	print(result)
+func link() -> RivetCliOutput:
+	thread.execute(run.bind(["--version"]))
+	var output: RivetCliOutput = await thread.wait_to_finish()
+	return output
