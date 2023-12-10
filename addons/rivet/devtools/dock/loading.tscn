@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cpiafwq88eamc"]
 
-[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/dock/elements/logo_container.tscn" id="1_oda17"]
-[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/dock/elements/links_container.tscn" id="2_c2osa"]
+[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_oda17"]
+[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_c2osa"]
 
 [node name="Loading" type="VBoxContainer"]
 theme_override_constants/separation = 16

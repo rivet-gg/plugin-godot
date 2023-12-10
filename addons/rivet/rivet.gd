@@ -5,19 +5,21 @@ extends EditorPlugin
 const AUTO_LOAD_RIVET_CLIENT = "RivetClient"
 const AUTO_LOAD_RIVET_HELPER = "RivetHelper"
 
-const RivetEditorSettings := preload("scripts/rivet_editor_settings.gd")
+const RivetEditorSettings := preload("devtools/rivet_editor_settings.gd")
+const RivetCLI := preload("res://addons/rivet/devtools/rivet_cli.gd")
+
+static var cli = RivetCLI.new()
 
 var dock: Control
 
 func _enter_tree():
 	# Add singleton
-	add_autoload_singleton(AUTO_LOAD_RIVET_CLIENT, "scripts/rivet_client.gd")
-	add_autoload_singleton(AUTO_LOAD_RIVET_HELPER, "scripts/rivet_helper.gd")
+	add_autoload_singleton(AUTO_LOAD_RIVET_CLIENT, "rivet_client.gd")
+	add_autoload_singleton(AUTO_LOAD_RIVET_HELPER, "rivet_helper.gd")
 	
 	# Add dock
-	dock = preload("dock/dock.tscn").instantiate()
+	dock = preload("devtools/dock/dock.tscn").instantiate()
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, dock)
-	
 	RivetEditorSettings.set_defaults()
 
 func _exit_tree():
