@@ -15,7 +15,11 @@ layout_mode = 2
 [node name="LinksContainer" parent="." instance=ExtResource("2_c2osa")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CenterContainer"]
 layout_mode = 2
 text = "Loading..."
 horizontal_alignment = 1
