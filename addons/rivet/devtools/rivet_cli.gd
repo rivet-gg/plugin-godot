@@ -52,5 +52,4 @@ func run(args: PackedStringArray) -> RivetCliOutput:
 	
 func link() -> RivetCliOutput:
 	thread.execute(run.bind(["--version"]))
-	var output: RivetCliOutput = await thread.wait_to_finish()
-	return output
+	return await thread.wait_to_finish()

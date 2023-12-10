@@ -16,7 +16,10 @@ func _init():
 	
 func wait_to_finish():
 	await finished
-	return last_output
+	mutex.lock()
+	var output = last_output
+	mutex.unlock()
+	return output
 
 func cleanup():
 	mutex.lock()
@@ -45,7 +48,7 @@ func _thread_loop():
 		var output = fn.call()
 		mutex.lock()
 		last_output = output
-		finished.emit()
+		call_deferred("emit_signal", "finished")
 		mutex.unlock()
 
 func execute(fn: Callable):
