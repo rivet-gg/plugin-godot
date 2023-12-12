@@ -7,9 +7,7 @@ func _ready() -> void:
 	self.visibility_changed.connect(_on_visibility_changed)
 
 func _on_visibility_changed() -> void:
-	print(Rivet.get_method_list().map(func (method): return method.name))
-	print(Rivet.is_inside_tree())
-	var request := Rivet.GET("/cloud/games/%s" % GAME_ID).request()
+	var request := RivetDevtools.get_plugin().GET("/cloud/games/%s" % GAME_ID).request()
 	# response.body:
 	#	game.namespaces = {namespace_id, version_id, display_name}[]
 	#	game.versions = {version_id, display_name}[]

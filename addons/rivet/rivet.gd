@@ -7,12 +7,15 @@ const AUTO_LOAD_RIVET_HELPER = "RivetHelper"
 const AUTO_LOAD_RIVET_GLOBAL = "Rivet"
 
 const RivetEditorSettings := preload("devtools/rivet_editor_settings.gd")
+const RivetGlobal := preload("res://addons/rivet/rivet_global.gd")
 
-
+var global: RivetGlobal
 var dock: Control
 
+func _init() -> void:
+	name = "RivetPlugin"
+
 func _enter_tree():
-	print("TEST")
 	# Add singleton
 	add_autoload_singleton(AUTO_LOAD_RIVET_CLIENT, "rivet_client.gd")
 	add_autoload_singleton(AUTO_LOAD_RIVET_HELPER, "rivet_helper.gd")
@@ -21,10 +24,11 @@ func _enter_tree():
 	
 	# Add dock
 	dock = preload("devtools/dock/dock.tscn").instantiate()
-	dock.add_child(Rivet)
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, dock)
 	RivetEditorSettings.set_defaults()
-	print("THIS")
+	
+	global = RivetGlobal.new()
+	dock.add_child(global)
 
 func _exit_tree():
 	# Remove singleton

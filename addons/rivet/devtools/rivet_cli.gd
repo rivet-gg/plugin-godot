@@ -11,7 +11,6 @@ const RivetEditorSettings = preload("rivet_editor_settings.gd")
 const RivetThread = preload("rivet_thread.gd")
 const RivetCliOutput = preload("rivet_cli_output.gd")
 
-var thread: RivetThread = RivetThread.new()
 #region Utilities
 static func find_executable(program: String) -> String:
 	var os := OS.get_name()
@@ -50,5 +49,5 @@ func run(args: PackedStringArray) -> RivetCliOutput:
 	return RivetCliOutput.new(code, output)
 	
 func link() -> RivetCliOutput:
-	thread.execute(run.bind(["--version"]))
+	var thread := RivetThread.new(run.bind(["--version"]))
 	return await thread.wait_to_finish()
