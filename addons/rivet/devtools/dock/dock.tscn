@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://l8cfdaru7ibw"]
+[gd_scene load_steps=5 format=3 uid="uid://l8cfdaru7ibw"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/dock.gd" id="1_xspk7"]
 [ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/devtools/dock/login.tscn" id="2_qo12a"]
-[ext_resource type="Script" path="res://addons/rivet/devtools/dock/login.gd" id="3_ht0v5"]
+[ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/devtools/dock/settings.tscn" id="3_8srmc"]
+[ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/devtools/dock/loading.tscn" id="4_mdhqv"]
 
 [node name="Rivet" type="MarginContainer"]
 offset_top = 92.0
@@ -16,7 +17,11 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 8
 script = ExtResource("1_xspk7")
 
-[node name="Login" type="VBoxContainer" parent="." instance=ExtResource("2_qo12a")]
+[node name="Login" parent="." instance=ExtResource("2_qo12a")]
 layout_mode = 2
-theme_override_constants/separation = 16
-script = ExtResource("3_ht0v5")
+
+[node name="Settings" parent="." instance=ExtResource("3_8srmc")]
+layout_mode = 2
+
+[node name="Loading" parent="." instance=ExtResource("4_mdhqv")]
+layout_mode = 2
