@@ -11,4 +11,4 @@ func _on_button_pressed() -> void:
 	await get_tree().create_timer(2.0).timeout
 	%LogInButton.disabled = false
 	if result.exit_code == result.ExitCode.SUCCESS:
-		owner.change_current_screen(owner.Settings)
+		owner.change_current_screen(owner.Screen.Settings)
