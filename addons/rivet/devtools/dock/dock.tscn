@@ -21,7 +21,9 @@ script = ExtResource("1_xspk7")
 layout_mode = 2
 
 [node name="Settings" parent="." instance=ExtResource("3_8srmc")]
+visible = false
 layout_mode = 2
 
 [node name="Loading" parent="." instance=ExtResource("4_mdhqv")]
+visible = false
 layout_mode = 2

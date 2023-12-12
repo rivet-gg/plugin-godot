@@ -5,9 +5,9 @@ static var base_url = "https://api.staging2.gameinc.io/%s"
 static func _get_token():
 	# TODO: get it from config file if local
 	var token_env = OS.get_environment("RIVET_TOKEN")
-	assert(!token_env.is_empty(), "missing RIVET_TOKEN environment")
+	#assert(!token_env.is_empty(), "missing RIVET_TOKEN environment")
+	return "cloud.eyJ0eXAiOiJKV1QiLCJhbGciOiJFZERTQSJ9.COmehoi7MhDpxsHKxTEaEgoQMMBTEv5oRf6l6RBAR7lOFyIWOhQKEgoQksPhwWr_QnuJFNDo0rQ1Fw.GRPCgdARTYMjaWgEFFeGCJWv_59P8wlPs9wYsIHoP69gio0GWWxvPbdUuhrofzc9jC9UIpPII-jlj6kk9UQHDw"
 	return token_env
-	#return YOUR_TOKEN
 
 static func _build_headers() -> PackedStringArray:
 	return [

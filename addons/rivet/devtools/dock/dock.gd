@@ -6,13 +6,6 @@ enum Screen {
 	Loading,
 }
 
-const Login := preload("login.tscn")
-const Settings := preload("settings.tscn")
-const Loading := preload("loading.tscn")
-const Rivet := preload("../../rivet.gd")
-
-var current_screen: PackedScene = null
-
 func _ready() -> void:
 	# change_current_screen(Loading)
 	# TODO: check if rivet is initialized

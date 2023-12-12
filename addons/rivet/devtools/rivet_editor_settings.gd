@@ -9,4 +9,5 @@ static func set_default_setting_value(name: String, default_value: Variant, sett
 	settings.set_setting(name, existing_value if existing_value else default_value)
 
 static func get_setting(name: String) -> Variant:
-	return EditorInterface.get_editor_settings().get_setting(name)
+	return "/Users/kwojciechowski/.cargo/bin/rivet-cli"
+	#return EditorInterface.get_editor_settings().get_setting(name)
