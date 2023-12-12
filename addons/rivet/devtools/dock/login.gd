@@ -5,10 +5,7 @@ func _ready():
 
 func _on_button_pressed() -> void:
 	%LogInButton.disabled = true
-	print(Rivet.get_parent().get_children())
-	var result := await Rivet.cli.link()
-	
-	await get_tree().create_timer(2.0).timeout
+	var result := await RivetDevtools.get_plugin().cli.link()
 	%LogInButton.disabled = false
 	if result.exit_code == result.ExitCode.SUCCESS:
 		owner.change_current_screen(owner.Screen.Settings)

@@ -1,62 +1,21 @@
-var semaphore: Semaphore
-var thread: Thread
+signal finished(output: Variant)
+
 var mutex: Mutex
-var should_exit_thread: bool = false
-var callable: Callable
-var last_output: Variant
+var thread: Thread
+var output: Variant = null
 
-signal finished()
-
-func _init():
-	mutex = Mutex.new()
-	semaphore = Semaphore.new()
-
-	thread = Thread.new()
-	thread.start(_thread_loop)
-	
 func wait_to_finish():
 	await finished
-	mutex.lock()
-	var output = last_output
-	mutex.unlock()
 	return output
 
-func cleanup():
-	mutex.lock()
-	should_exit_thread = true
-	mutex.unlock()
- 	# notify thread
-	semaphore.post()
-	thread.wait_to_finish()
-	
-func _thread_loop():
-	while true:
-		semaphore.wait()
-		
+func _init(fn: Callable) -> void:
+	thread = Thread.new()
+	mutex = Mutex.new()
+	thread.start(func():
+		var result = fn.call()
 		mutex.lock()
-		var should_exit: bool = should_exit_thread
+		output = result
+		finished.emit(result)
 		mutex.unlock()
-		
-		if should_exit:
-			break
-		
-		mutex.lock()
-		var fn: Callable = callable
-		last_output = null
-		mutex.unlock()
-		
-		var output = fn.call()
-		mutex.lock()
-		last_output = output
-		call_deferred("emit_signal", "finished")
-		mutex.unlock()
-
-func execute(fn: Callable):
-	callable = fn
-	semaphore.post()
-
-#func _notification(what: int) -> void:
-	#if what == NOTIFICATION_PREDELETE:
-		#cancel_free()
-		#cleanup()
-		#free()
+		return result
+	)
