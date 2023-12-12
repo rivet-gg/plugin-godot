@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://ceovepvn1782o"]
+[gd_scene load_steps=6 format=3 uid="uid://ceovepvn1782o"]
 
 [ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_22gtj"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/settings.gd" id="1_qd6no"]
 [ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_mervt"]
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="4_k8i13"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfadg"]
 
 [node name="Settings" type="VBoxContainer"]
 theme_override_constants/separation = 16
+script = ExtResource("1_qd6no")
 
 [node name="LogoContainer" parent="." instance=ExtResource("1_22gtj")]
 layout_mode = 2
@@ -14,3 +19,87 @@ layout_mode = 2
 
 [node name="LinksContainer" parent="." instance=ExtResource("2_mervt")]
 layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dfadg")
+bbcode_enabled = true
+text = "[b]Authentication Token[/b]"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Namespace" type="Label" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Namespace"
+
+[node name="AuthNamespaceSelector" parent="VBoxContainer/VBoxContainer" instance=ExtResource("4_k8i13")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Namespace" type="Label" parent="VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Connect to..."
+
+[node name="MenuButton" type="MenuButton" parent="VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "-"
+flat = false
+alignment = 0
+item_count = 3
+popup/item_0/text = "Connect to production"
+popup/item_0/checkable = 2
+popup/item_0/id = 0
+popup/item_1/text = "Connect to staging to test with friends"
+popup/item_1/checkable = 2
+popup/item_1/id = 1
+popup/item_2/text = "Connect to staging with game running locally"
+popup/item_2/checkable = 2
+popup/item_2/id = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "A long and meaningful description explaning how this work, and how the selected option works."
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dfadg")
+bbcode_enabled = true
+text = "[b]Build & Deploy Server[/b]"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DeployNamespaceSelector" parent="VBoxContainer/VBoxContainer2" instance=ExtResource("4_k8i13")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Build & Deploy"
+
+[node name="Button2" type="Button" parent="VBoxContainer/VBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Manage Versions"
