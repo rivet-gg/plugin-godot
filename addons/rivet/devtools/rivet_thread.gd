@@ -15,7 +15,7 @@ func _init(fn: Callable) -> void:
 		var result = fn.call()
 		mutex.lock()
 		output = result
-		finished.emit(result)
+		call_deferred("emit_signal", "finished", result)
 		mutex.unlock()
 		return result
 	)
