@@ -35,7 +35,6 @@ static func POST(owner: Node, path: String, body: Dictionary) -> RivetRequest:
 static func GET(owner: Node, path: String, body: Dictionary) -> RivetRequest:
 	var url = _build_url(path)
 	var body_json := JSON.stringify(body)
-	print(url)
 	
 	return RivetRequest.new(owner, HTTPClient.METHOD_GET, url, { 
 		"headers": _build_headers(), 
