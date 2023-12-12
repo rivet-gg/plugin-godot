@@ -39,7 +39,6 @@ static func find_rivet():
 	var rivet_cli_path = find_executable("rivet-cli")
 	if not rivet_cli_path.is_empty():
 		return rivet_cli_path
-	print(rivet_path, rivet_cli_path)
 	printerr("Can't find path to Rivet CLI (rivet-cli exec)")
 #endregion
 
