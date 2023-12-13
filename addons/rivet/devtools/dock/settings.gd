@@ -1,20 +1,16 @@
 @tool extends Control
+## Settings screens allow you to configure and deploy your game.
 
 # TODO
-const GAME_ID = "92c3e1c1-6aff-427b-8914-d0e8d2b43517"
-
-func _ready() -> void:
-	self.visibility_changed.connect(_on_visibility_changed)
-
-func _on_visibility_changed() -> void:
-	if not visible:
-		return
+const GAME_ID = "YOUR GAME ID HERE"
+	
+func prepare():
 	var request := RivetDevtools.get_plugin().GET("/cloud/games/%s" % GAME_ID).request()
 	# response.body:
 	#	game.namespaces = {namespace_id, version_id, display_name}[]
 	#	game.versions = {version_id, display_name}[]
 	var response = await request.wait_completed()
-	if response.result != OK:
+	if response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
 		push_error("Something is not right")
 		return
 	_populate_namespace_data(response)

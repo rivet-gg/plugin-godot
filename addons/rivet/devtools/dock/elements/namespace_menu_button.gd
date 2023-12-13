@@ -1,5 +1,7 @@
 @tool extends Control
+## A control that displays a list of namespaces and allows the user to select one.
 
+## Emitted when the user selects a namespace.
 signal selected
 
 @export var namespaces: Array: set = _on_namespaces_set
