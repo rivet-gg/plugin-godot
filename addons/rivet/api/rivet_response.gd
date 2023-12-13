@@ -1,7 +1,20 @@
-var result: int
-var response_code: int
+extends RefCounted
+## A response from the server. Contains the result, response code, headers, and body.
+## The body is a dictionary of the JSON response.
+## 
+## @experimental
+
+## The result of the request. 0 is success, 1 is failure.
+var result: HTTPClient.Status
+
+## The response code from the server.
+var response_code: HTTPClient.ResponseCode
+
+## The headers from the server.
 var headers: PackedStringArray
-var body: Dictionary
+
+## The body of the response, as a JSON dictionary, could be a null.
+var body: Variant
 
 func _init(result: int, response_code: int, headers: PackedStringArray, response_body: PackedByteArray) -> void:
 	self.result = result

@@ -1,5 +1,7 @@
 @tool extends MenuButton
+## A menu button that emits a signal when an item is selected.
 
+## The signal is emitted with the index of the selected item.
 signal selected
 
 # Called when the node enters the scene tree for the first time.

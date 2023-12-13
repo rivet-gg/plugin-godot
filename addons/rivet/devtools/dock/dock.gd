@@ -1,5 +1,7 @@
 @tool extends Control
+## Mainpoint of the plugin's UI
 
+## Enum representing indexes of the children of this node
 enum Screen {
 	Login,
 	Settings,
@@ -12,7 +14,11 @@ func _ready() -> void:
 	# await Rivet.cli.bootstrap()
 	# await get_tree().create_timer(2).timeout
 	change_current_screen(Screen.Login)
+	
 
 func change_current_screen(scene: Screen):
 	for idx in get_child_count():
-		get_child(idx).visible = idx == scene
+		var child := get_child(idx)
+		child.visible = idx == scene
+		if idx == scene and child.has_method("prepare"):
+			child.prepare()

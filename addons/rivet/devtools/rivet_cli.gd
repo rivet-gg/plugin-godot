@@ -1,17 +1,14 @@
 extends RefCounted
-## A brief description of the class's role and functionality.
+## Wrapper aroudn the Rivet CLI, allowing you to run it from GDScript in non-blocking way, and get the output.
 ##
-## The description of the script, what it can do,
-## and any further detail.
-##
-## @tutorial:            https://the/tutorial1/url.com
-## @tutorial(Tutorial2): https://the/tutorial2/url.com
 ## @experimental
-const RivetEditorSettings = preload("rivet_editor_settings.gd")
-const RivetThread = preload("rivet_thread.gd")
-const RivetCliOutput = preload("rivet_cli_output.gd")
+
+const _RivetEditorSettings = preload("rivet_editor_settings.gd")
+const _RivetThread = preload("rivet_thread.gd")
+const _RivetCliOutput = preload("rivet_cli_output.gd")
 
 #region Utilities
+## Finds executable in PATH using `where` on Windows and `which` on Linux and macOS.
 static func find_executable(program: String) -> String:
 	var os := OS.get_name()
 	var output = []
@@ -25,8 +22,9 @@ static func find_executable(program: String) -> String:
 		return ""
 	return output[0].strip_escapes()
 
+## Finds Rivet CLI executable in PATH or in editor settings.
 static func find_rivet():
-	var editor_rivet_path = RivetEditorSettings.get_setting(RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
 	if not editor_rivet_path or not editor_rivet_path.is_empty():
 		return editor_rivet_path
 	printerr("Can't find path to Rivet CLI (in editor settings)")
@@ -42,11 +40,13 @@ static func find_rivet():
 	printerr("Can't find path to Rivet CLI (rivet-cli exec)")
 #endregion
 
-func run(args: PackedStringArray) -> RivetCliOutput:
+## Runs Rivet CLI with given arguments.
+func run(args: PackedStringArray) -> _RivetCliOutput:
 	var output = []
 	var code = OS.execute(find_rivet(), args, output, true)
-	return RivetCliOutput.new(code, output)
-	
-func link() -> RivetCliOutput:
-	var thread := RivetThread.new(run.bind(["--version"]))
+	return _RivetCliOutput.new(code, output)
+
+## Links your game with Rivet Cloud, using `rivet link` command.
+func link() -> _RivetCliOutput:
+	var thread := _RivetThread.new(run.bind(["--version"]))
 	return await thread.wait_to_finish()

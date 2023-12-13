@@ -1,7 +1,11 @@
+extends RefCounted
+## It's a wrapper for the output of the command line tools
+
 var exit_code: ExitCode
 var output: Array
 var formatted_output: Array = []
 
+## The exit code of the command line tool
 enum ExitCode {
 	SUCCESS = 0
 	# TODO: fill with the rest of the exit codes
