@@ -18,6 +18,8 @@ func _on_button_pressed() -> void:
 
 		# Now that we have the link, open it in the user's browser
 		OS.shell_open(data["device_link_url"])
+		
+		owner.change_current_screen(owner.Screen.Loading)
 
 		# Long-poll the Rivet API until the user has logged in
 		result = await RivetDevtools.get_plugin().cli.run_command([
