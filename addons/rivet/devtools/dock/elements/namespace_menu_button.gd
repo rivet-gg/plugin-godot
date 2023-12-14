@@ -20,7 +20,7 @@ func _on_namespaces_set(value: Array) -> void:
 
 func _update_menu_button(value: Array) -> void:
 	var popup := menu_button.get_popup()
-	popup.clear(true)
+	popup.clear()
 	for item in value:
 		popup.add_radio_check_item(item.display_name)
 

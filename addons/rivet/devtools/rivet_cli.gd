@@ -44,9 +44,11 @@ static func find_rivet():
 func run(args: PackedStringArray) -> _RivetCliOutput:
 	var output = []
 	var code = OS.execute(find_rivet(), args, output, true)
+
 	return _RivetCliOutput.new(code, output)
 
 ## Links your game with Rivet Cloud, using `rivet link` command.
-func link() -> _RivetCliOutput:
-	var thread := _RivetThread.new(run.bind(["--version"]))
+func run_command(args: PackedStringArray) -> _RivetCliOutput:
+	var thread := _RivetThread.new(run.bind(args))
+	
 	return await thread.wait_to_finish()
