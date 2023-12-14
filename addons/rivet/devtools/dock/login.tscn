@@ -40,3 +40,33 @@ scroll_fit_content_height = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Please manually install CLI [here]"
+
+[node name="CloudTokenFieldContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CloudTokenFieldContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cloud token"
+
+[node name="CloudTokenTextEdit" type="TextEdit" parent="CloudTokenFieldContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "cloud_"
+scroll_fit_content_height = true
+
+[node name="NamespaceTokenFieldContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NamespaceTokenFieldContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Namespace token"
+
+[node name="NamespaceTokenTextEdit" type="TextEdit" parent="NamespaceTokenFieldContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "dev_"
+scroll_fit_content_height = true

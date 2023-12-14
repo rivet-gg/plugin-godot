@@ -11,6 +11,9 @@ const _cli = preload("devtools/rivet_cli.gd")
 
 var cli := _cli.new()
 
+var cloud_token: String
+var namespace_token: String 
+
 ## @experimental
 func POST(path: String, body: Dictionary) -> _api.RivetRequest:
 	return _api.POST(self, path, body)

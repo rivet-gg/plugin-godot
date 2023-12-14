@@ -1,9 +1,12 @@
 @tool extends Control
 ## A button that logs the user in to the Rivet using Rivet CLI.
 
+@onready var LogInButton: Button = %LogInButton
+@onready var CloudTokenTextEdit: TextEdit = %CloudTokenTextEdit
+@onready var NamespaceTokenTextEdit: TextEdit = %NamespaceTokenTextEdit
 
 func _ready():
-	%LogInButton.pressed.connect(_on_button_pressed)
+	LogInButton.pressed.connect(_on_button_pressed)
 
 func _on_button_pressed() -> void:
 	%LogInButton.disabled = true
@@ -32,6 +35,9 @@ func _on_button_pressed() -> void:
 		])
 
 		if result.exit_code == result.ExitCode.SUCCESS:
+			RivetDevtools.get_plugin().cloud_token = CloudTokenTextEdit.text
+			RivetDevtools.get_plugin().namespace_token = NamespaceTokenTextEdit.text
+
 			owner.change_current_screen(owner.Screen.Settings)
 
-	%LogInButton.disabled = false
+	LogInButton.disabled = false

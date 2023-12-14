@@ -16,6 +16,7 @@ func prepare():
 	if response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
 		push_error("Something is not right")
 		return
+	print(response.body)
 	_populate_namespace_data(response)
 
 func _populate_namespace_data(data: Object) -> void:

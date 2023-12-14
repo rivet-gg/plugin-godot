@@ -44,62 +44,6 @@ text = "Namespace"
 [node name="AuthNamespaceSelector" parent="VBoxContainer/Namespace Field" instance=ExtResource("4_k8i13")]
 unique_name_in_owner = true
 layout_mode = 2
-namespaces = [{
-"create_ts": "2023-11-19T05:46:56.378Z",
-"display_name": "Production",
-"name_id": "prod",
-"namespace_id": "215bd313-b4c7-4932-b9bd-64f8f09b7fe8",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-19T05:46:56.426Z",
-"display_name": "Staging",
-"name_id": "staging",
-"namespace_id": "112d1290-2d90-40e5-9e59-efcf6bf2c18c",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-29T20:10:07.022Z",
-"display_name": "test",
-"name_id": "test",
-"namespace_id": "bce3eb8e-58bd-4069-9285-c9c82487161a",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-29T20:12:56.296Z",
-"display_name": "test2",
-"name_id": "test2",
-"namespace_id": "0e84f4ef-6e6a-494a-a5c2-ea98c20092f6",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-29T20:13:46.230Z",
-"display_name": "test3",
-"name_id": "test3",
-"namespace_id": "1b06ae8b-c799-4836-a27e-86cdb29223f9",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}]
 
 [node name="Connection Field" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -136,62 +80,6 @@ layout_mode = 2
 [node name="DeployNamespaceSelector" parent="VBoxContainer/Deployment Fieds" instance=ExtResource("4_k8i13")]
 unique_name_in_owner = true
 layout_mode = 2
-namespaces = [{
-"create_ts": "2023-11-19T05:46:56.378Z",
-"display_name": "Production",
-"name_id": "prod",
-"namespace_id": "215bd313-b4c7-4932-b9bd-64f8f09b7fe8",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-19T05:46:56.426Z",
-"display_name": "Staging",
-"name_id": "staging",
-"namespace_id": "112d1290-2d90-40e5-9e59-efcf6bf2c18c",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-29T20:10:07.022Z",
-"display_name": "test",
-"name_id": "test",
-"namespace_id": "bce3eb8e-58bd-4069-9285-c9c82487161a",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-29T20:12:56.296Z",
-"display_name": "test2",
-"name_id": "test2",
-"namespace_id": "0e84f4ef-6e6a-494a-a5c2-ea98c20092f6",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}, {
-"create_ts": "2023-11-29T20:13:46.230Z",
-"display_name": "test3",
-"name_id": "test3",
-"namespace_id": "1b06ae8b-c799-4836-a27e-86cdb29223f9",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}]
 
 [node name="Actions" type="HBoxContainer" parent="VBoxContainer/Deployment Fieds"]
 layout_mode = 2
