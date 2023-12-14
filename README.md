@@ -1,4 +1,4 @@
-# Godot Plugin (Alpha)
+# Godot Plugin (v2.0.0)
 
 _Godot 3 is not supported at the moment._
 
