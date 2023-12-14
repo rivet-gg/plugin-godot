@@ -30,7 +30,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "API endpoint"
 
-[node name="ApiEndpointTextEdit" type="TextEdit" parent="ApiEndpointFieldContainer"]
+[node name="ApiAddressField" type="TextEdit" parent="FieldContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
