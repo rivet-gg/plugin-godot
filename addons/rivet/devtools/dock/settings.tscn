@@ -201,5 +201,6 @@ layout_mode = 2
 text = "Build & Deploy"
 
 [node name="ManageVersions" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Manage Versions"
