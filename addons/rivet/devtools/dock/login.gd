@@ -12,7 +12,7 @@ func _ready():
 
 func _on_button_pressed() -> void:
 	%LogInButton.disabled = true
-	var api_address = %ApiAddressField.text
+	var api_address = ApiEndpointTextEdit.text
 	var result := await RivetDevtools.get_plugin().cli.run_command([
 		"--api-endpoint",
 		api_address,

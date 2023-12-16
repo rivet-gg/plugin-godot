@@ -44,6 +44,7 @@ text = "Namespace"
 [node name="AuthNamespaceSelector" parent="VBoxContainer/Namespace Field" instance=ExtResource("4_k8i13")]
 unique_name_in_owner = true
 layout_mode = 2
+current_value = {}
 
 [node name="Connection Field" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -81,6 +82,7 @@ layout_mode = 2
 [node name="DeployNamespaceSelector" parent="VBoxContainer/Deployment Fieds" instance=ExtResource("4_k8i13")]
 unique_name_in_owner = true
 layout_mode = 2
+current_value = {}
 
 [node name="Actions" type="HBoxContainer" parent="VBoxContainer/Deployment Fieds"]
 layout_mode = 2
@@ -88,10 +90,12 @@ layout_mode = 2
 [node name="BuildDeployButton" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Build & Deploy"
 
 [node name="ManageVersionButton" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Manage Version
 "
