@@ -1,9 +1,9 @@
 @tool extends Control
 ## Settings screens allow you to configure and deploy your game.
 
-@onready var AuthNamespaceSelector = %AuthNameSpaceSelector
+@onready var AuthNamespaceSelector = %AuthNamespaceSelector
 @onready var ConnectionMenuButton: MenuButton = %ConnectionMenuButton
-@onready var DeployNamespaceSelector = %DeployNameSpaceSelector
+@onready var DeployNamespaceSelector = %DeployNamespaceSelector
 @onready var BuildDeployButton: Button = %BuildDeployButton
 @onready var ManageVersionButton: Button = %ManageVersionButton
 

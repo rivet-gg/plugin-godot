@@ -2,7 +2,7 @@ class_name RivetApi
 const RivetRequest = preload("rivet_request.gd")
 
 static func _get_api_url():
-	return "https://api.staging2.gameinc.io/%s"
+	return RivetDevtools.get_plugin().api_endpoint
 
 ## Gets the authorization token from the environment or from a config file
 static func _get_cloud_token():
@@ -32,13 +32,13 @@ static func _build_headers(service: String) -> PackedStringArray:
 
 ## Builds a URL to Rivet cloud services
 static func _build_url(path: String, service: String) -> String:
-	var path_segments := path.split("/")
+	var path_segments := path.split("/", false)
 	path_segments.remove_at(0)
-	return (_get_api_url() % service) + "/".join(path_segments)
+	return _get_api_url() + service + "/" + "/".join(path_segments)
 
 ## Gets service name from a path (e.g. /users/123 -> users)
 static func _get_service_from_path(path: String) -> String:
-	var path_segments := path.split("/")
+	var path_segments := path.split("/", false)
 	return path_segments[0]
 
 ## Creates a POST request to Rivet cloud services
