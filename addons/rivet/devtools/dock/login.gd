@@ -4,6 +4,7 @@
 @onready var LogInButton: Button = %LogInButton
 @onready var CloudTokenTextEdit: TextEdit = %CloudTokenTextEdit
 @onready var NamespaceTokenTextEdit: TextEdit = %NamespaceTokenTextEdit
+@onready var GameIdTextEdit: TextEdit = %GameIdTextEdit
 
 func _ready():
 	LogInButton.pressed.connect(_on_button_pressed)
@@ -37,6 +38,7 @@ func _on_button_pressed() -> void:
 		if result.exit_code == result.ExitCode.SUCCESS:
 			RivetDevtools.get_plugin().cloud_token = CloudTokenTextEdit.text
 			RivetDevtools.get_plugin().namespace_token = NamespaceTokenTextEdit.text
+			RivetDevtools.get_plugin().game_id = GameIdTextEdit.text
 
 			owner.change_current_screen(owner.Screen.Settings)
 

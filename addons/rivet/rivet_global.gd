@@ -13,6 +13,8 @@ var cli := _cli.new()
 
 var cloud_token: String
 var namespace_token: String 
+var game_id: String
+var api_endpoint: String
 
 ## @experimental
 func POST(path: String, body: Dictionary) -> _api.RivetRequest:

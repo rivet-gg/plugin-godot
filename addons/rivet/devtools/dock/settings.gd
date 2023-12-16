@@ -1,14 +1,18 @@
 @tool extends Control
 ## Settings screens allow you to configure and deploy your game.
 
-# TODO
-const GAME_ID = "YOUR GAME ID HERE"
+@onready var AuthNamespaceSelector = %AuthNameSpaceSelector
+@onready var ConnectionMenuButton: MenuButton = %ConnectionMenuButton
+@onready var DeployNamespaceSelector = %DeployNameSpaceSelector
+@onready var BuildDeployButton: Button = %BuildDeployButton
+@onready var ManageVersionButton: Button = %ManageVersionButton
 
 func _ready():
-	%ManageVersions.pressed.connect(_on_manage_version_button_pressed)
+	ManageVersionButton.pressed.connect(_on_manage_version_button_pressed)
 	
 func prepare():
-	var request := RivetDevtools.get_plugin().GET("/cloud/games/%s" % GAME_ID).request()
+	disable_all_actions(true)
+	var request := RivetDevtools.get_plugin().GET("/cloud/games/%s" % RivetDevtools.get_plugin().game_id).request()
 	# response.body:
 	#	game.namespaces = {namespace_id, version_id, display_name}[]
 	#	game.versions = {version_id, display_name}[]
@@ -16,8 +20,8 @@ func prepare():
 	if response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
 		push_error("Something is not right")
 		return
-	print(response.body)
 	_populate_namespace_data(response)
+	disable_all_actions(false)
 
 func _populate_namespace_data(data: Object) -> void:
 	var namespaces = data.body.game.namespaces
@@ -32,11 +36,11 @@ func _populate_namespace_data(data: Object) -> void:
 		else:
 			space["version"] = versions[0]
 	
-	%AuthNamespaceSelector.namespaces = namespaces
-	%DeployNamespaceSelector.namespaces = namespaces
+	AuthNamespaceSelector.namespaces = namespaces
+	DeployNamespaceSelector.namespaces = namespaces
 
 func _on_manage_version_button_pressed() -> void:
-		%ManageVersions.disabled = true
+		ManageVersionButton.disabled = true
 		var result := await RivetDevtools.get_plugin().cli.run_command([
 			"--api-endpoint",
 			"https://api.staging2.gameinc.io",
@@ -52,4 +56,11 @@ func _on_manage_version_button_pressed() -> void:
 
 			OS.shell_open(data["output"])
 
-		%ManageVersions.disabled = false
+		ManageVersionButton.disabled = false
+
+func disable_all_actions(disabled: bool) -> void:
+	AuthNamespaceSelector.disabled = disabled
+	ConnectionMenuButton.disabled = disabled
+	DeployNamespaceSelector.disabled = disabled
+	BuildDeployButton.disabled = disabled
+	ManageVersionButton.disabled = disabled

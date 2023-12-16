@@ -54,6 +54,7 @@ size_flags_horizontal = 3
 text = "Connect to..."
 
 [node name="ConnectionMenuButton" parent="VBoxContainer/Connection Field" instance=ExtResource("5_55rap")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Description" type="Label" parent="VBoxContainer/Connection Field"]
@@ -84,11 +85,13 @@ layout_mode = 2
 [node name="Actions" type="HBoxContainer" parent="VBoxContainer/Deployment Fieds"]
 layout_mode = 2
 
-[node name="Build&Deploy" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
+[node name="BuildDeployButton" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Build & Deploy"
 
-[node name="ManageVersions" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
+[node name="ManageVersionButton" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Manage Versions"
+text = "Manage Version
+"
