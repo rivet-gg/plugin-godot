@@ -2,7 +2,6 @@ extends RefCounted
 ## Wrapper aroudn the Rivet CLI, allowing you to run it from GDScript in non-blocking way, and get the output.
 ##
 ## @experimental
-
 const REQUIRED_RIVET_CLI_VERSION = "v0.3.0"
 
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
