@@ -19,6 +19,7 @@ theme_override_constants/margin_bottom = 8
 script = ExtResource("1_xspk7")
 
 [node name="Login" parent="." instance=ExtResource("2_qo12a")]
+visible = false
 layout_mode = 2
 
 [node name="Settings" parent="." instance=ExtResource("3_8srmc")]
@@ -30,5 +31,4 @@ visible = false
 layout_mode = 2
 
 [node name="Installer" parent="." instance=ExtResource("5_gdmi1")]
-visible = false
 layout_mode = 2

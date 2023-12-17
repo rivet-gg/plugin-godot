@@ -3,7 +3,7 @@ extends RefCounted
 ##
 ## @experimental
 
-const REQUIRED_RIVET_CLI_VERSION = "0.1.0"
+const REQUIRED_RIVET_CLI_VERSION = "v0.3.0"
 
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")
@@ -61,12 +61,16 @@ func _install() -> _RivetCliOutput:
 	var code
 	print(OS.get_name())
 	if OS.get_name() == "Windows":
-		code = OS.execute("powershell.exe", ["-Commandi",  "$env:RIVET_CLI_VERSION='v0.3.0'; iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex"], output, true, true)
+		OS.set_environment("RIVET_CLI_VERSION", REQUIRED_RIVET_CLI_VERSION)
+		code = OS.execute("powershell.exe", ["-Commandi",  "\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""], output, true, true)
 	elif OS.get_name() == "macOS":
-		var args = ['"/bin/bash -e curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/main/install/unix.sh | sh"']
-		OS.create_process("/System/Applications/Utilities/Terminal.app", args)
-	else:
-		code = OS.execute('/bin/bash', ['-c', "\"curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/main/install/unix.sh | sh\""], output, true, true)
+		var home_path: String = OS.get_environment("HOME")
+		OS.set_environment("RIVET_CLI_VERSION", REQUIRED_RIVET_CLI_VERSION)
+		OS.set_environment("BIN_DIR", home_path.path_join(".rivet").path_join(REQUIRED_RIVET_CLI_VERSION).path_join("bin"))
+		# https://github.com/godotengine/godot/issues/37291#issuecomment-603821838
+		var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh'\""]
+		code = OS.execute("/bin/bash", args, output, true, true)
+
 	return _RivetCliOutput.new(code, output)
  
 func install() -> _RivetCliOutput:
