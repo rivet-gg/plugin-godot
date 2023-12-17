@@ -6,6 +6,7 @@ enum Screen {
 	Login,
 	Settings,
 	Loading,
+	Installer,
 }
 
 func _ready() -> void:
@@ -13,12 +14,13 @@ func _ready() -> void:
 	# TODO: check if rivet is initialized
 	# await Rivet.cli.bootstrap()
 	# await get_tree().create_timer(2).timeout
-	change_current_screen(Screen.Login)
+	change_current_screen(Screen.Installer)
 	
 
 func change_current_screen(scene: Screen):
 	for idx in get_child_count():
 		var child := get_child(idx)
-		child.visible = idx == scene
+		if "visible" in child:
+			child.visible = idx == scene
 		if idx == scene and child.has_method("prepare"):
 			child.prepare()

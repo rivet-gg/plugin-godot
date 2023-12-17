@@ -3,6 +3,8 @@ extends RefCounted
 ##
 ## @experimental
 
+const REQUIRED_RIVET_CLI_VERSION = "0.1.0"
+
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")
 const _RivetCliOutput = preload("rivet_cli_output.gd")
@@ -10,7 +12,7 @@ const _RivetCliOutput = preload("rivet_cli_output.gd")
 #region Utilities
 ## Finds executable in PATH using `where` on Windows and `which` on Linux and macOS.
 static func find_executable(program: String) -> String:
-	var os := OS.get_name()
+	var os: String = OS.get_name()
 	var output = []
 	var code: int = -1
 	if OS.get_name() == "Windows":
@@ -24,15 +26,15 @@ static func find_executable(program: String) -> String:
 
 ## Finds Rivet CLI executable in PATH or in editor settings.
 static func find_rivet():
-	var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
-	if not editor_rivet_path or not editor_rivet_path.is_empty():
-		return editor_rivet_path
+	#var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	#if not editor_rivet_path or not editor_rivet_path.is_empty():
+	#	return editor_rivet_path
 	printerr("Can't find path to Rivet CLI (in editor settings)")
 	
-	var rivet_path = find_executable("rivet")
-	if not rivet_path.is_empty():
-		return rivet_path
-	printerr("Can't find path to Rivet CLI (rivet exec)")
+	#var rivet_path = find_executable("rivet")
+	#if not rivet_path.is_empty():
+	#	return rivet_path
+	#printerr("Can't find path to Rivet CLI (rivet exec)")
 	
 	var rivet_cli_path = find_executable("rivet-cli")
 	if not rivet_cli_path.is_empty():
@@ -50,6 +52,23 @@ func run(args: PackedStringArray) -> _RivetCliOutput:
 
 ## Links your game with Rivet Cloud, using `rivet link` command.
 func run_command(args: PackedStringArray) -> _RivetCliOutput:
-	var thread := _RivetThread.new(run.bind(args))
+	var thread: _RivetThread = _RivetThread.new(run.bind(args))
 	
 	return await thread.wait_to_finish()
+
+func _install() -> _RivetCliOutput:
+	var output = []
+	var code
+	print(OS.get_name())
+	if OS.get_name() == "Windows":
+		code = OS.execute("powershell.exe", ["-Commandi",  "$env:RIVET_CLI_VERSION='v0.3.0'; iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex"], output, true, true)
+	elif OS.get_name() == "macOS":
+		var args = ['"/bin/bash -e curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/main/install/unix.sh | sh"']
+		OS.create_process("/System/Applications/Utilities/Terminal.app", args)
+	else:
+		code = OS.execute('/bin/bash', ['-c', "\"curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/main/install/unix.sh | sh\""], output, true, true)
+	return _RivetCliOutput.new(code, output)
+ 
+func install() -> _RivetCliOutput:
+	var thread: _RivetThread = _RivetThread.new(_install)
+	return await thread.wait_to_finish() 

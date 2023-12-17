@@ -13,7 +13,7 @@ enum ExitCode {
 
 func _init(exit_code: int, output: Array) -> void:
 	self.exit_code = exit_code
-
+	print(exit_code, output)
 	# Parse the output as JSON
 	var json = JSON.new()
 	var error = json.parse(output[0])
