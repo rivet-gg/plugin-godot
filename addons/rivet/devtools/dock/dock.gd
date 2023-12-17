@@ -10,10 +10,6 @@ enum Screen {
 }
 
 func _ready() -> void:
-	# change_current_screen(Loading)
-	# TODO: check if rivet is initialized
-	# await Rivet.cli.bootstrap()
-	# await get_tree().create_timer(2).timeout
 	change_current_screen(Screen.Installer)
 	
 

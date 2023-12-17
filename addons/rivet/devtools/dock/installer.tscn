@@ -25,16 +25,27 @@ layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="InstallLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 2.08165e-12)
 layout_mode = 2
-size_flags_vertical = 1
-text = "It looks like you don't have Rivet CLI installed. In order to use this plugin you need to install it."
-horizontal_alignment = 1
-vertical_alignment = 1
+bbcode_enabled = true
+text = "[center]Looks like you don't have installed Rivet CLI 
+[b]Required: %%version%%[/b] in [code]%%bin_dir%%[/code].
+
+In order to use this plugin you need to install it. Use button below to auto-install it.[/center]"
+fit_content = true
+scroll_active = false
 autowrap_mode = 2
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
 
 [node name="InstallButton" type="Button" parent="CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Install"
+
+[node name="InstallDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+size = Vector2i(112, 100)

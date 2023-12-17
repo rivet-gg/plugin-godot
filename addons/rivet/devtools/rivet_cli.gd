@@ -2,76 +2,74 @@ extends RefCounted
 ## Wrapper aroudn the Rivet CLI, allowing you to run it from GDScript in non-blocking way, and get the output.
 ##
 ## @experimental
-const REQUIRED_RIVET_CLI_VERSION = "v0.3.0"
+
+const REQUIRED_RIVET_CLI_VERSION = "v0.3.1"
 
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")
 const _RivetCliOutput = preload("rivet_cli_output.gd")
 
-#region Utilities
-## Finds executable in PATH using `where` on Windows and `which` on Linux and macOS.
-static func find_executable(program: String) -> String:
-	var os: String = OS.get_name()
-	var output = []
-	var code: int = -1
-	if OS.get_name() == "Windows":
-		code = OS.execute("where", [program], output, true)
-	else:
-		code = OS.execute("which", [program], output, true)
-	
-	if code == 1 or output.size() < 1:
-		return ""
-	return output[0].strip_escapes()
+func check_existence() -> Error:
+	var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	if not editor_rivet_path or editor_rivet_path.is_empty():
+		return FAILED
+	var result: _RivetCliOutput = await run_command(["sidekick", "get-cli-version"])
+	if result.exit_code != 0 or !("Ok" in result.output):
+		return FAILED
+	var cli_version = result.output["Ok"].version
+	if cli_version != REQUIRED_RIVET_CLI_VERSION:
+		return FAILED
+	return OK
 
-## Finds Rivet CLI executable in PATH or in editor settings.
-static func find_rivet():
-	#var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
-	#if not editor_rivet_path or not editor_rivet_path.is_empty():
-	#	return editor_rivet_path
-	printerr("Can't find path to Rivet CLI (in editor settings)")
-	
-	#var rivet_path = find_executable("rivet")
-	#if not rivet_path.is_empty():
-	#	return rivet_path
-	#printerr("Can't find path to Rivet CLI (rivet exec)")
-	
-	var rivet_cli_path = find_executable("rivet-cli")
-	if not rivet_cli_path.is_empty():
-		return rivet_cli_path
-	printerr("Can't find path to Rivet CLI (rivet-cli exec)")
-#endregion
-
-## Runs Rivet CLI with given arguments.
-func run(args: PackedStringArray) -> _RivetCliOutput:
-	var output = []
-	var code = OS.execute(find_rivet(), args, output, true)
-	print("Running Rivet CLI: ", "rivet %s" % " ".join(args))
-
-	return _RivetCliOutput.new(code, output)
-
-## Links your game with Rivet Cloud, using `rivet link` command.
 func run_command(args: PackedStringArray) -> _RivetCliOutput:
-	var thread: _RivetThread = _RivetThread.new(run.bind(args))
-	
+	var thread: _RivetThread = _RivetThread.new(_run.bind(args))
 	return await thread.wait_to_finish()
 
-func _install() -> _RivetCliOutput:
-	var output = []
-	var code
-	print(OS.get_name())
-	if OS.get_name() == "Windows":
-		OS.set_environment("RIVET_CLI_VERSION", REQUIRED_RIVET_CLI_VERSION)
-		code = OS.execute("powershell.exe", ["-Commandi",  "\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""], output, true, true)
-	elif OS.get_name() == "macOS":
-		var home_path: String = OS.get_environment("HOME")
-		OS.set_environment("RIVET_CLI_VERSION", REQUIRED_RIVET_CLI_VERSION)
-		OS.set_environment("BIN_DIR", home_path.path_join(".rivet").path_join(REQUIRED_RIVET_CLI_VERSION).path_join("bin"))
-		# https://github.com/godotengine/godot/issues/37291#issuecomment-603821838
-		var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh'\""]
-		code = OS.execute("/bin/bash", args, output, true, true)
+func get_bin_dir() -> String:
+	var home_path: String = OS.get_environment("HOME")
+	return home_path.path_join(".rivet").path_join(REQUIRED_RIVET_CLI_VERSION).path_join("bin")
 
-	return _RivetCliOutput.new(code, output)
+func get_cli_path() -> String:
+	var cli_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	if cli_path and !cli_path.is_empty():
+		return cli_path
+	return get_bin_dir().path_join("rivet.exe" if OS.get_name() == "Windows" else "rivet")
  
 func install() -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_install)
-	return await thread.wait_to_finish() 
+	var result =  await thread.wait_to_finish()
+	if result.exit_code == 0:
+		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING, get_bin_dir())
+	return result
+
+
+## region Internal functions
+
+## Runs Rivet CLI with given arguments.
+func _run(args: PackedStringArray) -> _RivetCliOutput:
+	var output = []
+	var code: int = OS.execute(get_cli_path(), args, output, true)
+	print("Running Rivet CLI: ", "%s %s" % [get_cli_path(), " ".join(args)])
+
+	return _RivetCliOutput.new(code, output)
+
+func _install() -> _RivetCliOutput:
+	var output = []
+	var code: int
+	var bin_dir: String = get_bin_dir()
+
+	OS.set_environment("RIVET_CLI_VERSION", REQUIRED_RIVET_CLI_VERSION)
+	OS.set_environment("BIN_DIR", bin_dir)
+
+	# Double quotes issue: https://github.com/godotengine/godot/issues/37291#issuecomment-603821838
+	if OS.get_name() == "Windows":
+		var args = ["-Commandi",  "\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""]
+		code = OS.execute("powershell.exe", args, output, true)
+	else:
+		var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh'\""]
+		OS.execute("/bin/sh", args, output, true)
+	return _RivetCliOutput.new(code, output)
+
+
+
+## endregion
