@@ -7,6 +7,15 @@
 @onready var GameIdTextEdit: TextEdit = %GameIdTextEdit
 @onready var ApiEndpointTextEdit: TextEdit = %ApiEndpointTextEdit
 
+func prepare() -> void:
+	var result = await RivetDevtools.get_plugin().cli.run_command([
+		"sidekick",
+		"check-login-state",
+	])
+	if result.exit_code == result.ExitCode.SUCCESS and "Ok" in result.output:
+		owner.change_current_screen(owner.Screen.Settings)
+		return
+
 func _ready():
 	LogInButton.pressed.connect(_on_button_pressed)
 
