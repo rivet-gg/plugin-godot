@@ -10,10 +10,10 @@ func prepare() -> void:
 	InstallLabel.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
 
 	InstallLabel.text = InstallLabel.text.replace(&"%%version%%", RivetDevtools.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION).replace(&"%%bin_dir%%", RivetDevtools.get_plugin().cli.get_bin_dir())
-	InstallButton.disabled = true
+	InstallButton.loading = true
 	var error = await RivetDevtools.get_plugin().cli.check_existence()
 	if error:
-		InstallButton.disabled = false
+		InstallButton.loading = false
 		return
 	owner.change_current_screen(owner.Screen.Login)
 
@@ -21,15 +21,17 @@ func _ready() -> void:
 	InstallButton.pressed.connect(_on_install_button_pressed)
 
 func _on_install_button_pressed() -> void:	
-	InstallButton.disabled = true
+	InstallButton.loading = true
 	var result = await RivetDevtools.get_plugin().cli.install()
-	if "Ok" in result.output:
-		InstallDialog.title = &"Success!"
-		InstallDialog.dialog_text = &"Rivet installed successfully!\nInstalled Rivet %s in %s" % [result.output["Ok"]["version"], RivetDevtools.get_plugin().cli.get_bin_dir()]
-		InstallDialog.popup_centered()
-		owner.change_current_screen(owner.Screen.Login)
-		return
+	if result.exit_code == 0:
+		var error = await RivetDevtools.get_plugin().cli.check_existence()
+		if not error:
+			InstallDialog.title = &"Success!"
+			InstallDialog.dialog_text = &"Rivet installed successfully!\nInstalled Rivet %s in %s" % [RivetDevtools.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION, RivetDevtools.get_plugin().cli.get_bin_dir()]
+			InstallDialog.popup_centered()
+			owner.change_current_screen(owner.Screen.Login)
+			return
 	InstallDialog.title = &"Error!"
 	InstallDialog.dialog_text = &"Rivet installation failed! Please try again.\n\n%s" % result.output
 	InstallDialog.popup_centered()
-	InstallButton.disabled = false
+	InstallButton.loading = false

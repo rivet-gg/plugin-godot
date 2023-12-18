@@ -37,7 +37,7 @@ func get_cli_path() -> String:
  
 func install() -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_install)
-	var result =  await thread.wait_to_finish()
+	var result = await thread.wait_to_finish()
 	if result.exit_code == 0:
 		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING, get_bin_dir())
 	return result
@@ -48,8 +48,8 @@ func install() -> _RivetCliOutput:
 ## Runs Rivet CLI with given arguments.
 func _run(args: PackedStringArray) -> _RivetCliOutput:
 	var output = []
-	var code: int = OS.execute(get_cli_path(), args, output, true)
 	print("Running Rivet CLI: ", "%s %s" % [get_cli_path(), " ".join(args)])
+	var code: int = OS.execute(get_cli_path(), args, output, true)
 
 	return _RivetCliOutput.new(code, output)
 
@@ -64,10 +64,11 @@ func _install() -> _RivetCliOutput:
 	# Double quotes issue: https://github.com/godotengine/godot/issues/37291#issuecomment-603821838
 	if OS.get_name() == "Windows":
 		var args = ["-Commandi",  "\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""]
-		code = OS.execute("powershell.exe", args, output, true)
+		code = OS.execute("powershell.exe", args, output, true, true)
 	else:
-		var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh'\""]
-		OS.execute("/bin/sh", args, output, true)
+		#var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh''\""]
+		var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/ac57796861d195230fa043e12c5f9fe1921f467f/install/unix.sh | sh'\""]
+		code = OS.execute("/bin/sh", args, output, true, true)
 	return _RivetCliOutput.new(code, output)
 
 

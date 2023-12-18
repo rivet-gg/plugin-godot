@@ -99,3 +99,8 @@ layout_mode = 2
 disabled = true
 text = "Manage Version
 "
+
+[node name="ErrorDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+size = Vector2i(112, 100)
+dialog_text = "Configuration for this project couldn't be fetched. Have you run rivet init?"
