@@ -3,10 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_22gtj"]
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/settings.gd" id="1_qd6no"]
 [ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_mervt"]
-[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="4_k8i13"]
-[ext_resource type="PackedScene" uid="uid://im1ohjslk5ox" path="res://addons/rivet/devtools/dock/elements/menu_button.tscn" id="5_55rap"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfadg"]
+[ext_resource type="PackedScene" uid="uid://b17eqs0bmrncs" path="res://addons/rivet/devtools/dock/playtest_tab.tscn" id="4_e3aw6"]
+[ext_resource type="PackedScene" uid="uid://soum1c8oyrso" path="res://addons/rivet/devtools/dock/deployment_tab.tscn" id="5_bm0qr"]
+[ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/devtools/dock/settings_tab.tscn" id="6_fu2a3"]
 
 [node name="Settings" type="VBoxContainer"]
 theme_override_constants/separation = 16
@@ -21,86 +20,20 @@ layout_mode = 2
 [node name="LinksContainer" parent="." instance=ExtResource("2_mervt")]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="Authentication Token Label" type="RichTextLabel" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dfadg")
-bbcode_enabled = true
-text = "[b]Authentication Token[/b]"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-
-[node name="Namespace Field" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Namespace" type="Label" parent="VBoxContainer/Namespace Field"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Namespace"
-
-[node name="AuthNamespaceSelector" parent="VBoxContainer/Namespace Field" instance=ExtResource("4_k8i13")]
-unique_name_in_owner = true
-layout_mode = 2
-current_value = {}
-
-[node name="Connection Field" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Namespace" type="Label" parent="VBoxContainer/Connection Field"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Connect to..."
-
-[node name="ConnectionMenuButton" parent="VBoxContainer/Connection Field" instance=ExtResource("5_55rap")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Description" type="Label" parent="VBoxContainer/Connection Field"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-text = "A long and meaningful description explaning how this work, and how the selected option works."
-autowrap_mode = 3
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Deployment Label" type="RichTextLabel" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_dfadg")
-bbcode_enabled = true
-text = "[b]Build & Deploy Server[/b]"
-fit_content = true
-scroll_active = false
-shortcut_keys_enabled = false
-
-[node name="Deployment Fieds" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="DeployNamespaceSelector" parent="VBoxContainer/Deployment Fieds" instance=ExtResource("4_k8i13")]
-unique_name_in_owner = true
-layout_mode = 2
-current_value = {}
-
-[node name="Actions" type="HBoxContainer" parent="VBoxContainer/Deployment Fieds"]
-layout_mode = 2
-
-[node name="BuildDeployButton" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-disabled = true
-text = "Build & Deploy"
-
-[node name="ManageVersionButton" type="Button" parent="VBoxContainer/Deployment Fieds/Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-disabled = true
-text = "Manage Version
-"
-
 [node name="ErrorDialog" type="AcceptDialog" parent="."]
 unique_name_in_owner = true
 size = Vector2i(112, 100)
 dialog_text = "Configuration for this project couldn't be fetched. Have you run rivet init?"
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+
+[node name="Playtest" parent="TabContainer" instance=ExtResource("4_e3aw6")]
+layout_mode = 2
+
+[node name="Deployment" parent="TabContainer" instance=ExtResource("5_bm0qr")]
+visible = false
+layout_mode = 2
+
+[node name="Settings" parent="TabContainer" instance=ExtResource("6_fu2a3")]
+layout_mode = 2

@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://soum1c8oyrso"]
+
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="1_v13yw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfadg"]
+
+[node name="Deployment" type="MarginContainer"]
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Deployment Fieds" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Deployment Label" type="RichTextLabel" parent="Deployment Fieds"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dfadg")
+bbcode_enabled = true
+text = "[b]Build & Deploy Server[/b]"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+
+[node name="DeployNamespaceSelector" parent="Deployment Fieds" instance=ExtResource("1_v13yw")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="Deployment Fieds"]
+layout_mode = 2
+
+[node name="BuildDeployButton" type="Button" parent="Deployment Fieds/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Build & Deploy"
+
+[node name="ManageVersionButton" type="Button" parent="Deployment Fieds/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Manage Version
+"

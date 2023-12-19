@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://b17eqs0bmrncs"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/playtest_tab.gd" id="1_4p5p5"]
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="1_brqcl"]
+
+[node name="Playtest" type="MarginContainer"]
+theme_override_constants/margin_top = 8
+script = ExtResource("1_4p5p5")
+
+[node name="PlaytestContent" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TabBar" type="TabBar" parent="PlaytestContent"]
+unique_name_in_owner = true
+layout_mode = 2
+tab_alignment = 1
+scrolling_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlaytestContent"]
+layout_mode = 2
+
+[node name="Namespace" type="Label" parent="PlaytestContent/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Namespace"
+
+[node name="AuthNamespaceSelector" parent="PlaytestContent/VBoxContainer" instance=ExtResource("1_brqcl")]
+layout_mode = 2
+disabled = true
+
+[node name="NamespaceDescription" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "Configure which configuration should be emulated. [url=https://rivet.gg/docs/general/concepts/dev-tokens]Learn more...[/url]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="WarningLabel" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " Make sure that you’re using the same version that’s deployed. Using different versions can cause some unforeseen issues."
+fit_content = true
+scroll_active = false
+
+[node name="ErrorLabel" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " Hey pal, this namespace does not have any published versions. Please deploy one."
+fit_content = true
+scroll_active = false
