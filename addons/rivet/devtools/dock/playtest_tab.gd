@@ -44,7 +44,6 @@ func _on_connection_type_selected(id: int) -> void:
 
 func _on_namespace_selector_item_selected(id: int) -> void:
 	_update_warnings()
-
 		
 func _update_warnings() -> void:
 	var current_connection_type = connection_type.current_tab
@@ -54,6 +53,7 @@ func _update_warnings() -> void:
 	if current_connection_type == 0:
 		warning.visible = false
 		error.visible = false
+		_generate_dev_auth_token(current_namespace)
 		return
 
 	# Online server
@@ -65,4 +65,23 @@ func _update_warnings() -> void:
 		else:
 			warning.visible = true
 			error.visible = false
+			_generate_public_auth_token(current_namespace)
 		return
+		
+func _generate_dev_auth_token(ns) -> void:
+	for i in connection_type.tab_count:
+		connection_type.set_tab_disabled(i, true)
+	namespace_selector.disabled = true
+
+	var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-dev-token", "--namespace", ns.name_id])
+	if result.exit_code != 0 or !("Ok" in result.output):
+		print("Error: " + result.output)
+	else:
+		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
+
+	for i in connection_type.tab_count:
+		connection_type.set_tab_disabled(i, false)
+	namespace_selector.disabled = false
+
+func _generate_public_auth_token(ns) -> void:
+	pass
