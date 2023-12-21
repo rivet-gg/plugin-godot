@@ -67,21 +67,30 @@ func _update_warnings() -> void:
 			error.visible = false
 			_generate_public_auth_token(current_namespace)
 		return
+
+func _all_actions_set_disabled(disabled: bool) -> void:
+	for i in connection_type.tab_count:
+		connection_type.set_tab_disabled(i, disabled)
+	namespace_selector.disabled = disabled
 		
 func _generate_dev_auth_token(ns) -> void:
-	for i in connection_type.tab_count:
-		connection_type.set_tab_disabled(i, true)
-	namespace_selector.disabled = true
+	_all_actions_set_disabled(true)
 
 	var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-dev-token", "--namespace", ns.name_id])
 	if result.exit_code != 0 or !("Ok" in result.output):
 		print("Error: " + result.output)
 	else:
 		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
-
-	for i in connection_type.tab_count:
-		connection_type.set_tab_disabled(i, false)
-	namespace_selector.disabled = false
+	
+	_all_actions_set_disabled(false)
 
 func _generate_public_auth_token(ns) -> void:
-	pass
+	_all_actions_set_disabled(true)
+
+	var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-pub-token", "--namespace", ns.name_id])
+	if result.exit_code != 0 or !("Ok" in result.output):
+		print("Error: " + result.output)
+	else:
+		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
+	
+	_all_actions_set_disabled(false)
