@@ -15,6 +15,17 @@ static func _find_plugin():
 	var tree: SceneTree = Engine.get_main_loop()
 	return tree.get_root().get_child(0).get_node_or_null("RivetPlugin")
 
+static func display_cli_error(node: Node, cli_output) -> AcceptDialog:
+	var error = cli_output["Err"] if "Err" in cli_output else "\n".join(cli_output.formatted_output)
+	var alert = AcceptDialog.new()
+	alert.title = "Error!"
+	alert.dialog_text = error
+	alert.dialog_autowrap = true
+	alert.close_requested.connect(func(): alert.queue_free() )
+	node.add_child(alert)
+	alert.popup_centered_ratio(0.4)
+	return alert
+
 ## Autoload is not available for editor interfaces, we add a scoffolding to get
 ## the instance of the plugin from the engine's perspective
 ## @experimental
