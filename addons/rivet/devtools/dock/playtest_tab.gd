@@ -4,6 +4,7 @@
 @onready var connection_type: TabBar = %TabBar
 @onready var warning: RichTextLabel = %WarningLabel
 @onready var error: RichTextLabel = %ErrorLabel
+@onready var deploy_button: Button = %DeployButton
 @onready var namespace_selector = %AuthNamespaceSelector
 
 func _ready() -> void:
@@ -35,9 +36,11 @@ func _ready() -> void:
 
 	warning.visible = false
 	error.visible = false
+	deploy_button.visible = false
 
 	connection_type.tab_selected.connect(_on_connection_type_selected)
 	namespace_selector.item_selected.connect(_on_namespace_selector_item_selected)
+	deploy_button.pressed.connect(_on_deploy_button_pressed)
 
 func _on_connection_type_selected(id: int) -> void:
 	_update_warnings()
@@ -53,6 +56,7 @@ func _update_warnings() -> void:
 	if current_connection_type == 0:
 		warning.visible = false
 		error.visible = false
+		deploy_button.visible = false
 		_generate_dev_auth_token(current_namespace)
 		return
 
@@ -62,9 +66,11 @@ func _update_warnings() -> void:
 		if current_namespace.version.display_name == "0.0.1":
 			warning.visible = false
 			error.visible = true
+			deploy_button.visible = true
 		else:
 			warning.visible = true
 			error.visible = false
+			deploy_button.visible = false
 			_generate_public_auth_token(current_namespace)
 		return
 
@@ -94,3 +100,8 @@ func _generate_public_auth_token(ns) -> void:
 		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
 	
 	_all_actions_set_disabled(false)
+
+func _on_deploy_button_pressed() -> void:
+	owner.change_tab(1)
+	owner.deploy_tab.namespace_selector.current_value = namespace_selector.current_value
+	owner.deploy_tab.namespace_selector.selected = namespace_selector.selected

@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://soum1c8oyrso"]
+[gd_scene load_steps=4 format=3 uid="uid://soum1c8oyrso"]
 
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/deployment_tab.gd" id="1_kb2h3"]
 [ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="1_v13yw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfadg"]
@@ -9,6 +10,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+script = ExtResource("1_kb2h3")
 
 [node name="Deployment Fieds" type="VBoxContainer" parent="."]
 layout_mode = 2
