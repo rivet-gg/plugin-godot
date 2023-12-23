@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_mervt"]
 [ext_resource type="PackedScene" uid="uid://b17eqs0bmrncs" path="res://addons/rivet/devtools/dock/playtest_tab.tscn" id="4_e3aw6"]
 [ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/devtools/dock/elements/buttons_bar.tscn" id="4_urbnf"]
-[ext_resource type="PackedScene" uid="uid://soum1c8oyrso" path="res://addons/rivet/devtools/dock/deployment_tab.tscn" id="5_bm0qr"]
 [ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/devtools/dock/settings_tab.tscn" id="6_fu2a3"]
+[ext_resource type="PackedScene" uid="uid://soum1c8oyrso" path="res://addons/rivet/devtools/dock/deploy_tab.tscn" id="6_y2fod"]
 
 [node name="Settings" type="VBoxContainer"]
 theme_override_constants/separation = 16
@@ -62,7 +62,7 @@ tabs_visible = false
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Deploy" parent="TabContainer" instance=ExtResource("5_bm0qr")]
+[node name="Deploy" parent="TabContainer" instance=ExtResource("6_y2fod")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2

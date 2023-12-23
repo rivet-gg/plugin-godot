@@ -1,18 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://soum1c8oyrso"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/dock/deployment_tab.gd" id="1_kb2h3"]
-[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="1_v13yw"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/deploy_tab.gd" id="1_7k6ip"]
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="2_5hxk2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfadg"]
 
-[node name="Deployment" type="MarginContainer"]
+[node name="Deploy" type="MarginContainer"]
 offset_right = 734.0
 offset_bottom = 109.0
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-script = ExtResource("1_kb2h3")
+script = ExtResource("1_7k6ip")
 
 [node name="Deployment Fieds" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -26,9 +22,22 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 
-[node name="DeployNamespaceSelector" parent="Deployment Fieds" instance=ExtResource("1_v13yw")]
-unique_name_in_owner = true
+[node name="DeployNamespaceSelector" parent="Deployment Fieds" instance=ExtResource("2_5hxk2")]
 layout_mode = 2
+popup/item_2/text = "test (v2023.12 (31))"
+popup/item_3/text = "test2 (v2023.12 (30))"
+current_value = {
+"create_ts": "2023-11-19T05:46:56.378Z",
+"display_name": "Production",
+"name_id": "prod",
+"namespace_id": "215bd313-b4c7-4932-b9bd-64f8f09b7fe8",
+"version": {
+"create_ts": "2023-11-19T05:46:56.171Z",
+"display_name": "0.0.1",
+"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
+},
+"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
+}
 
 [node name="Actions" type="HBoxContainer" parent="Deployment Fieds"]
 layout_mode = 2
