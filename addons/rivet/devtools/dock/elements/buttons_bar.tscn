@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdpu38hakasqq"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/buttons_bar.gd" id="1_mg5dk"]
+
+[node name="ButtonsBar" type="HBoxContainer"]
+script = ExtResource("1_mg5dk")

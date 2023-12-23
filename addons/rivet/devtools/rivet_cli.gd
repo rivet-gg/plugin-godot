@@ -3,7 +3,7 @@ extends RefCounted
 ##
 ## @experimental
 
-const REQUIRED_RIVET_CLI_VERSION = "v0.3.1"
+const REQUIRED_RIVET_CLI_VERSION = "v1.0.0-rc.1"
 
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")

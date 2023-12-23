@@ -2,8 +2,7 @@
 ## Settings screens allow you to configure and deploy your game.
 
 @onready var errorDialog: AcceptDialog = %ErrorDialog
-@onready var tabs: TabContainer = %TabContainer
-
+@onready var buttons_bar: HBoxContainer = %ButtonsBar
 @onready var deploy_tab = %Deploy
 	
 func prepare():
@@ -13,4 +12,4 @@ func prepare():
 		return
 
 func change_tab(tab: int):
-	tabs.set_current_tab(tab)
+	buttons_bar.set_current_button(tab)
