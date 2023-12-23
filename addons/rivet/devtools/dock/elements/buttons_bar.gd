@@ -4,7 +4,15 @@ signal selected()
 
 @export var tab_container: TabContainer
 
-var current = -1
+var disabled: bool = false:
+	set(value):
+		disabled = value
+		for i in get_child_count():
+			var child = get_child(i)
+			if child is Button:
+				child.disabled = disabled
+
+var current = 0
 
 func _ready() -> void:
 	for i in get_child_count():

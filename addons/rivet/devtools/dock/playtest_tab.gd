@@ -74,27 +74,31 @@ func _update_warnings() -> void:
 
 func _all_actions_set_disabled(disabled: bool) -> void:
 	namespace_selector.disabled = disabled
-		
-func _generate_dev_auth_token(ns) -> void:
-	_all_actions_set_disabled(true)
+	buttons_bar.disabled = disabled
 
-	var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-dev-token", "--namespace", ns.name_id])
-	if result.exit_code != 0 or !("Ok" in result.output):
-		print("Error: " + result.output)
-	else:
+func _generate_dev_auth_token(ns) -> void:
+	_actions_disabled_while(func():
+		var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-dev-token", "--namespace", ns.name_id])
+		if result.exit_code != 0 or !("Ok" in result.output):
+			RivetPluginBridge.display_cli_error(self, result)
+			return
+
 		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
-	
-	_all_actions_set_disabled(false)
+	)
 
 func _generate_public_auth_token(ns) -> void:
-	_all_actions_set_disabled(true)
+	_actions_disabled_while(func():
+		var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-pub-token", "--namespace", ns.name_id])
+		if result.exit_code != 0 or !("Ok" in result.output):
+			RivetPluginBridge.display_cli_error(self, result)
+			return
 
-	var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-pub-token", "--namespace", ns.name_id])
-	if result.exit_code != 0 or !("Ok" in result.output):
-		print("Error: " + result.output)
-	else:
 		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
-	
+	)
+
+func _actions_disabled_while(fn: Callable) -> void:
+	_all_actions_set_disabled(true)
+	await fn.call()
 	_all_actions_set_disabled(false)
 
 func _on_deploy_button_pressed() -> void:
