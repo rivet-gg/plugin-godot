@@ -26,6 +26,10 @@ static func display_cli_error(node: Node, cli_output) -> AcceptDialog:
 	alert.popup_centered_ratio(0.4)
 	return alert
 
+# https://github.com/godotengine/godot-proposals/issues/900#issuecomment-1812881718
+static func is_part_of_edited_scene(node: Node):
+	return Engine.is_editor_hint() && node.is_inside_tree() && node.get_tree().get_edited_scene_root() && (node.get_tree().get_edited_scene_root() == node || node.get_tree().get_edited_scene_root().is_ancestor_of(node))
+
 ## Autoload is not available for editor interfaces, we add a scoffolding to get
 ## the instance of the plugin from the engine's perspective
 ## @experimental
