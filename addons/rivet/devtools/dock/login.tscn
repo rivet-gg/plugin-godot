@@ -38,6 +38,7 @@ text = "https://api.rivet.gg"
 scroll_fit_content_height = true
 
 [node name="CloudTokenFieldContainer" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="CloudTokenFieldContainer"]
@@ -53,6 +54,7 @@ text = "cloud_"
 scroll_fit_content_height = true
 
 [node name="NamespaceTokenFieldContainer" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="NamespaceTokenFieldContainer"]
@@ -68,6 +70,7 @@ text = "dev_"
 scroll_fit_content_height = true
 
 [node name="GameIdFieldContainer" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="GameIdFieldContainer"]

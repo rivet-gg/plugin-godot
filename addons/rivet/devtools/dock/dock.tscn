@@ -32,7 +32,3 @@ layout_mode = 2
 
 [node name="Installer" parent="." instance=ExtResource("5_gdmi1")]
 layout_mode = 2
-
-[node name="Installer" parent="." instance=ExtResource("5_gdmi1")]
-visible = false
-layout_mode = 2

@@ -21,3 +21,20 @@ static func get_plugin() -> _global:
 	push_error("Can't find Rivet Plugin")
 	return null
 
+
+static func bootstrap() -> Error:
+	var plugin = get_plugin()
+	if not plugin:
+		return FAILED
+
+	var result = await get_plugin().cli.run_command([
+		"sidekick",
+		"get-bootstrap-data",
+	])
+
+	if result.exit_code == 0 and "Ok" in result.output:
+		get_plugin().api_endpoint = result.output["Ok"].api_endpoint
+		get_plugin().cloud_token = result.output["Ok"].token
+		get_plugin().game_id = result.output["Ok"].game_id
+		return OK
+	return FAILED
