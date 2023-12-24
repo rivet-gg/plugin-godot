@@ -1,7 +1,9 @@
 @tool extends MarginContainer
 
+const ButtonsBar = preload("elements/buttons_bar.gd")
+
 @onready var namespace_description: RichTextLabel = %NamespaceDescription
-@onready var connection_type: TabBar = %TabBar
+@onready var buttons_bar: ButtonsBar = %ButtonsBar
 @onready var warning: RichTextLabel = %WarningLabel
 @onready var error: RichTextLabel = %ErrorLabel
 @onready var deploy_button: Button = %DeployButton
@@ -14,12 +16,6 @@ func _ready() -> void:
 	namespace_description.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
 	namespace_description.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
 	namespace_description.meta_clicked.connect(func(meta): OS.shell_open(str(meta)))
-
-	connection_type.add_tab(&"Local machine")
-	connection_type.add_tab(&"Online server")
-	connection_type.add_theme_stylebox_override(&"tab_unselected", get_theme_stylebox("normal", "Button"))
-	connection_type.add_theme_stylebox_override(&"tab_hovered",	get_theme_stylebox("normal", "Button"))
-	connection_type.add_theme_stylebox_override(&"tab_selected", get_theme_stylebox("normal", "Button"))
 
 	warning.add_theme_color_override(&"default_color", get_theme_color(&"warning_color", &"Editor"))
 	warning.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
@@ -39,22 +35,23 @@ func _ready() -> void:
 	error.visible = false
 	deploy_button.visible = false
 
-	connection_type.tab_selected.connect(_on_connection_type_selected)
 	namespace_selector.item_selected.connect(_on_namespace_selector_item_selected)
 	deploy_button.pressed.connect(_on_deploy_button_pressed)
-
-func _on_connection_type_selected(id: int) -> void:
-	_update_warnings()
+	buttons_bar.selected.connect(_on_buttons_bar_selected)
 
 func _on_namespace_selector_item_selected(id: int) -> void:
 	_update_warnings()
+
+func _on_buttons_bar_selected() -> void:
+	_update_warnings()
 		
 func _update_warnings() -> void:
-	var current_connection_type = connection_type.current_tab
+	var is_local_machine = buttons_bar.current == 0
+	var is_online_server = buttons_bar.current == 1
 	var current_namespace = namespace_selector.current_value
 
 	# Local machine
-	if current_connection_type == 0:
+	if is_local_machine:
 		warning.visible = false
 		error.visible = false
 		deploy_button.visible = false
@@ -62,7 +59,7 @@ func _update_warnings() -> void:
 		return
 
 	# Online server
-	if current_connection_type == 1:
+	if is_online_server:
 		# It means that user hasn't deployed anything to this namespace yet
 		if current_namespace.version.display_name == "0.0.1":
 			warning.visible = false
@@ -76,8 +73,6 @@ func _update_warnings() -> void:
 		return
 
 func _all_actions_set_disabled(disabled: bool) -> void:
-	for i in connection_type.tab_count:
-		connection_type.set_tab_disabled(i, disabled)
 	namespace_selector.disabled = disabled
 		
 func _generate_dev_auth_token(ns) -> void:

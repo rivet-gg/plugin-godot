@@ -1,5 +1,7 @@
 @tool extends HBoxContainer
 
+signal selected()
+
 @export var tab_container: TabContainer
 
 var current = -1
@@ -13,14 +15,15 @@ func _ready() -> void:
 			if i == 0:
 				child.set_pressed_no_signal(true)
 
-func _select_button(selected: int) -> void:
-	current = selected
+func _select_button(curr: int) -> void:
+	current = curr
 	if tab_container:
-		tab_container.set_current_tab(selected)
+		tab_container.set_current_tab(curr)
 	for i in get_child_count():
 		var child = get_child(i)
 		if child is Button:
-			child.set_pressed_no_signal(selected==i)
+			child.set_pressed_no_signal(curr==i)
+	selected.emit()
 
 
 func set_current_button(button: int) -> void:

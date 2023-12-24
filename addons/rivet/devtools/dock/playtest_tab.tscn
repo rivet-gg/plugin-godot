@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b17eqs0bmrncs"]
+[gd_scene load_steps=4 format=3 uid="uid://b17eqs0bmrncs"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/playtest_tab.gd" id="1_4p5p5"]
 [ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="1_brqcl"]
+[ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/devtools/dock/elements/buttons_bar.tscn" id="2_hd7vo"]
 
 [node name="Playtest" type="MarginContainer"]
 theme_override_constants/margin_top = 8
@@ -10,11 +11,25 @@ script = ExtResource("1_4p5p5")
 [node name="PlaytestContent" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="TabBar" type="TabBar" parent="PlaytestContent"]
+[node name="ButtonsBar" parent="PlaytestContent" instance=ExtResource("2_hd7vo")]
 unique_name_in_owner = true
 layout_mode = 2
-tab_alignment = 1
-scrolling_enabled = false
+alignment = 1
+
+[node name="ThisMachineButton" type="Button" parent="PlaytestContent/ButtonsBar"]
+layout_mode = 2
+tooltip_text = "Test against your local machine to iterate quickly in the editor."
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_pressed = true
+text = "This machine"
+
+[node name="RivetServersButton" type="Button" parent="PlaytestContent/ButtonsBar"]
+layout_mode = 2
+tooltip_text = "Deploy your game to Rivet's servers to playtest with others."
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Rivet servers"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlaytestContent"]
 layout_mode = 2
@@ -26,6 +41,19 @@ text = "Namespace"
 
 [node name="AuthNamespaceSelector" parent="PlaytestContent/VBoxContainer" instance=ExtResource("1_brqcl")]
 layout_mode = 2
+popup/item_2/text = "test (v2023.12 (26))"
+current_value = {
+"create_ts": "2023-11-19T05:46:56.378Z",
+"display_name": "Production",
+"name_id": "prod",
+"namespace_id": "215bd313-b4c7-4932-b9bd-64f8f09b7fe8",
+"version": {
+"create_ts": "2023-11-19T05:46:56.171Z",
+"display_name": "0.0.1",
+"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
+},
+"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
+}
 
 [node name="NamespaceDescription" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
 unique_name_in_owner = true
