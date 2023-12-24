@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://ceovepvn1782o"]
+[gd_scene load_steps=9 format=3 uid="uid://ceovepvn1782o"]
 
 [ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_22gtj"]
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/settings.gd" id="1_qd6no"]
 [ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_mervt"]
 [ext_resource type="PackedScene" uid="uid://b17eqs0bmrncs" path="res://addons/rivet/devtools/dock/playtest_tab.tscn" id="4_e3aw6"]
+[ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/devtools/dock/elements/buttons_bar.tscn" id="4_urbnf"]
 [ext_resource type="PackedScene" uid="uid://soum1c8oyrso" path="res://addons/rivet/devtools/dock/deployment_tab.tscn" id="5_bm0qr"]
 [ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/devtools/dock/settings_tab.tscn" id="6_fu2a3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv0ab"]
 
 [node name="Settings" type="VBoxContainer"]
 theme_override_constants/separation = 16
@@ -25,9 +28,33 @@ unique_name_in_owner = true
 size = Vector2i(112, 100)
 dialog_text = "Configuration for this project couldn't be fetched. Have you run rivet init?"
 
+[node name="ButtonsBar" parent="." node_paths=PackedStringArray("tab_container") instance=ExtResource("4_urbnf")]
+unique_name_in_owner = true
+layout_mode = 2
+tab_container = NodePath("../TabContainer")
+
+[node name="PlaytestButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "Playtest"
+
+[node name="DeployButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "Deploy"
+
+[node name="SettingsButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "Settings"
+
 [node name="TabContainer" type="TabContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+tabs_visible = false
 
 [node name="Playtest" parent="TabContainer" instance=ExtResource("4_e3aw6")]
 unique_name_in_owner = true
