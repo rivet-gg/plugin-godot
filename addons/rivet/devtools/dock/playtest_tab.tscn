@@ -26,7 +26,6 @@ text = "Namespace"
 
 [node name="AuthNamespaceSelector" parent="PlaytestContent/VBoxContainer" instance=ExtResource("1_brqcl")]
 layout_mode = 2
-disabled = true
 
 [node name="NamespaceDescription" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
 unique_name_in_owner = true
