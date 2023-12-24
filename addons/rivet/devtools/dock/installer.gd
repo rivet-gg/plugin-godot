@@ -9,9 +9,9 @@ func prepare() -> void:
 	InstallLabel.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
 	InstallLabel.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
 
-	InstallLabel.text = InstallLabel.text.replace(&"%%version%%", RivetDevtools.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION).replace(&"%%bin_dir%%", RivetDevtools.get_plugin().cli.get_bin_dir())
+	InstallLabel.text = InstallLabel.text.replace(&"%%version%%", RivetPluginBridge.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION).replace(&"%%bin_dir%%", RivetPluginBridge.get_plugin().cli.get_bin_dir())
 	InstallButton.loading = true
-	var error = await RivetDevtools.get_plugin().cli.check_existence()
+	var error = await RivetPluginBridge.get_plugin().cli.check_existence()
 	if error:
 		InstallButton.loading = false
 		return
@@ -22,12 +22,12 @@ func _ready() -> void:
 
 func _on_install_button_pressed() -> void:	
 	InstallButton.loading = true
-	var result = await RivetDevtools.get_plugin().cli.install()
+	var result = await RivetPluginBridge.get_plugin().cli.install()
 	if result.exit_code == 0:
-		var error = await RivetDevtools.get_plugin().cli.check_existence()
+		var error = await RivetPluginBridge.get_plugin().cli.check_existence()
 		if not error:
 			InstallDialog.title = &"Success!"
-			InstallDialog.dialog_text = &"Rivet installed successfully!\nInstalled Rivet %s in %s" % [RivetDevtools.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION, RivetDevtools.get_plugin().cli.get_bin_dir()]
+			InstallDialog.dialog_text = &"Rivet installed successfully!\nInstalled Rivet %s in %s" % [RivetPluginBridge.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION, RivetPluginBridge.get_plugin().cli.get_bin_dir()]
 			InstallDialog.popup_centered()
 			owner.change_current_screen(owner.Screen.Login)
 			return

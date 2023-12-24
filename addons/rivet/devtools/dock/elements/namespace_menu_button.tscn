@@ -1,21 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://bogw8dj8rr202"]
+[gd_scene load_steps=2 format=3 uid="uid://bogw8dj8rr202"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.gd" id="1_c2uah"]
-[ext_resource type="PackedScene" uid="uid://im1ohjslk5ox" path="res://addons/rivet/devtools/dock/elements/menu_button.tscn" id="2_croj6"]
 
-[node name="NamespaceMenuButton" type="HBoxContainer"]
-theme_override_constants/separation = 8
-script = ExtResource("1_c2uah")
-current_value = null
-
-[node name="MenuButton" parent="." instance=ExtResource("2_croj6")]
+[node name="NamespaceMenuButton" type="OptionButton"]
 unique_name_in_owner = true
-layout_mode = 2
+offset_right = 190.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
-item_count = 0
-
-[node name="VersionLabel" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-text = "vX.X.X"
-vertical_alignment = 1
+item_count = 5
+selected = 0
+popup/item_0/text = "Production (v0.0.1)"
+popup/item_0/id = 0
+popup/item_1/text = "Staging (v0.0.1)"
+popup/item_1/id = 1
+popup/item_2/text = "test (v0.0.1)"
+popup/item_2/id = 2
+popup/item_3/text = "test2 (v0.0.1)"
+popup/item_3/id = 3
+popup/item_4/text = "test3 (v2023.12 (2))"
+popup/item_4/id = 4
+script = ExtResource("1_c2uah")

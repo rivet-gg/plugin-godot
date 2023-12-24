@@ -8,7 +8,7 @@
 @onready var ApiEndpointTextEdit: TextEdit = %ApiEndpointTextEdit
 
 func prepare() -> void:
-	var result = await RivetDevtools.get_plugin().cli.run_command([
+	var result = await RivetPluginBridge.get_plugin().cli.run_command([
 		"sidekick",
 		"check-login-state",
 	])
@@ -22,7 +22,7 @@ func _ready():
 func _on_button_pressed() -> void:
 	%LogInButton.disabled = true
 	var api_address = ApiEndpointTextEdit.text
-	var result := await RivetDevtools.get_plugin().cli.run_command([
+	var result := await RivetPluginBridge.get_plugin().cli.run_command([
 		"--api-endpoint",
 		api_address,
 		"sidekick",
@@ -37,7 +37,7 @@ func _on_button_pressed() -> void:
 		owner.change_current_screen(owner.Screen.Loading)
 
 		# Long-poll the Rivet API until the user has logged in
-		result = await RivetDevtools.get_plugin().cli.run_command([
+		result = await RivetPluginBridge.get_plugin().cli.run_command([
 			"--api-endpoint",
 			api_address,
 			"sidekick",
@@ -47,10 +47,10 @@ func _on_button_pressed() -> void:
 		])
 
 		if result.exit_code == result.ExitCode.SUCCESS:
-			RivetDevtools.get_plugin().cloud_token = CloudTokenTextEdit.text
-			RivetDevtools.get_plugin().namespace_token = NamespaceTokenTextEdit.text
-			RivetDevtools.get_plugin().game_id = GameIdTextEdit.text
-			RivetDevtools.get_plugin().api_endpoint = ApiEndpointTextEdit.text
+			RivetPluginBridge.get_plugin().cloud_token = CloudTokenTextEdit.text
+			RivetPluginBridge.get_plugin().namespace_token = NamespaceTokenTextEdit.text
+			RivetPluginBridge.get_plugin().game_id = GameIdTextEdit.text
+			RivetPluginBridge.get_plugin().api_endpoint = ApiEndpointTextEdit.text
 
 			owner.change_current_screen(owner.Screen.Settings)
 

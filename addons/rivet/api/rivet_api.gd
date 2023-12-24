@@ -2,11 +2,11 @@ class_name RivetApi
 const RivetRequest = preload("rivet_request.gd")
 
 static func _get_api_url():
-	return RivetDevtools.get_plugin().api_endpoint
+	return RivetPluginBridge.get_plugin().api_endpoint
 
 ## Gets the authorization token from the environment or from a config file
 static func _get_cloud_token():
-	var plugin = RivetDevtools.get_plugin()
+	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.cloud_token
 
@@ -16,7 +16,7 @@ static func _get_cloud_token():
 	return token_env
 
 static func _get_namespace_token():
-	var plugin = RivetDevtools.get_plugin()
+	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.namespace_token
 	
