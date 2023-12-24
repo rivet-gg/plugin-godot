@@ -39,13 +39,20 @@ autowrap_mode = 2
 [node name="WarningLabel" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = " Make sure that you’re using the same version that’s deployed. Using different versions can cause some unforeseen issues."
+text = " Please make sure that you’re using the same version that’s deployed.
+Using different versions can cause some unforeseen issues."
 fit_content = true
 scroll_active = false
 
 [node name="ErrorLabel" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = " Hey pal, this namespace does not have any published versions. Please deploy one."
+text = " Before you can test online, you need to deploy your current game version to Rivet. 
+In order to deploy current game version to the cloud, click the button below."
 fit_content = true
 scroll_active = false
+
+[node name="DeployButton" type="Button" parent="PlaytestContent/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Deploy"
