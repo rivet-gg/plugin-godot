@@ -24,13 +24,15 @@ func _enter_tree():
 	
 	add_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL, "rivet_global.gd")
 	
-	# Add dock
+	global = _RivetGlobal.new()
+
 	_dock = preload("devtools/dock/dock.tscn").instantiate()
+	_dock.add_child(global)
+
+	# Add dock
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, _dock)
 	_RivetEditorSettings.set_defaults()
 	
-	global = _RivetGlobal.new()
-	_dock.add_child(global)
 
 func _exit_tree():
 	# Remove singleton

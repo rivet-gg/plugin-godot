@@ -19,3 +19,5 @@ mono_crash.*.json
 # devtools
 project.godot
 settings.cfg
+addons/*
+!addons/rivet

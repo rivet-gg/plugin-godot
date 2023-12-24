@@ -21,5 +21,3 @@ static func get_plugin() -> _global:
 	push_error("Can't find Rivet Plugin")
 	return null
 
-static func foo() -> Variant:
-	return _find_plugin().get_editor_interface()
