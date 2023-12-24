@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cle7km6xt44im"
-path="res://.godot/imported/icon-circle.png-1a108df90c1753d1b786aba81e88418f.ctex"
+uid="uid://bvolfn2wkgqj7"
+path="res://.godot/imported/screenshot.png-383732b1ad1229e277ccf09f7ea21a80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/rivet_api/images/icon-circle.png"
-dest_files=["res://.godot/imported/icon-circle.png-1a108df90c1753d1b786aba81e88418f.ctex"]
+source_file="res://media/screenshot.png"
+dest_files=["res://.godot/imported/screenshot.png-383732b1ad1229e277ccf09f7ea21a80.ctex"]
 
 [params]
 

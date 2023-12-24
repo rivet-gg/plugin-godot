@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bogw8dj8rr202"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.gd" id="1_c2uah"]
+[ext_resource type="PackedScene" uid="uid://im1ohjslk5ox" path="res://addons/rivet/devtools/dock/elements/menu_button.tscn" id="2_croj6"]
+
+[node name="NamespaceMenuButton" type="HBoxContainer"]
+theme_override_constants/separation = 8
+script = ExtResource("1_c2uah")
+
+[node name="MenuButton" parent="." instance=ExtResource("2_croj6")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 0
+
+[node name="VersionLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "vX.X.X"
+vertical_alignment = 1
