@@ -12,9 +12,10 @@ func _ready():
 
 func _on_button_pressed() -> void:
 	%LogInButton.disabled = true
+	var api_address = ApiEndpointTextEdit.text
 	var result := await RivetDevtools.get_plugin().cli.run_command([
 		"--api-endpoint",
-		"https://api.staging2.gameinc.io",
+		api_address,
 		"sidekick",
 		"get-link",
 	])
@@ -29,7 +30,7 @@ func _on_button_pressed() -> void:
 		# Long-poll the Rivet API until the user has logged in
 		result = await RivetDevtools.get_plugin().cli.run_command([
 			"--api-endpoint",
-			"https://api.staging2.gameinc.io",
+			api_address,
 			"sidekick",
 			"wait-for-login",
 			"--device-link-token",

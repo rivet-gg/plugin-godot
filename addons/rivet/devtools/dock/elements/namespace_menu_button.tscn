@@ -6,6 +6,7 @@
 [node name="NamespaceMenuButton" type="HBoxContainer"]
 theme_override_constants/separation = 8
 script = ExtResource("1_c2uah")
+current_value = null
 
 [node name="MenuButton" parent="." instance=ExtResource("2_croj6")]
 unique_name_in_owner = true

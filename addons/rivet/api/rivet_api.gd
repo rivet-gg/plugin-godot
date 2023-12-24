@@ -34,7 +34,7 @@ static func _build_headers(service: String) -> PackedStringArray:
 static func _build_url(path: String, service: String) -> String:
 	var path_segments := path.split("/", false)
 	path_segments.remove_at(0)
-	return _get_api_url() + service + "/" + "/".join(path_segments)
+	return _get_api_url() + "/%s/%s" % [service, "/".join(path_segments)]
 
 ## Gets service name from a path (e.g. /users/123 -> users)
 static func _get_service_from_path(path: String) -> String:

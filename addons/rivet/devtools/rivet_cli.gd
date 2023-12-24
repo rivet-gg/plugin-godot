@@ -44,6 +44,7 @@ static func find_rivet():
 func run(args: PackedStringArray) -> _RivetCliOutput:
 	var output = []
 	var code = OS.execute(find_rivet(), args, output, true)
+	print("Running Rivet CLI: ", "rivet %s" % " ".join(args))
 
 	return _RivetCliOutput.new(code, output)
 

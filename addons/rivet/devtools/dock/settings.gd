@@ -9,6 +9,7 @@
 
 func _ready():
 	ManageVersionButton.pressed.connect(_on_manage_version_button_pressed)
+	DeployNamespaceSelector.selected.connect(_on_deploy_namespace_selector_selected)
 	
 func prepare():
 	disable_all_actions(true)
@@ -43,12 +44,11 @@ func _on_manage_version_button_pressed() -> void:
 		ManageVersionButton.disabled = true
 		var result := await RivetDevtools.get_plugin().cli.run_command([
 			"--api-endpoint",
-			"https://api.staging2.gameinc.io",
+			RivetDevtools.get_plugin().api_endpoint,
 			"sidekick",
 			"get-version",
 			"--namespace",
-			# TODO: This needs to change to the selected namespace
-			"1b06ae8b-c799-4836-a27e-86cdb29223f9",
+			DeployNamespaceSelector.current_value.version_id,
 		])
 
 		if result.exit_code == result.ExitCode.SUCCESS and result.output.has("Ok"):
@@ -57,6 +57,10 @@ func _on_manage_version_button_pressed() -> void:
 			OS.shell_open(data["output"])
 
 		ManageVersionButton.disabled = false
+
+func _on_deploy_namespace_selector_selected():
+	ManageVersionButton.disabled = false
+	BuildDeployButton.disabled = false
 
 func disable_all_actions(disabled: bool) -> void:
 	AuthNamespaceSelector.disabled = disabled
