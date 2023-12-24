@@ -6,6 +6,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dfadg"]
 
 [node name="Deployment" type="MarginContainer"]
+offset_right = 734.0
+offset_bottom = 109.0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -34,12 +36,13 @@ layout_mode = 2
 [node name="BuildDeployButton" type="Button" parent="Deployment Fieds/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 disabled = true
 text = "Build & Deploy"
 
 [node name="ManageVersionButton" type="Button" parent="Deployment Fieds/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
-disabled = true
-text = "Manage Version
-"
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "Manage Versions"
