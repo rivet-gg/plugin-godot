@@ -7,10 +7,11 @@ var namespaces: Array:
 	get: return RivetPluginBridge.instance.game_namespaces
 
 func _ready():
+	if RivetPluginBridge.is_part_of_edited_scene(self):
+		return
 	disabled = true
 	_update_menu_button(namespaces)
 	item_selected.connect(_on_item_selected)
-
 	RivetPluginBridge.instance.bootstrapped.connect(_on_plugin_bootstrapped)
 
 func _update_menu_button(value: Array) -> void:

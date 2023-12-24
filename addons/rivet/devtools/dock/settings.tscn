@@ -69,4 +69,5 @@ layout_mode = 2
 
 [node name="Settings" parent="TabContainer" instance=ExtResource("6_fu2a3")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
