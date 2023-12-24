@@ -35,6 +35,7 @@ func _ready() -> void:
 	error.visible = false
 	deploy_button.visible = false
 
+	RivetPluginBridge.instance.bootstrapped.connect(_on_bootstrapped)
 	namespace_selector.item_selected.connect(_on_namespace_selector_item_selected)
 	deploy_button.pressed.connect(_on_deploy_button_pressed)
 	buttons_bar.selected.connect(_on_buttons_bar_selected)
@@ -43,6 +44,9 @@ func _on_namespace_selector_item_selected(id: int) -> void:
 	_update_warnings()
 
 func _on_buttons_bar_selected() -> void:
+	_update_warnings()
+
+func _on_bootstrapped() -> void:
 	_update_warnings()
 		
 func _update_warnings() -> void:
@@ -84,6 +88,7 @@ func _generate_dev_auth_token(ns) -> void:
 			return
 
 		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
+		RivetPluginBridge.instance.save_configuration()
 	)
 
 func _generate_public_auth_token(ns) -> void:
@@ -94,6 +99,7 @@ func _generate_public_auth_token(ns) -> void:
 			return
 
 		RivetPluginBridge.get_plugin().namespace_token = result.output["Ok"]["token"]
+		RivetPluginBridge.instance.save_configuration()
 	)
 
 func _actions_disabled_while(fn: Callable) -> void:

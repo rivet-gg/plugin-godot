@@ -19,7 +19,7 @@ func _ready():
 func _on_button_pressed() -> void:
 	log_in_button.disabled = true
 	var api_address = api_endpoint_line_edit.text
-	var result := await RivetPluginBridge.get_plugin().cli.run_command([
+	var result = await RivetPluginBridge.get_plugin().cli.run_command([
 		"--api-endpoint",
 		api_address,
 		"sidekick",
