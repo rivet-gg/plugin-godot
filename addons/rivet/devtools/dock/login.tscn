@@ -20,9 +20,10 @@ layout_mode = 2
 [node name="LogInButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Sign in to Rivet"
 
-[node name="ApiEndpointFieldContainer" type="HBoxContainer" parent="."]
+[node name="ApiEndpointFieldContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="ApiEndpointFieldContainer"]
@@ -30,57 +31,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "API endpoint"
 
-[node name="ApiEndpointTextEdit" type="TextEdit" parent="ApiEndpointFieldContainer"]
+[node name="ApiEndpointLineEdit" type="LineEdit" parent="ApiEndpointFieldContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "https://api.rivet.gg"
-scroll_fit_content_height = true
-
-[node name="CloudTokenFieldContainer" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CloudTokenFieldContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Cloud token"
-
-[node name="CloudTokenTextEdit" type="TextEdit" parent="CloudTokenFieldContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "cloud_"
-scroll_fit_content_height = true
-
-[node name="NamespaceTokenFieldContainer" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="NamespaceTokenFieldContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Namespace token"
-
-[node name="NamespaceTokenTextEdit" type="TextEdit" parent="NamespaceTokenFieldContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "dev_"
-scroll_fit_content_height = true
-
-[node name="GameIdFieldContainer" type="HBoxContainer" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GameIdFieldContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Game ID"
-
-[node name="GameIdTextEdit" type="TextEdit" parent="GameIdFieldContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "12345"
-scroll_fit_content_height = true
+middle_mouse_paste_enabled = false
+drag_and_drop_selection_enabled = false

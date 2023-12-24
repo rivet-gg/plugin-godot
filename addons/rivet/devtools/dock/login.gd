@@ -1,11 +1,8 @@
 @tool extends Control
 ## A button that logs the user in to the Rivet using Rivet CLI.
 
-@onready var LogInButton: Button = %LogInButton
-@onready var CloudTokenTextEdit: TextEdit = %CloudTokenTextEdit
-@onready var NamespaceTokenTextEdit: TextEdit = %NamespaceTokenTextEdit
-@onready var GameIdTextEdit: TextEdit = %GameIdTextEdit
-@onready var ApiEndpointTextEdit: TextEdit = %ApiEndpointTextEdit
+@onready var log_in_button: Button = %LogInButton
+@onready var api_endpoint_line_edit: LineEdit = %ApiEndpointLineEdit
 
 func prepare() -> void:
 	var result = await RivetPluginBridge.get_plugin().cli.run_command([
@@ -17,11 +14,11 @@ func prepare() -> void:
 		return
 
 func _ready():
-	LogInButton.pressed.connect(_on_button_pressed)
+	log_in_button.pressed.connect(_on_button_pressed)
 
 func _on_button_pressed() -> void:
-	%LogInButton.disabled = true
-	var api_address = ApiEndpointTextEdit.text
+	log_in_button.disabled = true
+	var api_address = api_endpoint_line_edit.text
 	var result := await RivetPluginBridge.get_plugin().cli.run_command([
 		"--api-endpoint",
 		api_address,
@@ -30,7 +27,7 @@ func _on_button_pressed() -> void:
 	])
 	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
 		RivetPluginBridge.display_cli_error(self, result)
-		LogInButton.disabled = false
+		log_in_button.disabled = false
 		return
 	var data: Dictionary = result.output["Ok"]
 
@@ -51,13 +48,9 @@ func _on_button_pressed() -> void:
 
 	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
 		RivetPluginBridge.display_cli_error(self, result)
-		LogInButton.disabled = false
+		log_in_button.disabled = false
 		return
 
-	RivetPluginBridge.get_plugin().cloud_token = CloudTokenTextEdit.text
-	RivetPluginBridge.get_plugin().namespace_token = NamespaceTokenTextEdit.text
-	RivetPluginBridge.get_plugin().game_id = GameIdTextEdit.text
-	RivetPluginBridge.get_plugin().api_endpoint = ApiEndpointTextEdit.text
-
+	log_in_button.disabled = false
 	owner.change_current_screen(owner.Screen.Settings)
 

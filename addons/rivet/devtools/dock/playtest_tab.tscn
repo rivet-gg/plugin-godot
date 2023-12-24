@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/devtools/dock/elements/buttons_bar.tscn" id="2_hd7vo"]
 
 [node name="Playtest" type="MarginContainer"]
-theme_override_constants/margin_top = 8
 script = ExtResource("1_4p5p5")
 
 [node name="PlaytestContent" type="VBoxContainer" parent="."]
