@@ -28,30 +28,36 @@ func _on_button_pressed() -> void:
 		"sidekick",
 		"get-link",
 	])
-	if result.exit_code == result.ExitCode.SUCCESS and result.output.has("Ok"):
-		var data: Dictionary = result.output["Ok"]
+	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
+		RivetPluginBridge.display_cli_error(self, result)
+		LogInButton.disabled = false
+		return
+	var data: Dictionary = result.output["Ok"]
 
-		# Now that we have the link, open it in the user's browser
-		OS.shell_open(data["device_link_url"])
-		
-		owner.change_current_screen(owner.Screen.Loading)
+	# Now that we have the link, open it in the user's browser
+	OS.shell_open(data["device_link_url"])
+	
+	owner.change_current_screen(owner.Screen.Loading)
 
-		# Long-poll the Rivet API until the user has logged in
-		result = await RivetPluginBridge.get_plugin().cli.run_command([
-			"--api-endpoint",
-			api_address,
-			"sidekick",
-			"wait-for-login",
-			"--device-link-token",
-			data["device_link_token"],
-		])
+	# Long-poll the Rivet API until the user has logged in
+	result = await RivetPluginBridge.get_plugin().cli.run_command([
+		"--api-endpoint",
+		api_address,
+		"sidekick",
+		"wait-for-login",
+		"--device-link-token",
+		data["device_link_token"],
+	])
 
-		if result.exit_code == result.ExitCode.SUCCESS:
-			RivetPluginBridge.get_plugin().cloud_token = CloudTokenTextEdit.text
-			RivetPluginBridge.get_plugin().namespace_token = NamespaceTokenTextEdit.text
-			RivetPluginBridge.get_plugin().game_id = GameIdTextEdit.text
-			RivetPluginBridge.get_plugin().api_endpoint = ApiEndpointTextEdit.text
+	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
+		RivetPluginBridge.display_cli_error(self, result)
+		LogInButton.disabled = false
+		return
 
-			owner.change_current_screen(owner.Screen.Settings)
+	RivetPluginBridge.get_plugin().cloud_token = CloudTokenTextEdit.text
+	RivetPluginBridge.get_plugin().namespace_token = NamespaceTokenTextEdit.text
+	RivetPluginBridge.get_plugin().game_id = GameIdTextEdit.text
+	RivetPluginBridge.get_plugin().api_endpoint = ApiEndpointTextEdit.text
 
-	LogInButton.disabled = false
+	owner.change_current_screen(owner.Screen.Settings)
+

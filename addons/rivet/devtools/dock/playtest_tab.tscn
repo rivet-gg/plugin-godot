@@ -41,19 +41,6 @@ text = "Namespace"
 
 [node name="AuthNamespaceSelector" parent="PlaytestContent/VBoxContainer" instance=ExtResource("1_brqcl")]
 layout_mode = 2
-popup/item_2/text = "test (v2023.12 (26))"
-current_value = {
-"create_ts": "2023-11-19T05:46:56.378Z",
-"display_name": "Production",
-"name_id": "prod",
-"namespace_id": "215bd313-b4c7-4932-b9bd-64f8f09b7fe8",
-"version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
-"display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-},
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
-}
 
 [node name="NamespaceDescription" type="RichTextLabel" parent="PlaytestContent/VBoxContainer"]
 unique_name_in_owner = true
