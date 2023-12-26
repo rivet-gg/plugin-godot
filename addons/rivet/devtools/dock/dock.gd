@@ -1,4 +1,5 @@
-@tool extends Control
+@tool
+extends Control
 ## Mainpoint of the plugin's UI
 
 ## Enum representing indexes of the children of this node
@@ -9,9 +10,10 @@ enum Screen {
 	Installer,
 }
 
+
 func _ready() -> void:
 	change_current_screen(Screen.Installer)
-	
+
 
 func change_current_screen(scene: Screen):
 	for idx in get_child_count():

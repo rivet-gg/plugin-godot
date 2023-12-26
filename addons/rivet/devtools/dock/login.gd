@@ -1,30 +1,48 @@
-@tool extends Control
+@tool
+extends Control
 ## A button that logs the user in to the Rivet using Rivet CLI.
 
 @onready var log_in_button: Button = %LogInButton
 @onready var api_endpoint_line_edit: LineEdit = %ApiEndpointLineEdit
 
+
 func prepare() -> void:
-	var result = await RivetPluginBridge.get_plugin().cli.run_command([
-		"sidekick",
-		"check-login-state",
-	])
+	var result = await (
+		RivetPluginBridge
+		. get_plugin()
+		. cli
+		. run_command(
+			[
+				"sidekick",
+				"check-login-state",
+			]
+		)
+	)
 	if result.exit_code == result.ExitCode.SUCCESS and "Ok" in result.output:
 		owner.change_current_screen(owner.Screen.Settings)
 		return
 
+
 func _ready():
 	log_in_button.pressed.connect(_on_button_pressed)
+
 
 func _on_button_pressed() -> void:
 	log_in_button.disabled = true
 	var api_address = api_endpoint_line_edit.text
-	var result = await RivetPluginBridge.get_plugin().cli.run_command([
-		"--api-endpoint",
-		api_address,
-		"sidekick",
-		"get-link",
-	])
+	var result = await (
+		RivetPluginBridge
+		. get_plugin()
+		. cli
+		. run_command(
+			[
+				"--api-endpoint",
+				api_address,
+				"sidekick",
+				"get-link",
+			]
+		)
+	)
 	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
 		RivetPluginBridge.display_cli_error(self, result)
 		log_in_button.disabled = false
@@ -33,18 +51,25 @@ func _on_button_pressed() -> void:
 
 	# Now that we have the link, open it in the user's browser
 	OS.shell_open(data["device_link_url"])
-	
+
 	owner.change_current_screen(owner.Screen.Loading)
 
 	# Long-poll the Rivet API until the user has logged in
-	result = await RivetPluginBridge.get_plugin().cli.run_command([
-		"--api-endpoint",
-		api_address,
-		"sidekick",
-		"wait-for-login",
-		"--device-link-token",
-		data["device_link_token"],
-	])
+	result = await (
+		RivetPluginBridge
+		. get_plugin()
+		. cli
+		. run_command(
+			[
+				"--api-endpoint",
+				api_address,
+				"sidekick",
+				"wait-for-login",
+				"--device-link-token",
+				data["device_link_token"],
+			]
+		)
+	)
 
 	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
 		RivetPluginBridge.display_cli_error(self, result)
@@ -53,4 +78,3 @@ func _on_button_pressed() -> void:
 
 	log_in_button.disabled = false
 	owner.change_current_screen(owner.Screen.Settings)
-

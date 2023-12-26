@@ -1,8 +1,11 @@
-@tool extends Button
+@tool
+extends Button
 
-@export var loading: bool: set = _set_loading
+@export var loading: bool:
+	set = _set_loading
 
 var _tween: Tween
+
 
 func _set_loading(value) -> void:
 	loading = value
@@ -28,5 +31,5 @@ func _set_loading(value) -> void:
 		for idx in icons.size():
 			_tween.tween_property(self, "icon", icons[idx], 0 if idx == 0 else 1)
 		_tween.set_loops()
-	else: 
+	else:
 		icon = null

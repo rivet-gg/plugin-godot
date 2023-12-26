@@ -25,17 +25,19 @@ func _init(owner: Node, method: HTTPClient.Method, url: String, opts: Variant = 
 	}
 	owner.add_child(self._http_request)
 
+
 ## Runs the request
 func request() -> _RivetRequest:
 	var error = _http_request.request(_opts.url, _opts.headers, _opts.method, _opts.body)
 	return self
 
+
 func _on_request_completed(result, response_code, headers, body):
 	_response = _RivetResponse.new(result, response_code, headers, body)
 	completed.emit()
+
 
 ## Waits for the request to complete and returns the response in non-blocking way
 func wait_completed() -> _RivetResponse:
 	await completed
 	return _response
-

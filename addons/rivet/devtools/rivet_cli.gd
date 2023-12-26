@@ -9,8 +9,11 @@ const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")
 const _RivetCliOutput = preload("rivet_cli_output.gd")
 
+
 func check_existence() -> Error:
-	var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	var editor_rivet_path = _RivetEditorSettings.get_setting(
+		_RivetEditorSettings.RIVET_CLI_PATH_SETTING
+	)
 	if not editor_rivet_path or editor_rivet_path.is_empty():
 		return FAILED
 	var result: _RivetCliOutput = await run_command(["sidekick", "get-cli-version"])
@@ -21,29 +24,36 @@ func check_existence() -> Error:
 		return FAILED
 	return OK
 
+
 func run_command(args: PackedStringArray) -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_run.bind(args))
 	return await thread.wait_to_finish()
 
+
 func get_bin_dir() -> String:
 	var home_path: String = OS.get_environment("HOME")
 	return home_path.path_join(".rivet").path_join(REQUIRED_RIVET_CLI_VERSION).path_join("bin")
+
 
 func get_cli_path() -> String:
 	var cli_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
 	if cli_path and !cli_path.is_empty():
 		return cli_path
 	return get_bin_dir().path_join("rivet.exe" if OS.get_name() == "Windows" else "rivet")
- 
+
+
 func install() -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_install)
 	var result = await thread.wait_to_finish()
 	if result.exit_code == 0:
-		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING, get_bin_dir())
+		_RivetEditorSettings.set_setting_value(
+			_RivetEditorSettings.RIVET_CLI_PATH_SETTING, get_bin_dir()
+		)
 	return result
 
 
 ## region Internal functions
+
 
 ## Runs Rivet CLI with given arguments.
 func _run(args: PackedStringArray) -> _RivetCliOutput:
@@ -52,6 +62,7 @@ func _run(args: PackedStringArray) -> _RivetCliOutput:
 	var code: int = OS.execute(get_cli_path(), args, output, true)
 
 	return _RivetCliOutput.new(code, output)
+
 
 func _install() -> _RivetCliOutput:
 	var output = []
@@ -63,14 +74,18 @@ func _install() -> _RivetCliOutput:
 
 	# Double quotes issue: https://github.com/godotengine/godot/issues/37291#issuecomment-603821838
 	if OS.get_name() == "Windows":
-		var args = ["-Commandi",  "\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""]
+		var args = [
+			"-Commandi",
+			"\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""
+		]
 		code = OS.execute("powershell.exe", args, output, true, true)
 	else:
 		#var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh''\""]
-		var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/ac57796861d195230fa043e12c5f9fe1921f467f/install/unix.sh | sh'\""]
+		var args = [
+			"-c",
+			"\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/ac57796861d195230fa043e12c5f9fe1921f467f/install/unix.sh | sh'\""
+		]
 		code = OS.execute("/bin/sh", args, output, true, true)
 	return _RivetCliOutput.new(code, output)
-
-
 
 ## endregion

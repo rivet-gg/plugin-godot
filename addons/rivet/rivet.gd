@@ -1,4 +1,5 @@
-@tool extends EditorPlugin
+@tool
+extends EditorPlugin
 ## Mainpoint for the Rivet editor plugin.
 
 # MARK: Plugin
@@ -17,16 +18,18 @@ var cli: _RivetCLI = _RivetCLI.new()
 ## The global singleton for the Rivet plugin, only available in the editor.
 var global: _RivetGlobal
 
+
 func _init() -> void:
 	name = "RivetPlugin"
+
 
 func _enter_tree():
 	# Add singleton
 	add_autoload_singleton(AUTO_LOAD_RIVET_CLIENT, "rivet_client.gd")
 	add_autoload_singleton(AUTO_LOAD_RIVET_HELPER, "rivet_helper.gd")
-	
+
 	add_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL, "rivet_global.gd")
-	
+
 	global = _RivetGlobal.new()
 	global.cli = cli
 
@@ -40,7 +43,7 @@ func _enter_tree():
 	# Add dock
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, _dock)
 	_RivetEditorSettings.set_defaults()
-	
+
 
 func _exit_tree():
 	# Remove singleton
@@ -51,8 +54,7 @@ func _exit_tree():
 	# Remove export plugin
 	remove_export_plugin(_export_plugin)
 	_export_plugin = null
-	
+
 	# Remove dock
 	remove_control_from_docks(_dock)
 	_dock.free()
-
