@@ -10,7 +10,7 @@ const _RivetThread = preload("rivet_thread.gd")
 const _RivetCliOutput = preload("rivet_cli_output.gd")
 
 func check_existence() -> Error:
-	var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	var editor_rivet_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING.name)
 	if not editor_rivet_path or editor_rivet_path.is_empty():
 		return FAILED
 	var result: _RivetCliOutput = await run_command(["sidekick", "get-cli-version"])
@@ -30,7 +30,7 @@ func get_bin_dir() -> String:
 	return home_path.path_join(".rivet").path_join(REQUIRED_RIVET_CLI_VERSION).path_join("bin")
 
 func get_cli_path() -> String:
-	var cli_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING)
+	var cli_path = _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_CLI_PATH_SETTING.name)
 	if cli_path and !cli_path.is_empty():
 		return cli_path
 	return get_bin_dir().path_join("rivet.exe" if OS.get_name() == "Windows" else "rivet")
@@ -39,7 +39,7 @@ func install() -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_install)
 	var result = await thread.wait_to_finish()
 	if result.exit_code == 0:
-		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING, get_bin_dir())
+		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING.name, get_bin_dir())
 	return result
 
 
@@ -48,7 +48,7 @@ func install() -> _RivetCliOutput:
 ## Runs Rivet CLI with given arguments.
 func _run(args: PackedStringArray) -> _RivetCliOutput:
 	var output = []
-	print("Running Rivet CLI: ", "%s %s" % [get_cli_path(), " ".join(args)])
+	RivetPluginBridge.log(["Running Rivet CLI: ", "%s %s" % [get_cli_path(), " ".join(args)]])
 	var code: int = OS.execute(get_cli_path(), args, output, true)
 
 	return _RivetCliOutput.new(code, output)
