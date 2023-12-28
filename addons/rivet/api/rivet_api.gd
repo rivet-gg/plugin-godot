@@ -19,50 +19,58 @@ static func _get_configuration():
 			CONFIGURATION_CACHE = deployed_config_file.new()
 			return CONFIGURATION_CACHE
 
-	push_warning("Rivet configuration file not found")
+	RivetPluginBridge.error("Rivet configuration file not found")
 	CONFIGURATION_CACHE = null
 	return CONFIGURATION_CACHE
 
-static func _get_api_url():
+static func _get_api_url() -> String:
 	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.api_endpoint
+
+	var url_env = OS.get_environment("RIVET_API_ENDPOINT")
+	if url_env:
+		return url_env
 
 	var config = _get_configuration()
 	if config:
 		return config.api_endpoint
 
-	var url_env = OS.get_environment("RIVET_API_ENDPOINT")
-	if url_env:
-		return url_env
+	RivetPluginBridge.warning("Rivet api endpoint not found. Please provide it via RIVET_API_ENDPOINT environment variable. Using default value as fallback.")
 	return "https://api.rivet.gg"
 
 ## Gets the authorization token from the environment or from a config file
-static func _get_cloud_token():
+static func _get_cloud_token() -> String:
 	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.cloud_token
+
+	var token_env = OS.get_environment("RIVET_TOKEN")
+	if token_env:
+		return token_env
 
 	var config = _get_configuration()
 	if config:
 		return config.cloud_token
 
-	var token_env = OS.get_environment("RIVET_TOKEN")
-	assert(!token_env.is_empty(), "missing RIVET_TOKEN environment")
-	return token_env
+	RivetPluginBridge.error("Rivet cloud token not found. Please provide it via RIVET_TOKEN environment variable.")
+	return ""
 
-static func _get_namespace_token():
+static func _get_namespace_token() -> String:
 	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.namespace_token
 
+	var token_env = OS.get_environment("RIVET_NAMESPACE_TOKEN")
+	if token_env:
+		return token_env
+
 	var config = _get_configuration()
 	if config:
 		return config.namespace_token
-	
-	var token_env = OS.get_environment("NAMESPACE_TOKEN")
-	assert(!token_env.is_empty(), "missing NAMESPACE_TOKEN environment")
-	return token_env
+
+	RivetPluginBridge.error("Rivet namespace token not found. Please provide it via RIVET_NAMESPACE_TOKEN environment variable.")
+	return ""
 
 ## Builds the headers for a request, including the authorization token
 static func _build_headers(service: String) -> PackedStringArray:
