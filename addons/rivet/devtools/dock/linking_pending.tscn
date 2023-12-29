@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://cpiafwq88eamc"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/linking_pending.gd" id="1_2ygnd"]
+[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_oda17"]
+[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_c2osa"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/rivet_rich_text_label.gd" id="4_1rtmw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ibb0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[node name="LinkingPending" type="VBoxContainer"]
+theme_override_constants/separation = 16
+script = ExtResource("1_2ygnd")
+
+[node name="LogoContainer" parent="." instance=ExtResource("1_oda17")]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="LinksContainer" parent="." instance=ExtResource("2_c2osa")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LinkInstructions" type="RichTextLabel" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 2.08165e-12)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+script = ExtResource("4_1rtmw")
+
+[node name="LinkLineEdit" type="LineEdit" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cancel"

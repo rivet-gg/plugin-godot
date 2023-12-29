@@ -4,9 +4,11 @@ extends RefCounted
 ## @experimental
 
 signal finished(output: Variant)
+signal killed()
 
 var _mutex: Mutex
 var _thread: Thread
+var _is_killed: bool = false
 
 ## Result of the thread.
 var output: Variant = null
@@ -22,8 +24,15 @@ func _init(fn: Callable) -> void:
 	_thread.start(func():
 		var result = fn.call()
 		_mutex.lock()
-		output = result
-		call_deferred("emit_signal", "finished", result)
+		if not _is_killed:
+			output = result
+			call_deferred("emit_signal", "finished", result)
 		_mutex.unlock()
 		return result
 	)
+
+func kill() -> void:
+	_mutex.lock()
+	_is_killed = true
+	call_deferred("emit_signal", "killed")
+	_mutex.unlock()

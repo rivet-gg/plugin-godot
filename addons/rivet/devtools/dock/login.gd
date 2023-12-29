@@ -1,13 +1,15 @@
 @tool extends Control
 ## A button that logs the user in to the Rivet using Rivet CLI.
 
+const RivetCliOutput = preload("../rivet_cli_output.gd")
+
 @onready var log_in_button: Button = %LogInButton
 @onready var api_endpoint_line_edit: LineEdit = %ApiEndpointLineEdit
 @onready var advanced_options_button: Button = %AdvancedOptionsButton
 @onready var api_endpoint_field: Control = %ApiEndpointField
 
-func prepare() -> void:
-	var result = await RivetPluginBridge.get_plugin().cli.run_command([
+func prepare(_args: Dictionary) -> void:
+	var result = await RivetPluginBridge.get_plugin().cli.run_and_wait([
 		"sidekick",
 		"check-login-state",
 	])
@@ -23,7 +25,7 @@ func _ready():
 func _on_button_pressed() -> void:
 	log_in_button.disabled = true
 	var api_address = api_endpoint_line_edit.text
-	var result = await RivetPluginBridge.get_plugin().cli.run_command([
+	var result = await RivetPluginBridge.get_plugin().cli.run_and_wait([
 		"--api-endpoint",
 		api_address,
 		"sidekick",
@@ -35,13 +37,12 @@ func _on_button_pressed() -> void:
 		return
 	var data: Dictionary = result.output["Ok"]
 
-	# Now that we have the link, open it in the user's browser
-	OS.shell_open(data["device_link_url"])
-	
-	owner.change_current_screen(owner.Screen.Loading)
+	var link = data["device_link_url"]
 
-	# Long-poll the Rivet API until the user has logged in
-	result = await RivetPluginBridge.get_plugin().cli.run_command([
+	# Now that we have the link, open it in the user's browser
+	OS.shell_open(link)
+
+	var command = RivetPluginBridge.get_plugin().cli.run([
 		"--api-endpoint",
 		api_address,
 		"sidekick",
@@ -49,14 +50,29 @@ func _on_button_pressed() -> void:
 		"--device-link-token",
 		data["device_link_token"],
 	])
+	
+	owner.change_current_screen(owner.Screen.LinkingPending, {
+		"link": link, 
+		"on_cancel": func() -> void:
+			print("Killing command")
+			command.kill()
+	})
 
-	if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
-		RivetPluginBridge.display_cli_error(self, result)
+	command.finished.connect(
+		func(result: RivetCliOutput) -> void:
+		if result.exit_code != result.ExitCode.SUCCESS or !("Ok" in result.output):
+			RivetPluginBridge.display_cli_error(self, result)
+			log_in_button.disabled = false
+			owner.change_current_screen(owner.Screen.Login)
+			return
+		owner.change_current_screen(owner.Screen.Settings)
+	)
+
+	command.killed.connect(
+		func() -> void:
 		log_in_button.disabled = false
-		return
-
-	log_in_button.disabled = false
-	owner.change_current_screen(owner.Screen.Settings)
+		owner.change_current_screen(owner.Screen.Login)
+	)
 
 func _on_advanced_options_button_pressed():
 	api_endpoint_field.visible = !api_endpoint_field.visible

@@ -5,7 +5,7 @@
 @onready var buttons_bar: HBoxContainer = %ButtonsBar
 @onready var deploy_tab = %Deploy
 	
-func prepare():
+func prepare(_args: Dictionary) -> void:
 	var error = await RivetPluginBridge.instance.bootstrap()
 	if error:
 		errorDialog.popup_centered()

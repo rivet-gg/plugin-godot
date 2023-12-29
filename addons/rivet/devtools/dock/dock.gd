@@ -5,7 +5,7 @@
 enum Screen {
 	Login,
 	Settings,
-	Loading,
+	LinkingPending,
 	Installer,
 }
 
@@ -19,10 +19,10 @@ func reload() -> void:
 	instance.grab_focus()
 	
 
-func change_current_screen(scene: Screen):
+func change_current_screen(scene: Screen, args: Dictionary = {}):
 	for idx in get_child_count():
 		var child := get_child(idx)
 		if "visible" in child:
 			child.visible = idx == scene
 		if idx == scene and child.has_method("prepare"):
-			child.prepare()
+			child.prepare(args)

@@ -4,7 +4,7 @@
 @onready var InstallDialog: AcceptDialog = %InstallDialog
 @onready var InstallLabel: RichTextLabel = %InstallLabel
 
-func prepare() -> void:
+func prepare(_args: Dictionary) -> void:
 	InstallLabel.add_theme_font_override(&"mono_font", get_theme_font(&"output_source_mono", &"EditorFonts"))
 	InstallLabel.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
 	InstallLabel.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))

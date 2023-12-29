@@ -87,7 +87,7 @@ func bootstrap() -> Error:
 	if not plugin:
 		return FAILED
 
-	var result = await get_plugin().cli.run_command([
+	var result = await get_plugin().cli.run_and_wait([
 		"sidekick",
 		"get-bootstrap-data",
 	])
