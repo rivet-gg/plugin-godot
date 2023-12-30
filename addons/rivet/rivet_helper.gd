@@ -43,19 +43,9 @@ func setup_multiplayer():
 	if is_dedicated_server():
 		rivet_print("Starting server")
 		start_server.emit()
-		
-		RivetClient.lobby_ready({}, _lobby_ready, _lobby_ready_fail)
 	else:
 		rivet_print("Starting client")
 		start_client.emit()
-
-
-func _lobby_ready(_body):
-	rivet_print("Lobby ready")
-
-
-func _lobby_ready_fail(_body):
-	OS.crash("Lobby ready failed")
 
 
 ## Sets the player token for the next authentication challenge.
@@ -76,9 +66,17 @@ func _auth_callback(id: int, buf: PackedByteArray):
 		
 		rivet_print("Player authenticating %s: %s" % [id, data])
 		player_tokens[id] = data.player_token
-		RivetClient.player_connected({
+
+		var response = await Rivet.matchmaker.players.connected({
 			"player_token": data.player_token
-		}, _rivet_player_connected.bind(id), _rivet_player_connect_failed.bind(id))
+		})
+
+		if response.result == OK:
+			rivet_print("Player authenticated for %s" % id)
+			(multiplayer as SceneMultiplayer).complete_auth(id)
+		else:
+			rivet_print("Player authentiation failed for %s: %s" % [id, response.body])
+			(multiplayer as SceneMultiplayer).disconnect_peer(id)
 	else:
 		# Auto-approve if not a server
 		(multiplayer as SceneMultiplayer).complete_auth(id)
@@ -91,27 +89,18 @@ func _player_authenticating(id):
 
 func _player_authentication_failed(id):
 	rivet_print("Authentication failed for %s" % id)
-	multiplayer.set_network_peer(null)
-#	connection_failed.emit()
+	multiplayer.set_multiplayer_peer(null)
 
 func _player_disconnected(id):
 	if multiplayer.is_server():
 		var player_token = player_tokens.get(id)
 		player_tokens.erase(id)
 		rivet_print("Removing player %s" % player_token)
-		
-		RivetClient.player_disconnected({
+
+		var response = await Rivet.matchmaker.players.disconnected({
 			"player_token": player_token
-		}, func(_x): pass, func(_x): pass)
+		})
 
-func _rivet_player_connected(_body, id: int):
-	rivet_print("Player authenticated for %s" % id)
-	(multiplayer as SceneMultiplayer).complete_auth(id)
-
-
-func _rivet_player_connect_failed(error, id: int):
-	rivet_print("Player authentiation failed for %s: %s" % [id, error])
-	(multiplayer as SceneMultiplayer).disconnect_peer(id)
 
 func rivet_print(message: String):
 	print("[Rivet] %s" % message)

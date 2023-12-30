@@ -24,6 +24,8 @@ static var game_namespaces: Array
 
 static var instance = RivetPluginBridge.new()
 
+static var cli
+
 static func _find_plugin():
 	var tree: SceneTree = Engine.get_main_loop()
 	return tree.get_root().get_child(0).get_node_or_null("RivetPlugin")
@@ -107,8 +109,7 @@ func bootstrap() -> Error:
 	return fetch_result
 
 func _fetch_plugin_data() -> Error:
-	var request = get_plugin().GET("/cloud/games/%s" % get_plugin().game_id).request()
-	var response = await request.wait_completed()
+	var response = await get_plugin().GET("/cloud/games/%s" % get_plugin().game_id).wait_completed()
 	# response.body:
 	#	game.namespaces = {namespace_id, version_id, display_name}[]
 	#	game.versions = {version_id, display_name}[]

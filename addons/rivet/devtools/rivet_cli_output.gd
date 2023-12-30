@@ -34,7 +34,7 @@ func _parse_output(internal_output: Array) -> void:
 	)
 
 	if lines_with_json.is_empty():
-		RivetPluginBridge.error("Invalid response format from the command line tool. Please report this issue and try again.")
+		print("No JSON output found")
 		return
 
 	var line_with_json: String = lines_with_json.front()
@@ -46,5 +46,4 @@ func _parse_output(internal_output: Array) -> void:
 		self.output = json.data
 	else:
 		# If the output is not JSON, throw an error
-		RivetPluginBridge.error("Invalid response from the command line tool. Please report this issue and try again.")
-		
+		print("Error parsing JSON output: " + str(error))
