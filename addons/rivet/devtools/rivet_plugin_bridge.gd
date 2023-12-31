@@ -10,12 +10,18 @@ signal bootstrapped
 const RIVET_CONFIGURATION_PATH: String = "res://.rivet"
 const RIVET_CONFIGURATION_FILE_PATH: String = "res://.rivet/config.gd"
 const RIVET_DEPLOYED_CONFIGURATION_FILE_PATH: String = "res://.rivet_config.gd"
-const SCRIPT_TEMPLATE: String ="extends RefCounted\nconst api_endpoint: String = \"{api_endpoint}\"\nconst namespace_token: String = \"{namespace_token}\"\nconst cloud_token: String = \"{cloud_token}\"\nconst game_id: String = \"{game_id}\""
+const SCRIPT_TEMPLATE: String = """
+extends RefCounted
+const api_endpoint: String = \"{api_endpoint}\"
+const namespace_token: String = \"{namespace_token}\"
+const cloud_token: String = \"{cloud_token}\"
+const game_id: String = \"{game_id}\"
+"""
 const _global := preload("../rivet_global.gd")
 
-static var instance = RivetPluginBridge.new()
+static var game_namespaces: Array
 
-static var cli
+static var instance = RivetPluginBridge.new()
 
 static func _find_plugin():
 	var tree: SceneTree = Engine.get_main_loop()
@@ -44,8 +50,6 @@ static func get_plugin() -> _global:
 	if plugin:
 		return plugin.global
 	return null
-
-static var game_namespaces: Array
 
 func save_configuration():
 	DirAccess.make_dir_recursive_absolute(RIVET_CONFIGURATION_PATH)
