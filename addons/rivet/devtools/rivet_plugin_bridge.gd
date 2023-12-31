@@ -18,6 +18,7 @@ const cloud_token: String = \"{cloud_token}\"
 const game_id: String = \"{game_id}\"
 """
 const _global := preload("../rivet_global.gd")
+const _RivetEditorSettings = preload("./rivet_editor_settings.gd")
 
 static var game_namespaces: Array
 
@@ -50,6 +51,16 @@ static func get_plugin() -> _global:
 	if plugin:
 		return plugin.global
 	return null
+
+static func log(args):
+	if _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_DEBUG_SETTING.name):
+		print("[Rivet] ", args)
+
+static func warning(args):
+	push_warning("[Rivet] ", args)
+
+static func error(args):
+	push_error("[Rivet] ", args)
 
 func save_configuration():
 	DirAccess.make_dir_recursive_absolute(RIVET_CONFIGURATION_PATH)
