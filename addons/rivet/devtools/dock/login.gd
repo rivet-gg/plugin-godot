@@ -3,6 +3,8 @@
 
 @onready var log_in_button: Button = %LogInButton
 @onready var api_endpoint_line_edit: LineEdit = %ApiEndpointLineEdit
+@onready var advanced_options_button: Button = %AdvancedOptionsButton
+@onready var api_endpoint_field: Control = %ApiEndpointField
 
 func prepare() -> void:
 	var result = await RivetPluginBridge.get_plugin().cli.run_command([
@@ -15,6 +17,8 @@ func prepare() -> void:
 
 func _ready():
 	log_in_button.pressed.connect(_on_button_pressed)
+	advanced_options_button.pressed.connect(_on_advanced_options_button_pressed)
+	advanced_options_button.icon = get_theme_icon("arrow", "OptionButton")
 
 func _on_button_pressed() -> void:
 	log_in_button.disabled = true
@@ -54,3 +58,5 @@ func _on_button_pressed() -> void:
 	log_in_button.disabled = false
 	owner.change_current_screen(owner.Screen.Settings)
 
+func _on_advanced_options_button_pressed():
+	api_endpoint_field.visible = !api_endpoint_field.visible
