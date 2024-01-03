@@ -4,6 +4,14 @@ extends EditorExportPlugin
 var has_added_file: bool = false
 var _plugin_name = "RivetEditorPlugin"
 
+const SCRIPT_TEMPLATE: String = """
+extends RefCounted
+const api_endpoint: String = \"{api_endpoint}\"
+const namespace_token: String = \"{namespace_token}\"
+const cloud_token: String = \"{cloud_token}\"
+const game_id: String = \"{game_id}\"
+"""
+
 func _supports_platform(platform):
 	return true
 
@@ -11,14 +19,14 @@ func _get_name():
 	return _plugin_name
 
 func _export_begin(features: PackedStringArray, is_debug: bool, path: String, flags: int) -> void:
-	if not FileAccess.file_exists(RivetPluginBridge.RIVET_CONFIGURATION_FILE_PATH):
-		push_warning("Rivet plugin not configured. Please configure it using plugin interface.")
-		return
-
-	var configuration_file = FileAccess.open(RivetPluginBridge.RIVET_CONFIGURATION_FILE_PATH, FileAccess.READ)
-	var source = configuration_file.get_as_text()
 	var script = GDScript.new()
-	script.source_code = source
+	script.source_code = SCRIPT_TEMPLATE.format({
+		"api_endpoint": get_plugin().api_endpoint,
+		"namespace_token": get_plugin().namespace_token,
+		"cloud_token": get_plugin().cloud_token,
+		"game_id": get_plugin().game_id
+	})
+	
 	var error: Error = ResourceSaver.save(script, RivetPluginBridge.RIVET_DEPLOYED_CONFIGURATION_FILE_PATH)
 	if not error:
 		has_added_file = true

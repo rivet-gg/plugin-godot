@@ -64,25 +64,6 @@ static func warning(args):
 static func error(args):
 	push_error("[Rivet] ", args)
 
-func save_configuration():
-	DirAccess.make_dir_recursive_absolute(RIVET_CONFIGURATION_PATH)
-
-	var gd_ignore_path = RIVET_CONFIGURATION_PATH.path_join(".gdignore")
-	if not FileAccess.file_exists(gd_ignore_path):
-		var gd_ignore = FileAccess.open(gd_ignore_path, FileAccess.WRITE)
-		gd_ignore.store_string("")
-
-	var git_ignore_path = RIVET_CONFIGURATION_PATH.path_join(".gitignore")
-	if not FileAccess.file_exists(git_ignore_path):
-		var git_ignore = FileAccess.open(git_ignore_path, FileAccess.WRITE)
-		git_ignore.store_string("*")
-
-	var plg = get_plugin()
-	var script: GDScript = GDScript.new()
-	script.source_code = SCRIPT_TEMPLATE.format({"api_endpoint": plg.api_endpoint, "namespace_token": plg.namespace_token, "cloud_token": plg.cloud_token, "game_id": plg.game_id})
-	var err: Error = ResourceSaver.save(script, RIVET_CONFIGURATION_FILE_PATH)
-	if err: 
-		push_warning("Error saving Rivet data: %s" % err)
 
 func bootstrap() -> Error:
 	var plugin = get_plugin()
@@ -100,8 +81,6 @@ func bootstrap() -> Error:
 	get_plugin().api_endpoint = result.output["Ok"].api_endpoint
 	get_plugin().cloud_token = result.output["Ok"].token
 	get_plugin().game_id = result.output["Ok"].game_id
-
-	save_configuration()
 
 	var fetch_result = await _fetch_plugin_data()
 	if fetch_result == OK:
