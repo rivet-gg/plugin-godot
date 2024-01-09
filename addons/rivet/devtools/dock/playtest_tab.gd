@@ -82,7 +82,7 @@ func _all_actions_set_disabled(disabled: bool) -> void:
 
 func _generate_dev_auth_token(ns) -> void:
 	_actions_disabled_while(func():
-		var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-dev-token", "--namespace", ns.name_id])
+		var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-development-token", "--namespace", ns.name_id])
 		if result.exit_code != 0 or !("Ok" in result.output):
 			RivetPluginBridge.display_cli_error(self, result)
 			return
@@ -93,7 +93,7 @@ func _generate_dev_auth_token(ns) -> void:
 
 func _generate_public_auth_token(ns) -> void:
 	_actions_disabled_while(func():
-		var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-pub-token", "--namespace", ns.name_id])
+		var result = await RivetPluginBridge.get_plugin().cli.run_command(["sidekick", "get-namespace-public-token", "--namespace", ns.name_id])
 		if result.exit_code != 0 or !("Ok" in result.output):
 			RivetPluginBridge.display_cli_error(self, result)
 			return
