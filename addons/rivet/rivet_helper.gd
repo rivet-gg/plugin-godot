@@ -27,7 +27,7 @@ func is_dedicated_server() -> bool:
 
 ## Sets up the authentication hooks on SceneMultiplayer.
 func setup_multiplayer():
-	assert(!multiplayer_setup, "RivetHelper.setup_multiplayer already called")
+	RivetHelper._assert(!multiplayer_setup, "RivetHelper.setup_multiplayer already called")
 	multiplayer_setup = true
 	
 	var scene_multiplayer = multiplayer as SceneMultiplayer
@@ -60,8 +60,8 @@ func _lobby_ready_fail(_body):
 
 ## Sets the player token for the next authentication challenge.
 func set_player_token(_player_token: String):
-	assert(multiplayer_setup, "RivetHelper.setup_multiplayer has not been called")
-	assert(!is_dedicated_server(), "cannot called RivetHelper.set_player_token on server")
+	RivetHelper._assert(multiplayer_setup, "RivetHelper.setup_multiplayer has not been called")
+	RivetHelper._assert(!is_dedicated_server(), "cannot called RivetHelper.set_player_token on server")
 	player_token = _player_token
 
 
@@ -115,3 +115,12 @@ func _rivet_player_connect_failed(error, id: int):
 
 func rivet_print(message: String):
 	print("[Rivet] %s" % message)
+
+func _assert(condition: bool, message: String = "Assertion failed"):
+	if not condition:
+		# For now, we won't crash the game if an assertion fails. There are a
+		# few reasons for this. See discussion:
+		# https://app.graphite.dev/github/pr/rivet-gg/plugin-godot/33/Assert-fix#
+		# OS.crash(message)
+
+		rivet_print(message)
