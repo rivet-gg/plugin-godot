@@ -1,14 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://dldxcm1l8nnnf"]
+[gd_scene load_steps=3 format=3 uid="uid://dldxcm1l8nnnf"]
 
-[ext_resource type="Texture2D" uid="uid://cebc1tvicnoux" path="res://addons/rivet/images/white-logo.svg" id="1_meomk"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/logo_container.gd" id="1_pgpb4"]
+[ext_resource type="Texture2D" uid="uid://10vqh72x3wrr" path="res://addons/rivet/images/icon-text-black.svg" id="2_c8wnq"]
 
 [node name="LogoContainer" type="HBoxContainer"]
+size_flags_horizontal = 3
 alignment = 1
+script = ExtResource("1_pgpb4")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(40, 40)
+[node name="Logo" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(2.08165e-12, 40)
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
-texture = ExtResource("1_meomk")
+texture = ExtResource("2_c8wnq")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
