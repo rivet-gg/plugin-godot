@@ -7,11 +7,14 @@ alignment = 1
 [node name="HubLink" type="LinkButton" parent="."]
 layout_mode = 2
 text = "Hub"
+uri = "https://hub.rivet.gg/"
 
 [node name="DocsLink" type="LinkButton" parent="."]
 layout_mode = 2
 text = "Docs"
+uri = "https://rivet.gg/docs"
 
 [node name="DiscordLink" type="LinkButton" parent="."]
 layout_mode = 2
 text = "Discord"
+uri = "https://rivet.gg/discord"
