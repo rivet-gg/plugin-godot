@@ -24,49 +24,62 @@ static func _get_configuration():
 	return CONFIGURATION_CACHE
 
 static func _get_api_url():
+	# Use plugin config if available
 	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.api_endpoint
 
-	var config = _get_configuration()
-	if config:
-		return config.api_endpoint
-
+	# Override shipped configuration endpoint
 	var url_env = OS.get_environment("RIVET_API_ENDPOINT")
 	if url_env:
 		return url_env
+
+	# Use configuration shipped with game
+	var config = _get_configuration()
+	if config:
+		return config.api_endpoint
+	
+	# Fallback
 	return "https://api.rivet.gg"
 
-## Gets the authorization token from the environment or from a config file
+## Get authorization token used from within only the plugin for cloud-specific
+## actions.
 static func _get_cloud_token():
+	# Use plugin config if available
 	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.cloud_token
 
-	var config = _get_configuration()
-	if config:
-		return config.cloud_token
+	OS.crash("Rivet cloud token not found, this should only be called within the plugin")
 
-	var token_env = OS.get_environment("RIVET_TOKEN")
-	assert(!token_env.is_empty(), "missing RIVET_TOKEN environment")
-	return token_env
-
-static func _get_namespace_token():
+## Get authorization token used for making requests from within the game.
+##
+## The priority of tokens is:
+##
+## - If in editor, use the plugin token
+## - If provided by environment, then use that (allows for testing)
+## - Assume config is provided by the game client
+static func _get_runtime_token():
+	# Use plugin config if available
 	var plugin = RivetPluginBridge.get_plugin()
 	if plugin:
 		return plugin.namespace_token
 
+	# Use configuration shipped with game
+	var token_env = OS.get_environment("RIVET_TOKEN")
+	if token_env:
+		return token_env
+
+	# Use configuration shipped with game
 	var config = _get_configuration()
 	if config:
 		return config.namespace_token
-	
-	var token_env = OS.get_environment("NAMESPACE_TOKEN")
-	assert(!token_env.is_empty(), "missing NAMESPACE_TOKEN environment")
-	return token_env
+
+	OS.crash("Rivet token not found, validate a config is shipped with the game in the .rivet folder")
 
 ## Builds the headers for a request, including the authorization token
 static func _build_headers(service: String) -> PackedStringArray:
-	var token = _get_cloud_token() if service == "cloud" else _get_namespace_token()
+	var token = _get_cloud_token() if service == "cloud" else _get_runtime_token()
 	return [
 		"Authorization: Bearer " + token,
 	]
@@ -102,6 +115,18 @@ static func GET(owner: Node, path: String, body: Dictionary) -> RivetRequest:
 	var body_json := JSON.stringify(body)
 	
 	return RivetRequest.new(owner, HTTPClient.METHOD_GET, url, { 
+		"headers": _build_headers(service), 
+		"body": body_json
+	})
+	
+## Creates a PUT request to Rivet cloud services
+## @experimental
+static func PUT(owner: Node, path: String, body: Dictionary) -> RivetRequest:
+	var service := _get_service_from_path(path)
+	var url := _build_url(path, service)
+	var body_json := JSON.stringify(body)
+	
+	return RivetRequest.new(owner, HTTPClient.METHOD_PUT, url, { 
 		"headers": _build_headers(service), 
 		"body": body_json
 	})
