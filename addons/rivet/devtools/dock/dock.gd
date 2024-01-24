@@ -11,6 +11,12 @@ enum Screen {
 
 func _ready() -> void:
 	change_current_screen(Screen.Installer)
+
+
+func reload() -> void:
+	var instance = load("res://addons/rivet/devtools/dock/dock.tscn").instantiate()
+	replace_by(instance)
+	instance.grab_focus()
 	
 
 func change_current_screen(scene: Screen):

@@ -20,4 +20,5 @@ func _on_unlink_game_button_pressed() -> void:
 		return
 
 	unlink_game_button.disabled = false
+	owner.owner.reload()
 	owner.owner.change_current_screen(owner.owner.Screen.Login)
