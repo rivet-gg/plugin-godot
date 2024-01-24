@@ -1,0 +1,7 @@
+media export-ignore
+.github export-ignore
+README.md export-ignore
+release-please-config.json export-ignore
+test.gd export-ignore
+test.tscn export-ignore
+.gitignore export-ignore
