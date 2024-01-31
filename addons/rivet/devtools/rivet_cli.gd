@@ -39,7 +39,7 @@ func install() -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_install)
 	var result = await thread.wait_to_finish()
 	if result.exit_code == 0:
-		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING.name, get_bin_dir())
+		_RivetEditorSettings.set_setting_value(_RivetEditorSettings.RIVET_CLI_PATH_SETTING.name, get_bin_dir() + "/rivet")
 	return result
 
 
