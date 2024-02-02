@@ -1,7 +1,6 @@
 const RIVET_CLI_PATH_SETTING = {
     "name": "rivet/cli_executable_path",
     "type": TYPE_STRING,
-    "hint": PROPERTY_HINT_TYPE_STRING,
 }
 const RIVET_DEBUG_SETTING ={
     "name": "rivet/debug",
