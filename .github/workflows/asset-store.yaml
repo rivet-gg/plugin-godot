@@ -1,8 +1,7 @@
 name: "Push to Godot Asset Store"
 on:
   release:
-    types:
-      - published
+    types: [published]
 
 jobs:
   publish:
