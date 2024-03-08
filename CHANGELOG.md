@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/rivet-gg/plugin-godot/compare/v1.1.0...v1.1.1) (2024-03-08)
+
+
+### Bug Fixes
+
+* Release to trigger CI to asset store ([465e36c](https://github.com/rivet-gg/plugin-godot/commit/465e36cf8586011f9cf89a39f0f9dfb3b8552410))
+
 ## [1.1.0](https://github.com/rivet-gg/plugin-godot/compare/v1.0.0...v1.1.0) (2024-03-08)
 
 
