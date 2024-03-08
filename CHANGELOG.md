@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/rivet-gg/plugin-godot/compare/v1.1.2...v1.1.3) (2024-03-08)
+
+
+### Bug Fixes
+
+* Fix icon url ([3a81613](https://github.com/rivet-gg/plugin-godot/commit/3a816138359bf22f544b86c437fb22ef38f58319))
+
 ## [1.1.2](https://github.com/rivet-gg/plugin-godot/compare/v1.1.1...v1.1.2) (2024-03-08)
 
 
