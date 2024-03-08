@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/rivet-gg/plugin-godot/compare/v1.1.1...v1.1.2) (2024-03-08)
+
+
+### Bug Fixes
+
+* Run deploy workflow in release please workflow ([e0dba08](https://github.com/rivet-gg/plugin-godot/commit/e0dba08a00e5277dc8a37cf68f9bdf378eae905e))
+
 ## [1.1.1](https://github.com/rivet-gg/plugin-godot/compare/v1.1.0...v1.1.1) (2024-03-08)
 
 
