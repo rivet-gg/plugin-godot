@@ -26,7 +26,12 @@ func run_command(args: PackedStringArray) -> _RivetCliOutput:
 	return await thread.wait_to_finish()
 
 func get_bin_dir() -> String:
-	var home_path: String = OS.get_environment("HOME")
+	var home_path: String = OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	
+	# Convert any backslashes to forward slashes
+	# https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#path-separators
+	home_path = home_path.replace("\\", "/")
+
 	return home_path.path_join(".rivet").path_join(REQUIRED_RIVET_CLI_VERSION).path_join("bin")
 
 func get_cli_path() -> String:
@@ -63,7 +68,7 @@ func _install() -> _RivetCliOutput:
 
 	# Double quotes issue: https://github.com/godotengine/godot/issues/37291#issuecomment-603821838
 	if OS.get_name() == "Windows":
-		var args = ["-Commandi",  "\"'iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex'\""]
+		var args = ["-Command",  "\"iwr https://raw.githubusercontent.com/rivet-gg/cli/$env:RIVET_CLI_VERSION/install/windows.ps1 -useb | iex; Read-Host -Prompt 'Press Enter to exit'\""]
 		code = OS.execute("powershell.exe", args, output, true, true)
 	else:
 		#var args = ["-c", "\"'curl -fsSL https://raw.githubusercontent.com/rivet-gg/cli/${RIVET_CLI_VERSION}/install/unix.sh | sh''\""]
