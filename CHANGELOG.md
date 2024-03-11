@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/rivet-gg/plugin-godot/compare/v1.1.3...v1.1.4) (2024-03-11)
+
+
+### Bug Fixes
+
+* Fix Windows installer for Rivet CLI ([#70](https://github.com/rivet-gg/plugin-godot/issues/70)) ([e08222e](https://github.com/rivet-gg/plugin-godot/commit/e08222e6bc544d6f4d034c178b8198f2acdb6ee0))
+
 ## [1.1.3](https://github.com/rivet-gg/plugin-godot/compare/v1.1.2...v1.1.3) (2024-03-08)
 
 
