@@ -21,7 +21,7 @@ func _on_manage_versions_button_pressed() -> void:
 func _on_build_deploy_button_pressed() -> void:
 	# First, ask the user if they want to save their scenes
 	var dialog = ConfirmationDialog.new()
-	dialog.dialog_text = "Would you like to save your scenes before building and deploying?"
+	dialog.dialog_text = "Would you like to save before building and deploying?"
 	dialog.connect("confirmed", save_before_build_and_deploy)
 	dialog.get_cancel_button().pressed.connect(build_and_deploy)
 	dialog.cancel_button_text = "No, just build and deploy"
@@ -30,8 +30,9 @@ func _on_build_deploy_button_pressed() -> void:
 
 
 func save_before_build_and_deploy() -> void:
-	# Save all scenes
+	# Save all
 	EditorInterface.save_all_scenes()
+	EditorInterface.get_script_editor().save_all_scripts()
 
 	# Now, build and deploy
 	build_and_deploy()
