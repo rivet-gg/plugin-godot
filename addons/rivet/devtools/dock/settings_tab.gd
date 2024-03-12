@@ -10,7 +10,7 @@ func _ready() -> void:
 func _on_unlink_game_button_pressed() -> void:
 	unlink_game_button.disabled = true
 
-	var result = await RivetPluginBridge.get_plugin().cli.run_command([
+	var result = await RivetPluginBridge.get_plugin().cli.run_and_wait([
 		"unlink"
 	])
 

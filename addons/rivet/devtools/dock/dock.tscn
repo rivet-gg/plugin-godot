@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://l8cfdaru7ibw"]
+[gd_scene load_steps=5 format=3 uid="uid://l8cfdaru7ibw"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/dock.gd" id="1_xspk7"]
 [ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/devtools/dock/login.tscn" id="2_qo12a"]
 [ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/devtools/dock/settings.tscn" id="3_8srmc"]
-[ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/devtools/dock/loading.tscn" id="4_mdhqv"]
+[ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/devtools/dock/linking_pending.tscn" id="4_mdhqv"]
 [ext_resource type="PackedScene" uid="uid://d3l0arylk0h43" path="res://addons/rivet/devtools/dock/installer.tscn" id="5_gdmi1"]
 
 [node name="Rivet" type="MarginContainer"]
@@ -26,7 +26,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="Loading" parent="." instance=ExtResource("4_mdhqv")]
+[node name="LinkingPending" parent="." instance=ExtResource("4_mdhqv")]
 visible = false
 layout_mode = 2
 
