@@ -53,7 +53,6 @@ _and much more coming soon!_
 
 ## 🏗️ Contributing
 1. Look for any issue that describes something that needs to be done - or, if you're willing to add a new feature, create a new issue with an appropriate description.
-    - You can follow [Rivet RFCs](https://github.com/rivet-gg/rfcs) if you want to be up to date with upcoming features.
 2. Submit your pull request.
 3. Rivet team will review your changes.
 4. Don't forget to join [Rivet's Discord](https://rivet.gg/discord) to hang out with the devs, or to pairprogram together!
