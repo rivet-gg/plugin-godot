@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/rivet-gg/plugin-godot/compare/v1.1.4...v1.2.0) (2024-05-15)
+
+
+### Features
+
+* Ask user if they want to save before build and deploy ([14e30c8](https://github.com/rivet-gg/plugin-godot/commit/14e30c81b8b477320f1716db013c4572e84688b1))
+* Improve loading screen ([bf1a960](https://github.com/rivet-gg/plugin-godot/commit/bf1a960a7cebcee376bb049f0c5b51966631ea32))
+
+
+### Bug Fixes
+
+* Save scripts as well on check ([44bc1e9](https://github.com/rivet-gg/plugin-godot/commit/44bc1e97dcff12eaadf23f84da1edca2c44d60a9))
+
 ## [1.1.4](https://github.com/rivet-gg/plugin-godot/compare/v1.1.3...v1.1.4) (2024-03-11)
 
 
