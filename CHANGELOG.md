@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/rivet-gg/plugin-godot/compare/v1.2.0...v1.2.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* fix deploy tab code indentation ([#85](https://github.com/rivet-gg/plugin-godot/issues/85)) ([221472a](https://github.com/rivet-gg/plugin-godot/commit/221472ad692f12f871092edc3aff380551a69a90))
+
 ## [1.2.0](https://github.com/rivet-gg/plugin-godot/compare/v1.1.4...v1.2.0) (2024-05-15)
 
 
