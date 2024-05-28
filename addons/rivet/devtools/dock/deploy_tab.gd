@@ -69,6 +69,9 @@ func build_and_deploy() -> void:
 	if result.exit_code != 0:
 		RivetPluginBridge.display_cli_error(self, result)
 
+	# Update the namespaces list
+	RivetPluginBridge.instance.bootstrap()
+
 	_all_actions_set_disabled(false)
 	
 func _all_actions_set_disabled(disabled: bool) -> void:
