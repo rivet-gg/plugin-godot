@@ -10,10 +10,10 @@ offset_right = 734.0
 offset_bottom = 109.0
 script = ExtResource("1_7k6ip")
 
-[node name="Deployment Fieds" type="VBoxContainer" parent="."]
+[node name="Deployment Fields" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Deployment Label" type="RichTextLabel" parent="Deployment Fieds"]
+[node name="Deployment Label" type="RichTextLabel" parent="Deployment Fields"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_dfadg")
 bbcode_enabled = true
@@ -22,33 +22,32 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 
-[node name="DeployNamespaceSelector" parent="Deployment Fieds" instance=ExtResource("2_5hxk2")]
+[node name="DeployNamespaceSelector" parent="Deployment Fields" instance=ExtResource("2_5hxk2")]
 layout_mode = 2
-selected = -1
 current_value = {
-"create_ts": "2023-11-19T05:46:56.378Z",
+"create_ts": "1970-01-01T00:00:00Z",
 "display_name": "Production",
 "name_id": "prod",
-"namespace_id": "215bd313-b4c7-4932-b9bd-64f8f09b7fe8",
+"namespace_id": "00000000-0000-0000-0000-000000000000",
 "version": {
-"create_ts": "2023-11-19T05:46:56.171Z",
+"create_ts": "1970-01-01T00:00:00Z",
 "display_name": "0.0.1",
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
+"version_id": "00000000-0000-0000-0000-000000000000"
 },
-"version_id": "73881376-21fa-4fb2-93f2-2f76fb3bac19"
+"version_id": "00000000-0000-0000-0000-000000000000"
 }
 
-[node name="Actions" type="HBoxContainer" parent="Deployment Fieds"]
+[node name="Actions" type="HBoxContainer" parent="Deployment Fields"]
 layout_mode = 2
 
-[node name="BuildDeployButton" type="Button" parent="Deployment Fieds/Actions"]
+[node name="BuildDeployButton" type="Button" parent="Deployment Fields/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 text = "Build & Deploy"
 
-[node name="ManageVersionButton" type="Button" parent="Deployment Fieds/Actions"]
+[node name="ManageVersionButton" type="Button" parent="Deployment Fields/Actions"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
