@@ -1,7 +1,10 @@
 {
 	"packages": {
 		".": {
-			"release-type": "simple"
+			"release-type": "simple",
+			"extra-files": [
+				"addons/rivet/plugin.cfg"
+			]
 		}
 	},
 	"changelog-sections": [
