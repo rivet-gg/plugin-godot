@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/rivet-gg/plugin-godot/compare/v1.3.0...v1.3.1) (2024-05-29)
+
+
+### Bug Fixes
+
+* cfg file comments ([#109](https://github.com/rivet-gg/plugin-godot/issues/109)) ([d8082b3](https://github.com/rivet-gg/plugin-godot/commit/d8082b3808196dbf886af56bb6ed3b002171f2b3))
+
 ## [1.3.0](https://github.com/rivet-gg/plugin-godot/compare/v1.2.1...v1.3.0) (2024-05-29)
 
 
