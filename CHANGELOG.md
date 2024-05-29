@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.3.0](https://github.com/rivet-gg/plugin-godot/compare/v1.2.1...v1.3.0) (2024-05-29)
+
+
+### Features
+
+* logs and lobbies link buttons ([#100](https://github.com/rivet-gg/plugin-godot/issues/100)) ([4bd9442](https://github.com/rivet-gg/plugin-godot/commit/4bd9442e33624d422f0adc8d0dfbefbce81899ab))
+
+
+### Bug Fixes
+
+* change default namespace values ([#99](https://github.com/rivet-gg/plugin-godot/issues/99)) ([d0bf2bd](https://github.com/rivet-gg/plugin-godot/commit/d0bf2bd60170e69689ca170b3404b9aa1de064ef))
+* update namespaces after deploying ([#102](https://github.com/rivet-gg/plugin-godot/issues/102)) ([4f9707d](https://github.com/rivet-gg/plugin-godot/commit/4f9707dace75f5db3185a4c61a70c05316e92227))
+
+
+### Continuous Integration
+
+* update plugin version after release ([#103](https://github.com/rivet-gg/plugin-godot/issues/103)) ([9b15332](https://github.com/rivet-gg/plugin-godot/commit/9b15332a2a7dd4dc0bc7461e5c9a4a671b4e92f0))
+
+
+### Chores
+
+* bump CLI version ([#108](https://github.com/rivet-gg/plugin-godot/issues/108)) ([5262763](https://github.com/rivet-gg/plugin-godot/commit/5262763eb7f2e1935d66de121a1bfff27ae2f75b))
+
 ## [1.2.1](https://github.com/rivet-gg/plugin-godot/compare/v1.2.0...v1.2.1) (2024-05-16)
 
 
