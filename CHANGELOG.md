@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.2](https://github.com/rivet-gg/plugin-godot/compare/v1.3.1...v1.3.2) (2024-05-31)
+
+
+### Bug Fixes
+
+* empty namespaces on plugin launch ([#112](https://github.com/rivet-gg/plugin-godot/issues/112)) ([8c457ab](https://github.com/rivet-gg/plugin-godot/commit/8c457ab9507f09206291a3661b9142b9101ecf91))
+* fix runtime dependency graph ([#111](https://github.com/rivet-gg/plugin-godot/issues/111)) ([308eeaf](https://github.com/rivet-gg/plugin-godot/commit/308eeafb1f0fbcc85a55a8815eb148347c88332b))
+
 ## [1.3.1](https://github.com/rivet-gg/plugin-godot/compare/v1.3.0...v1.3.1) (2024-05-29)
 
 
