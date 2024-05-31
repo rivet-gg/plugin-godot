@@ -3,18 +3,25 @@ const RivetRequest = preload("rivet_request.gd")
 
 static var CONFIGURATION_CACHE
 
+# This is needed to make sure that at runtime, 
+static func _get_bridge() -> Variant:
+	if Engine.is_editor_hint():
+		return load("res://addons/rivet/devtools/rivet_plugin_bridge.gd")
+	else:
+		return null
+
 static func _get_configuration():
 	if CONFIGURATION_CACHE:
 		return CONFIGURATION_CACHE
 
-	if FileAccess.file_exists(RivetPluginBridge.RIVET_CONFIGURATION_FILE_PATH):
-		var config_file = ResourceLoader.load(RivetPluginBridge.RIVET_CONFIGURATION_FILE_PATH)
+	if FileAccess.file_exists(RivetConstants.RIVET_CONFIGURATION_FILE_PATH):
+		var config_file = ResourceLoader.load(RivetConstants.RIVET_CONFIGURATION_FILE_PATH)
 		if config_file and 'new' in config_file:
 			CONFIGURATION_CACHE = config_file.new()
 			return CONFIGURATION_CACHE
 
-	if FileAccess.file_exists(RivetPluginBridge.RIVET_DEPLOYED_CONFIGURATION_FILE_PATH):
-		var deployed_config_file = ResourceLoader.load(RivetPluginBridge.RIVET_DEPLOYED_CONFIGURATION_FILE_PATH)
+	if FileAccess.file_exists(RivetConstants.RIVET_DEPLOYED_CONFIGURATION_FILE_PATH):
+		var deployed_config_file = ResourceLoader.load(RivetConstants.RIVET_DEPLOYED_CONFIGURATION_FILE_PATH)
 		if deployed_config_file and 'new' in deployed_config_file:
 			CONFIGURATION_CACHE = deployed_config_file.new()
 			return CONFIGURATION_CACHE
@@ -25,9 +32,11 @@ static func _get_configuration():
 
 static func _get_api_url():
 	# Use plugin config if available
-	var plugin = RivetPluginBridge.get_plugin()
-	if plugin:
-		return plugin.api_endpoint
+	var bridge = _get_bridge()
+	if bridge != null:
+		var plugin = bridge.get_plugin()
+		if plugin:
+			return plugin.api_endpoint
 
 	# Override shipped configuration endpoint
 	var url_env = OS.get_environment("RIVET_API_ENDPOINT")
@@ -46,11 +55,14 @@ static func _get_api_url():
 ## actions.
 static func _get_cloud_token():
 	# Use plugin config if available
-	var plugin = RivetPluginBridge.get_plugin()
-	if plugin:
-		return plugin.cloud_token
-
-	OS.crash("Rivet cloud token not found, this should only be called within the plugin")
+	if Engine.is_editor_hint():
+		var plugin = RivetPluginBridge.get_plugin()
+		if plugin:
+			return plugin.cloud_token
+	# Explicit else, since if OS.crash is called from the engine, it will just
+	# crash the editor.
+	else:
+		OS.crash("Rivet cloud token not found, this should only be called within the plugin")
 
 ## Get authorization token used for making requests from within the game.
 ##
@@ -61,9 +73,11 @@ static func _get_cloud_token():
 ## - Assume config is provided by the game client
 static func _get_runtime_token():
 	# Use plugin config if available
-	var plugin = RivetPluginBridge.get_plugin()
-	if plugin:
-		return plugin.namespace_token
+	var bridge = _get_bridge()
+	if bridge != null:
+		var plugin = bridge.get_plugin()
+		if plugin:
+			return plugin.namespace_token
 
 	# Use configuration shipped with game
 	var token_env = OS.get_environment("RIVET_TOKEN")
@@ -72,10 +86,12 @@ static func _get_runtime_token():
 
 	# Use configuration shipped with game
 	var config = _get_configuration()
-	if config:
+	if config and config.namespace_token:
 		return config.namespace_token
-
-	OS.crash("Rivet token not found, validate a config is shipped with the game in the .rivet folder")
+	# Explicit else, since if OS.crash is called from the engine, it will just
+	# crash the editor.
+	else:
+		OS.crash("Rivet token not found, validate a config is shipped with the game in the .rivet folder")
 
 ## Builds the headers for a request, including the authorization token
 static func _build_headers(service: String) -> PackedStringArray:

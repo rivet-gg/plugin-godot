@@ -1,4 +1,6 @@
-@tool class_name RivetPluginBridge
+@tool
+
+class_name RivetPluginBridge
 ## Scaffolding for the plugin to be used in the editor, this is not meant to be
 ## used in the game. It's a way to get the plugin instance from the engine's
 ## perspective.
@@ -7,16 +9,6 @@
 
 signal bootstrapped
 
-const RIVET_CONFIGURATION_PATH: String = "res://.rivet"
-const RIVET_CONFIGURATION_FILE_PATH: String = "res://.rivet/config.gd"
-const RIVET_DEPLOYED_CONFIGURATION_FILE_PATH: String = "res://.rivet_config.gd"
-const SCRIPT_TEMPLATE: String = """
-extends RefCounted
-const api_endpoint: String = \"{api_endpoint}\"
-const namespace_token: String = \"{namespace_token}\"
-const cloud_token: String = \"{cloud_token}\"
-const game_id: String = \"{game_id}\"
-"""
 const _global := preload("../rivet_global.gd")
 const _RivetEditorSettings = preload("./rivet_editor_settings.gd")
 
@@ -53,8 +45,9 @@ static func get_plugin() -> _global:
 	return null
 
 static func log(args):
-	if _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_DEBUG_SETTING.name):
-		print("[Rivet] ", args)
+	if Engine.is_editor_hint():
+		if _RivetEditorSettings.get_setting(_RivetEditorSettings.RIVET_DEBUG_SETTING.name):
+			print("[Rivet] ", args)
 
 static func warning(args):
 	push_warning("[Rivet] ", args)
@@ -63,22 +56,27 @@ static func error(args):
 	push_error("[Rivet] ", args)
 
 func save_configuration():
-	DirAccess.make_dir_recursive_absolute(RIVET_CONFIGURATION_PATH)
+	DirAccess.make_dir_recursive_absolute(RivetConstants.RIVET_CONFIGURATION_PATH)
 
-	var gd_ignore_path = RIVET_CONFIGURATION_PATH.path_join(".gdignore")
+	var gd_ignore_path = RivetConstants.RIVET_CONFIGURATION_PATH.path_join(".gdignore")
 	if not FileAccess.file_exists(gd_ignore_path):
 		var gd_ignore = FileAccess.open(gd_ignore_path, FileAccess.WRITE)
 		gd_ignore.store_string("")
 
-	var git_ignore_path = RIVET_CONFIGURATION_PATH.path_join(".gitignore")
+	var git_ignore_path = RivetConstants.RIVET_CONFIGURATION_PATH.path_join(".gitignore")
 	if not FileAccess.file_exists(git_ignore_path):
 		var git_ignore = FileAccess.open(git_ignore_path, FileAccess.WRITE)
 		git_ignore.store_string("*")
 
 	var plg = get_plugin()
 	var script: GDScript = GDScript.new()
-	script.source_code = SCRIPT_TEMPLATE.format({"api_endpoint": plg.api_endpoint, "namespace_token": plg.namespace_token, "cloud_token": plg.cloud_token, "game_id": plg.game_id})
-	var err: Error = ResourceSaver.save(script, RIVET_CONFIGURATION_FILE_PATH)
+	script.source_code = RivetConstants.SCRIPT_TEMPLATE.format({
+		"api_endpoint": plg.api_endpoint,
+		"namespace_token": plg.namespace_token,
+		"cloud_token": plg.cloud_token,
+		"game_id": plg.game_id
+	})
+	var err: Error = ResourceSaver.save(script, RivetConstants.RIVET_CONFIGURATION_FILE_PATH)
 	if err: 
 		push_warning("Error saving Rivet data: %s" % err)
 
