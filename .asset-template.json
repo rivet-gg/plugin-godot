@@ -9,28 +9,5 @@
     "download_commit": "{{ env.GITHUB_SHA }}",
     "browse_url": "{{ context.repository.html_url }}",
     "issues_url": "{{ context.repository.html_url }}/issues",
-    "icon_url": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/d722f74e5b3cb1c350dc2cf2b518161ac57cc4d7/addons/rivet/images/icon-square.png",
-    "previews": [
-        {
-            "enabled": true,
-            "operation": "insert",
-            "type": "image",
-            "link": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/28181db1274c827aec4c7c145cbeaabbf1361ac9/media/editor-window.png",
-            "thumbnail": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/28181db1274c827aec4c7c145cbeaabbf1361ac9/media/editor-window.png"
-        },
-        {
-            "enabled": true,
-            "operation": "insert",
-            "type": "image",
-            "link": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/6bf1a5084bf90157a5f6bbe89a2d7aa38a7130ed/media/local-playtest-tab.png",
-            "thumbnail": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/6bf1a5084bf90157a5f6bbe89a2d7aa38a7130ed/media/local-playtest-tab.png"
-        },
-        {
-            "enabled": true,
-            "operation": "insert",
-            "type": "image",
-            "link": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/6bf1a5084bf90157a5f6bbe89a2d7aa38a7130ed/media/deploy-tab.png",
-            "thumbnail": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/6bf1a5084bf90157a5f6bbe89a2d7aa38a7130ed/media/deploy-tab.png"
-        }
-    ]
+    "icon_url": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/d722f74e5b3cb1c350dc2cf2b518161ac57cc4d7/addons/rivet/images/icon-square.png"
 }
