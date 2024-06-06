@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.3](https://github.com/rivet-gg/plugin-godot/compare/v1.3.2...v1.3.3) (2024-06-06)
+
+
+### Bug Fixes
+
+* update plugin name ([#114](https://github.com/rivet-gg/plugin-godot/issues/114)) ([962023a](https://github.com/rivet-gg/plugin-godot/commit/962023afb73c5f83e332665c9bdf1cef9694fb0e))
+
+
+### Continuous Integration
+
+* prevent duplicate plugin image uploads ([#115](https://github.com/rivet-gg/plugin-godot/issues/115)) ([fae9672](https://github.com/rivet-gg/plugin-godot/commit/fae9672e73de415502acad189ef73efdde72ea10))
+
 ## [1.3.2](https://github.com/rivet-gg/plugin-godot/compare/v1.3.1...v1.3.2) (2024-05-31)
 
 
