@@ -1,5 +1,5 @@
 {
-    "title": "Rivet Plugin",
+    "title": "Rivet - Multiplayer Game Servers and Backend",
     "description": "Managed game servers, matchmaking, and DDoS mitigation that lets you focus on building your game.\n\nLearn more at https://rivet.gg",
     "category_id": "6",
     "godot_version": "4.2",
