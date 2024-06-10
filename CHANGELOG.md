@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.4](https://github.com/rivet-gg/plugin-godot/compare/v1.3.3...v1.3.4) (2024-06-10)
+
+
+### Bug Fixes
+
+* replace usage of the RivetPluginBridge identifier ([c07f2a1](https://github.com/rivet-gg/plugin-godot/commit/c07f2a12a8c06b2ddc2f2c9bce50b962c34034c0))
+
+
+### Chores
+
+* bump cli version ([#119](https://github.com/rivet-gg/plugin-godot/issues/119)) ([6f841d0](https://github.com/rivet-gg/plugin-godot/commit/6f841d017f38ff0e7e94601f6f7edc78ec5cf6f8))
+
 ## [1.3.3](https://github.com/rivet-gg/plugin-godot/compare/v1.3.2...v1.3.3) (2024-06-06)
 
 
