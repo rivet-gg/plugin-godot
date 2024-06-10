@@ -55,8 +55,9 @@ static func _get_api_url():
 ## actions.
 static func _get_cloud_token():
 	# Use plugin config if available
-	if Engine.is_editor_hint():
-		var plugin = RivetPluginBridge.get_plugin()
+	var bridge = _get_bridge()
+	if bridge != null:
+		var plugin = bridge.get_plugin()
 		if plugin:
 			return plugin.cloud_token
 	# Explicit else, since if OS.crash is called from the engine, it will just
