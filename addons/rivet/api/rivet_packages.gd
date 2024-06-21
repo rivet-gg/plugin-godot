@@ -31,7 +31,7 @@ class Lobbies:
 	##
 	## [url]{https://rivet.gg/docs/matchmaker/api/lobbies/set-closed}[/url]
 	func setClosed(body: Dictionary = {}) -> _RivetResponse:
-		return await Rivet.PUT("matchmaker/lobbies/set_closed", body).wait_completed()
+		return await Rivet.PUT("matchmaker/lobbies/closed", body).wait_completed()
 
 	## Creates a custom lobby.
 	##
