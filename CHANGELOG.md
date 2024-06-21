@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5](https://github.com/rivet-gg/plugin-godot/compare/v1.3.4...v1.3.5) (2024-06-21)
+
+
+### Bug Fixes
+
+* setClosed endpoint ([#122](https://github.com/rivet-gg/plugin-godot/issues/122)) ([947a33c](https://github.com/rivet-gg/plugin-godot/commit/947a33c016f03539a848bdbb7f56be967f25624a))
+
 ## [1.3.4](https://github.com/rivet-gg/plugin-godot/compare/v1.3.3...v1.3.4) (2024-06-10)
 
 
