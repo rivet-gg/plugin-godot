@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.6](https://github.com/rivet-gg/plugin-godot/compare/v1.3.5...v1.3.6) (2024-06-22)
+
+
+### Chores
+
+* update asset listing ([#124](https://github.com/rivet-gg/plugin-godot/issues/124)) ([7d45f67](https://github.com/rivet-gg/plugin-godot/commit/7d45f67600f1b22db449a0aaa25ba088ec591854))
+
 ## [1.3.5](https://github.com/rivet-gg/plugin-godot/compare/v1.3.4...v1.3.5) (2024-06-21)
 
 
