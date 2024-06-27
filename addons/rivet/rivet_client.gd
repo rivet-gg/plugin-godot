@@ -1,7 +1,7 @@
 ## @deprecated
 extends Node
 
-var base_url = "https://api.rivet.gg/v1"
+var base_url = "https://rivet.gg"
 
 ## @deprecated
 func get_token():
@@ -11,19 +11,19 @@ func get_token():
 	
 ## @deprecated
 func lobby_ready(body: Variant, on_success: Callable, on_fail: Callable):
-	_rivet_request_with_body("POST", "matchmaker", "/lobbies/ready", body, on_success, on_fail)
+	_rivet_request_with_body("POST", "api", "/matchmaker/lobbies/ready", body, on_success, on_fail)
 
 ## @deprecated
 func find_lobby(body: Variant, on_success: Callable, on_fail: Callable):
-	_rivet_request_with_body("POST", "matchmaker", "/lobbies/find", body, on_success, on_fail)
+	_rivet_request_with_body("POST", "api", "/matchmaker/lobbies/find", body, on_success, on_fail)
 
 ## @deprecated
 func player_connected(body: Variant, on_success: Callable, on_fail: Callable):
-	_rivet_request_with_body("POST", "matchmaker", "/players/connected", body, on_success, on_fail)
+	_rivet_request_with_body("POST", "api", "/matchmaker/players/connected", body, on_success, on_fail)
 
 ## @deprecated
 func player_disconnected(body: Variant, on_success: Callable, on_fail: Callable):
-	_rivet_request_with_body("POST", "matchmaker", "/players/disconnected", body, on_success, on_fail)
+	_rivet_request_with_body("POST", "api", "/matchmaker/players/disconnected", body, on_success, on_fail)
 
 func _build_url(service, path) -> String:
 	return base_url.replace("://", "://" + service + ".") + path
