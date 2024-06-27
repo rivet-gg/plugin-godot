@@ -54,9 +54,8 @@ func _on_build_deploy_button_pressed() -> void:
 
 
 func save_before_build_and_deploy() -> void:
-	# Save all
+	# Save all scenes
 	EditorInterface.save_all_scenes()
-	EditorInterface.get_script_editor().save_all_scripts()
 
 	# Now, build and deploy
 	build_and_deploy()
