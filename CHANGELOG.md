@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.7](https://github.com/rivet-gg/plugin-godot/compare/v1.3.6...v1.3.7) (2024-06-27)
+
+
+### Bug Fixes
+
+* save scenes before deploy ([#131](https://github.com/rivet-gg/plugin-godot/issues/131)) ([d4ce4fb](https://github.com/rivet-gg/plugin-godot/commit/d4ce4fb601f69bf6cd037e3f0ccbef703698c783))
+
 ## [1.3.6](https://github.com/rivet-gg/plugin-godot/compare/v1.3.5...v1.3.6) (2024-06-22)
 
 
