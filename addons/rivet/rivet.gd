@@ -2,7 +2,6 @@
 ## Mainpoint for the Rivet editor plugin.
 
 # MARK: Plugin
-const AUTO_LOAD_RIVET_CLIENT = "RivetClient"
 const AUTO_LOAD_RIVET_HELPER = "RivetHelper"
 const AUTO_LOAD_RIVET_GLOBAL = "Rivet"
 
@@ -22,9 +21,7 @@ func _init() -> void:
 
 func _enter_tree():
 	# Add singleton
-	add_autoload_singleton(AUTO_LOAD_RIVET_CLIENT, "rivet_client.gd")
 	add_autoload_singleton(AUTO_LOAD_RIVET_HELPER, "rivet_helper.gd")
-	
 	add_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL, "rivet_global.gd")
 	
 	global = _RivetGlobal.new()
@@ -44,7 +41,6 @@ func _enter_tree():
 
 func _exit_tree():
 	# Remove singleton
-	remove_autoload_singleton(AUTO_LOAD_RIVET_CLIENT)
 	remove_autoload_singleton(AUTO_LOAD_RIVET_HELPER)
 	remove_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL)
 
