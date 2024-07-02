@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/rivet-gg/plugin-godot/compare/v1.3.7...v1.4.0) (2024-07-02)
+
+
+### Chores
+
+* release 1.4.0 ([17110e7](https://github.com/rivet-gg/plugin-godot/commit/17110e72d2059f00eebc1c1fb32006b60a84569d))
+* remove deprecated code ([#134](https://github.com/rivet-gg/plugin-godot/issues/134)) ([10fa97f](https://github.com/rivet-gg/plugin-godot/commit/10fa97f9270cc7c8fd09e5f7d964275dc66fda91))
+
 ## [1.3.7](https://github.com/rivet-gg/plugin-godot/compare/v1.3.6...v1.3.7) (2024-06-27)
 
 
