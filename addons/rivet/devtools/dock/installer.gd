@@ -3,13 +3,18 @@
 @onready var InstallButton: Button = %InstallButton
 @onready var InstallDialog: AcceptDialog = %InstallDialog
 @onready var InstallLabel: RichTextLabel = %InstallLabel
+@onready var TipLabel: RichTextLabel = %TipLabel
 
 func prepare(_args: Dictionary) -> void:
 	InstallLabel.add_theme_font_override(&"mono_font", get_theme_font(&"output_source_mono", &"EditorFonts"))
+	TipLabel.add_theme_font_override(&"mono_font", get_theme_font(&"output_source_mono", &"EditorFonts"))
 	InstallLabel.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
+	TipLabel.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
 	InstallLabel.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
+	TipLabel.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
 
-	InstallLabel.text = InstallLabel.text.replace(&"%%version%%", RivetPluginBridge.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION).replace(&"%%bin_dir%%", RivetPluginBridge.get_plugin().cli.get_bin_dir())
+	InstallLabel.text = InstallLabel.text.replace(&"%%version%%", RivetPluginBridge.get_plugin().cli.REQUIRED_RIVET_CLI_VERSION)
+	TipLabel.text = TipLabel.text.replace(&"%%bin_dir%%", RivetPluginBridge.get_plugin().cli.get_bin_dir())
 	InstallButton.loading = true
 	var error = await RivetPluginBridge.get_plugin().cli.check_existence()
 	if error:
@@ -35,3 +40,7 @@ func _on_install_button_pressed() -> void:
 	InstallDialog.dialog_text = &"Rivet installation failed! Please try again.\n\n%s" % result.output
 	InstallDialog.popup_centered()
 	InstallButton.loading = false
+
+
+func _on_tip_label_meta_clicked(meta):
+	OS.shell_open(meta)
