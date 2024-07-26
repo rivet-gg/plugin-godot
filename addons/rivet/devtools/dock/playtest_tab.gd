@@ -2,6 +2,7 @@
 
 const ButtonsBar = preload("elements/buttons_bar.gd")
 
+# Namespaces
 @onready var namespace_description: RichTextLabel = %NamespaceDescription
 @onready var buttons_bar: ButtonsBar = %ButtonsBar
 @onready var warning: RichTextLabel = %WarningLabel
@@ -9,9 +10,19 @@ const ButtonsBar = preload("elements/buttons_bar.gd")
 @onready var deploy_button: Button = %DeployButton
 @onready var namespace_selector = %AuthNamespaceSelector
 
+# Game Server
+var game_server_poll_timer: Timer
+var game_server_pid: int = -1
+@onready var game_server_start_button: Button = %GameServerStartButton
+@onready var game_server_stop_button: Button = %GameServerStopButton
+@onready var game_server_restart_button: Button = %GameServerRestartButton
+@onready var game_server_status_label: Label = %GameServerStatusLabel
+@onready var game_server_show_logs: CheckBox = %GameServerShowLogs
+
 func _ready() -> void:
 	if get_tree().edited_scene_root == self:
 		return # This is the scene opened in the editor!
+
 	namespace_description.add_theme_font_override(&"mono_font", get_theme_font(&"output_source_mono", &"EditorFonts"))
 	namespace_description.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
 	namespace_description.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
@@ -39,6 +50,15 @@ func _ready() -> void:
 	namespace_selector.item_selected.connect(_on_namespace_selector_item_selected)
 	deploy_button.pressed.connect(_on_deploy_button_pressed)
 	buttons_bar.selected.connect(_on_buttons_bar_selected)
+
+	game_server_poll_timer = Timer.new()
+	game_server_poll_timer.wait_time = 0.5
+	game_server_poll_timer.paused = true
+	game_server_poll_timer.autostart = true
+	game_server_poll_timer.timeout.connect(_poll_game_server_status)
+	add_child(game_server_poll_timer)
+
+	_poll_game_server_status()
 
 func _on_namespace_selector_item_selected(id: int) -> void:
 	_update_warnings()
@@ -117,3 +137,77 @@ func _on_deploy_button_pressed() -> void:
 	owner.change_tab(1)
 	owner.deploy_tab.namespace_selector.current_value = namespace_selector.current_value
 	owner.deploy_tab.namespace_selector.selected = namespace_selector.selected
+
+
+func _on_game_server_start_pressed():
+	start_server()
+
+
+func _on_game_server_stop_pressed():
+	stop_server()
+
+func _on_game_server_restart_pressed():
+	start_server()
+
+# MARK: Game Server
+func start_server():
+	if game_server_pid != -1:
+		RivetPluginBridge.log("Restarting server, old pid %s" % game_server_pid)
+		stop_server()
+
+	if game_server_show_logs.button_pressed:
+		# Running with logs does not have a PID we can kill
+		game_server_pid = -1
+
+		# Run via Rivet CLI to show the terminal. Get the PID from the process
+		# the Rivet CLI spawned.
+		var full_args = ["sidekick", "show-term", "--", OS.get_executable_path()]
+		full_args.append_array(_server_run_args())
+		var result = RivetPluginBridge.get_plugin().cli.run_and_wait_sync(full_args)
+		if result.exit_code != 0 or !("Ok" in result.output):
+			RivetPluginBridge.display_cli_error(self, result)
+			return
+		RivetPluginBridge.log("Started server with logs")
+	else:
+		# Run natively without terminal
+		game_server_pid = OS.create_process(OS.get_executable_path(), _server_run_args())
+		RivetPluginBridge.log("Started server without logs %s" % game_server_pid)
+
+	_poll_game_server_status()
+
+func stop_server():
+	if game_server_pid != -1:
+		RivetPluginBridge.log("Stopped serer %s" % game_server_pid)
+		OS.kill(game_server_pid)
+		game_server_pid = -1
+		_poll_game_server_status()
+	else:
+		RivetPluginBridge.log("Server not running")
+
+func _server_run_args() -> PackedStringArray:
+	var project_path = ProjectSettings.globalize_path("res://")
+	return ["--path", project_path, "--headless", "--", "--server"]
+
+## Checks if the server process is still running.
+func _poll_game_server_status():
+	# Check if server still running
+	if game_server_pid != -1 and !OS.is_process_running(game_server_pid):
+		RivetPluginBridge.log("Server process exited %s" % game_server_pid)
+		game_server_pid = -1
+	
+	# Update stop button
+	if game_server_pid != -1:
+		game_server_poll_timer.paused = false
+		game_server_status_label.text = "Game server running (pid %s)" % game_server_pid
+		game_server_start_button.visible = false
+		game_server_stop_button.visible = true
+		game_server_restart_button.visible = true
+		game_server_status_label.visible = true
+		game_server_show_logs.visible = false
+	else:
+		game_server_poll_timer.paused = true
+		game_server_start_button.visible = true
+		game_server_stop_button.visible = false
+		game_server_restart_button.visible = false
+		game_server_status_label.visible = false
+		game_server_show_logs.visible = true

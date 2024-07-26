@@ -3,7 +3,7 @@ extends RefCounted
 ##
 ## @experimental
 
-const REQUIRED_RIVET_CLI_VERSION = "v1.3.1"
+const REQUIRED_RIVET_CLI_VERSION = "v1.4.0"
 
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")
@@ -25,8 +25,11 @@ func run_and_wait(args: PackedStringArray) -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_run.bind(args))
 	return await thread.wait_to_finish()
 
-func run(args:PackedStringArray) -> _RivetThread:
+func run(args: PackedStringArray) -> _RivetThread:
 	return _RivetThread.new(_run.bind(args))
+
+func run_and_wait_sync(args: PackedStringArray) -> _RivetCliOutput:
+	return _run(args)
 
 func get_bin_dir() -> String:
 	var home_path: String = OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
