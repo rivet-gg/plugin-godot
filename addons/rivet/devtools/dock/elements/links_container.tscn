@@ -4,7 +4,7 @@
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="HubLink" type="LinkButton" parent="."]
+[node name="DashboardLink" type="LinkButton" parent="."]
 layout_mode = 2
 text = "Hub"
 uri = "https://hub.rivet.gg/"
@@ -18,3 +18,8 @@ uri = "https://rivet.gg/docs"
 layout_mode = 2
 text = "Discord"
 uri = "https://rivet.gg/discord"
+
+[node name="BugLInk" type="LinkButton" parent="."]
+layout_mode = 2
+text = "Report Bug"
+uri = "https://hub.rivet.gg/?modal=feedback&utm_source=godot"
