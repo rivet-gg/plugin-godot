@@ -23,9 +23,11 @@ var _name: String
 var _input: Variant
 
 # State
-var thread
 var is_running = true
 var state_files
+var _thread
+var _log_file
+var _log_last_position
 
 func _init(name: String, input: Variant):
 	if name == null or input == null:
@@ -54,8 +56,8 @@ func _init(name: String, input: Variant):
 	})
 	var input_json = JSON.stringify(_input)
 
-	thread = Thread.new()
-	thread.start(func():
+	_thread = Thread.new()
+	_thread.start(func():
 		var output = _run(toolchain, run_config_json, input_json)
 		call_deferred("_on_finish")
 		return output
@@ -69,7 +71,8 @@ func _run(toolchain: RivetToolchain, run_config_json: String, input_json: String
 
 func _on_finish():
 	# This will not block because this event is emitted after the task is cancelled
-	var output_json = thread.wait_to_finish()
+	var output_json = _thread.wait_to_finish()
+	_finish_logs()
 
 	is_running = false
 
@@ -122,45 +125,55 @@ func _gen_state_files_dir():
 		return null
 
 func _touch_file(path: String):
-	var file = FileAccess.open(path, FileAccess.WRITE)
-	file.close()
+	_log_file = FileAccess.open(path, FileAccess.WRITE)
+	_log_file.close()
 
 ## Tail a file and print it to the console in realtime.
 func _tail_logs(path: String):
-	var log_type = LogType.STDOUT
-
 	# Open file
-	var file = FileAccess.open(path, FileAccess.READ)
-	if file == null:
+	_log_file = FileAccess.open(path, FileAccess.READ)
+	if _log_file == null:
 		RivetPluginBridge.error("Failed to open file: %s" % path)
 		return
 	
 	# Poll file
-	var last_position = 0
+	_log_last_position = 0
 	while true:
-		var current_position = file.get_length()
-		if current_position > last_position:
-			# Read new text
-			file.seek(last_position)
-			var new_content = file.get_buffer(current_position - last_position).get_string_from_utf8()
-			last_position = current_position
-
-			# Parse lines
-			var lines = new_content.split("\n", false)
-			for line in lines:
-				var parsed = JSON.parse_string(line)
-				if parsed == null:
-					print('Failed to parse: %s' % line)
-					continue
-				elif "Stdout" in parsed:
-					task_log.emit(parsed["Stdout"], LogType.STDOUT)
-				elif "Stderr" in parsed:
-					task_log.emit(parsed["Stderr"], LogType.STDERR)
-
 		# Stop polling file if process stopped. Do this after reading the end of
 		# the file before the process exited.
 		if not is_running:
 			break
+
+		# Read logs
+		_read_log_tail()
 		
 		# Wait for next tick
 		await Engine.get_main_loop().create_timer(POLL_LOGS_INTERVAL).timeout
+
+## Read the end of the logs. Runs on task exit in order to finish printing the
+## file.
+func _finish_logs():
+	_read_log_tail()
+	_log_file.close()
+
+## Reads the end of the logs.
+func _read_log_tail():
+	var current_position = _log_file.get_length()
+	if current_position > _log_last_position:
+		# Read new text
+		_log_file.seek(_log_last_position)
+		var new_content = _log_file.get_buffer(current_position - _log_last_position).get_string_from_utf8()
+		_log_last_position = current_position
+
+		# Parse lines
+		var lines = new_content.split("\n", false)
+		for line in lines:
+			var parsed = JSON.parse_string(line)
+			if parsed == null:
+				print('Failed to parse: %s' % line)
+				continue
+			elif "Stdout" in parsed:
+				task_log.emit(parsed["Stdout"], LogType.STDOUT)
+			elif "Stderr" in parsed:
+				task_log.emit(parsed["Stderr"], LogType.STDERR)
+
