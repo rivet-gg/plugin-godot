@@ -25,11 +25,14 @@ func run_and_wait(args: PackedStringArray) -> _RivetCliOutput:
 	var thread: _RivetThread = _RivetThread.new(_run.bind(args))
 	return await thread.wait_to_finish()
 
+func run_and_wait_sync(args: PackedStringArray) -> _RivetCliOutput:
+	return _run(args)
+
 func run(args: PackedStringArray) -> _RivetThread:
 	return _RivetThread.new(_run.bind(args))
 
-func run_and_wait_sync(args: PackedStringArray) -> _RivetCliOutput:
-	return _run(args)
+func run_with_pid(args: PackedStringArray) -> int:
+	return _run_with_pid(args)
 
 func get_bin_dir() -> String:
 	var home_path: String = OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
@@ -63,6 +66,12 @@ func _run(args: PackedStringArray) -> _RivetCliOutput:
 	var code: int = OS.execute(get_cli_path(), args, output, true)
 
 	return _RivetCliOutput.new(code, output)
+
+## Runs Rivet CLI with given arguments and returns the PID.
+func _run_with_pid(args: PackedStringArray) -> int:
+	RivetPluginBridge.log(["Running Rivet CLI: ", "%s %s" % [get_cli_path(), " ".join(args)]])
+	return OS.create_process(get_cli_path(), args)
+	# return OS.create_process("/bin/bash", ["-c", "%s %s &> /tmp/log.txt" % [get_cli_path(), " ".join(args)]])
 
 func _install() -> _RivetCliOutput:
 	var output = []

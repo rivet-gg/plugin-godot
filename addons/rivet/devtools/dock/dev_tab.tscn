@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b17eqs0bmrncs"]
+[gd_scene load_steps=5 format=3 uid="uid://dvgoy5fid7fr5"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/dev_tab.gd" id="1_q8kto"]
 [ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/devtools/dock/elements/buttons_bar.tscn" id="2_o3824"]
@@ -121,7 +121,7 @@ layout_mode = 2
 [node name="Backend" type="VBoxContainer" parent="DevelopContent"]
 layout_mode = 2
 
-[node name="GameServer" type="Label" parent="DevelopContent/Backend"]
+[node name="Backend" type="Label" parent="DevelopContent/Backend"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Backend"
@@ -136,8 +136,55 @@ script = ExtResource("4_u02u4")
 layout_mode = 2
 text = "Edit Config"
 
+[node name="HSeparator3" type="HSeparator" parent="DevelopContent"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DevelopContent"]
+layout_mode = 2
+
+[node name="BackendServer" type="Label" parent="DevelopContent/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Backend Server
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DevelopContent/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackendServerStartButton" type="Button" parent="DevelopContent/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start"
+
+[node name="BackendServerRestartButton" type="Button" parent="DevelopContent/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart
+"
+
+[node name="BackendServerStopButton" type="Button" parent="DevelopContent/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Stop"
+
+[node name="BackendServerStatusLabel" type="Label" parent="DevelopContent/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Game server not running"
+
+[node name="BackendServerShowLogs" type="CheckBox" parent="DevelopContent/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Show Server Logs"
+
 [connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerStartButton" to="." method="_on_game_server_start_pressed"]
 [connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerRestartButton" to="." method="_on_game_server_restart_pressed"]
 [connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerStopButton" to="." method="_on_game_server_stop_pressed"]
 [connection signal="pressed" from="DevelopContent/Backend/BackendGenerateSdk" to="." method="_on_backend_generate_sdk_pressed"]
 [connection signal="pressed" from="DevelopContent/Backend/BackendEditConfig" to="." method="_on_backend_edit_config_pressed"]
+[connection signal="pressed" from="DevelopContent/VBoxContainer/HBoxContainer/BackendServerStartButton" to="." method="_on_backend_server_start_pressed"]
+[connection signal="pressed" from="DevelopContent/VBoxContainer/HBoxContainer/BackendServerRestartButton" to="." method="_on_backend_server_restart_pressed"]
+[connection signal="pressed" from="DevelopContent/VBoxContainer/HBoxContainer/BackendServerStopButton" to="." method="_on_backend_server_stop_pressed"]
