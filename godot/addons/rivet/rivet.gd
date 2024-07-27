@@ -31,7 +31,6 @@ func _enter_tree():
 	# specific behavior to the dock.
 	global = _RivetGlobal.new()
 	global.add_autoload.connect(_on_add_autoload)
-
 	
 	# Dock
 	_dock = preload("devtools/dock/dock.tscn").instantiate()
@@ -86,12 +85,14 @@ func _enter_tree():
 	global.stop_backend.connect(func(): _backend_panel.stop_task())
 	global.focus_backend.connect(_on_focus_backend)
 	_backend_panel.state_change.connect(func(running): global.backend_state_change.emit(running))
+
+	# Start backend
+	_backend_panel.start_task.call_deferred()
 	
 func _exit_tree():
-	# Remove signal
-	global.add_autoload.disconnect(_on_add_autoload)
-	global.focus_game_server.disconnect(_on_focus_game_server)
-	global.focus_backend.disconnect(_on_focus_backend)
+	# Stop processes
+	_game_server_panel.stop_task()
+	_backend_panel.stop_task()
 
 	# Remove singleton
 	remove_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL)
