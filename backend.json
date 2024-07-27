@@ -1,0 +1,14 @@
+{
+	"registries": {
+		"local": {
+			"local": {
+				"directory": "modules"
+			}
+		}
+	},
+	"modules": {
+		"users": {},
+		"rate_limit": {},
+		"tokens": {}
+	}
+}

@@ -43,7 +43,7 @@ with Rivet and Godot.
 ### Link your game with Rivet
 
 One click and your game is connected! Linking your game with Rivet gives you
-one-click deployments to production, easy playtesting setup, and ways to
+one-click deployments to production, easy developing setup, and ways to
 configure your game's hosting and matchmaking.
 
 ### Deploy your game
@@ -60,10 +60,10 @@ _and much more coming soon!_
 
 ## 📸 Screenshots
 
-|![Screenshot](./media/login-screen.png)<p align="center">Login screen</p>|![Screenshot](./media/local-playtest-tab.png)<p align="center">Playtesting on your own machine</p>|
+|![Screenshot](./media/login-screen.png)<p align="center">Login screen</p>|![Screenshot](./media/local-develop-tab.png)<p align="center">Developing on your own machine</p>|
 |---|---|
 
-|![Screenshot](./media/remote-playtest-tab.png)<p align="center">Playtesting on Rivet Servers</p>|![Screenshot](./media/deploy-tab.png)<p  align="center">Deploying your game</p>|
+|![Screenshot](./media/remote-develop-tab.png)<p align="center">Developing on Rivet Servers</p>|![Screenshot](./media/deploy-tab.png)<p  align="center">Deploying your game</p>|
 |---|---|
 
 ## 🏗️ Contributing
