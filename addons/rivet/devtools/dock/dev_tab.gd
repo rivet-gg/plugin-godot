@@ -1,5 +1,7 @@
 @tool extends MarginContainer
 
+const BACKEND_SINGLETON_NAME = "Backend"
+
 const ButtonsBar = preload("elements/buttons_bar.gd")
 
 # Namespaces
@@ -18,6 +20,9 @@ var game_server_pid: int = -1
 @onready var game_server_restart_button: Button = %GameServerRestartButton
 @onready var game_server_status_label: Label = %GameServerStatusLabel
 @onready var game_server_show_logs: CheckBox = %GameServerShowLogs
+
+# Backend
+@onready var backend_gerate_sdk_button: Button = %BackendGenerateSdk
 
 func _ready() -> void:
 	if get_tree().edited_scene_root == self:
@@ -212,6 +217,43 @@ func _poll_game_server_status():
 		game_server_status_label.visible = false
 		game_server_show_logs.visible = true
 
+# MARK: Backend
+func _on_backend_generate_sdk_pressed():
+	# TODO: Allow configuring this
+	var sdk_path = "addons/backend"
+	var sdk_res_path = "res://%s" % sdk_path
+
+	# Generate SDK
+	backend_gerate_sdk_button.loading = true
+	var result = await RivetPluginBridge.get_plugin().cli.run_and_wait(["sidekick", "backend-generate-sdk", "--godot", "--output-path", sdk_path])
+	backend_gerate_sdk_button.loading = false
+	
+	# Rivet CLI error
+	if result.exit_code != 0 or !("Ok" in result.output):
+		RivetPluginBridge.display_cli_error(self, result)
+		return
+
+	# OpenGB error
+	if result.output["Ok"].exit_code != 0:
+		_full_cli_error_alert("Failed To Generate SDK", result.output["Ok"])
+		return
+
+	# Success
+	var alert = AcceptDialog.new()
+	alert.title = "SDK Generated Successfully"
+	alert.dialog_text = "SDK generted to \"%s\".\nYou can now access the backend with the \"Backend\" singleton." % sdk_path
+	alert.dialog_autowrap = true
+	alert.close_requested.connect(func(): alert.queue_free() )
+	add_child(alert)
+	alert.popup_centered(Vector2(400, 0))
+
+	# Nav to path
+	EditorInterface.get_file_system_dock().navigate_to_path(sdk_res_path)
+
+	# Add singleton
+	RivetPluginBridge.get_plugin().add_autoload.emit(BACKEND_SINGLETON_NAME, "%s/backend.gd" % sdk_res_path)
+
+	# TODO: Focus file system dock
 
 func _on_backend_edit_config_pressed():
 	var backend_json = load("res://backend.json")
@@ -226,3 +268,25 @@ func _on_backend_edit_config_pressed():
 		return
 
 	EditorInterface.edit_resource(backend_json)
+
+# TODO: Improve core error to handle this
+func _full_cli_error_alert(title, cmd_result):
+	# Build output details
+	var dialog_text = ""
+	if !cmd_result["stdout"].is_empty():
+		dialog_text += cmd_result["stdout"]
+	if !cmd_result["stderr"].is_empty():
+		if !dialog_text.is_empty():
+			dialog_text += "\n---\n"
+		dialog_text += cmd_result["stderr"]
+	dialog_text += "\n\nExit code: %s" % cmd_result["exit_code"]
+
+	# Alert
+	var alert = AcceptDialog.new()
+	alert.title = title
+	alert.dialog_text = dialog_text
+	alert.dialog_autowrap = true
+	alert.close_requested.connect(func(): alert.queue_free() )
+	add_child(alert)
+	alert.popup_centered_ratio(0.4)
+	return

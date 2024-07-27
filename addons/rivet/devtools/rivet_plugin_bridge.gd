@@ -21,7 +21,7 @@ static func _find_plugin():
 	return tree.get_root().get_child(0).get_node_or_null("RivetPlugin")
 
 static func display_cli_error(node: Node, cli_output) -> AcceptDialog:
-	var error = cli_output.output["Err"].c_unescape() if "Err" in cli_output.output else "\n".join(cli_output.formatted_output)
+	var error = cli_output.output["Err"].c_unescape() if "Err" in cli_output.output else cli_output
 	var alert = AcceptDialog.new()
 	alert.title = "Error!"
 	alert.dialog_text = error

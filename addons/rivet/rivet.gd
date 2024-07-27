@@ -1,4 +1,5 @@
 @tool extends EditorPlugin
+class_name RivetPlugin
 ## Mainpoint for the Rivet editor plugin.
 
 # MARK: Plugin
@@ -26,6 +27,7 @@ func _enter_tree():
 	
 	global = _RivetGlobal.new()
 	global.cli = cli
+	global.add_autoload.connect(_on_add_autoload)
 
 	_dock = preload("devtools/dock/dock.tscn").instantiate()
 	_dock.add_child(global)
@@ -38,8 +40,10 @@ func _enter_tree():
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, _dock)
 	_RivetEditorSettings.set_defaults()
 	
-
 func _exit_tree():
+	# Remove signal
+	global.add_autoload.disconnect(_on_add_autoload)
+
 	# Remove singleton
 	remove_autoload_singleton(AUTO_LOAD_RIVET_HELPER)
 	remove_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL)
@@ -52,3 +56,5 @@ func _exit_tree():
 	remove_control_from_docks(_dock)
 	_dock.free()
 
+func _on_add_autoload(name: String, path: String):
+	add_autoload_singleton(name, path)

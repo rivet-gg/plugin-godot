@@ -21,3 +21,10 @@ project.godot
 settings.cfg
 addons/*
 !addons/rivet
+
+# Rivet-generated
+.opengb/
+backend.json
+modules/
+backend/
+deno.*

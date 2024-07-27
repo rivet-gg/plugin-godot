@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvgoy5fid7fr5"]
+[gd_scene load_steps=5 format=3 uid="uid://b17eqs0bmrncs"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/dev_tab.gd" id="1_q8kto"]
 [ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/devtools/dock/elements/buttons_bar.tscn" id="2_o3824"]
 [ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/namespace_menu_button.tscn" id="3_jb44v"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/loading_button.gd" id="4_u02u4"]
 
 [node name="Develop" type="MarginContainer"]
 script = ExtResource("1_q8kto")
@@ -125,6 +126,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Backend"
 
+[node name="BackendGenerateSdk" type="Button" parent="DevelopContent/Backend"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Generate SDK"
+script = ExtResource("4_u02u4")
+
 [node name="BackendEditConfig" type="Button" parent="DevelopContent/Backend"]
 layout_mode = 2
 text = "Edit Config"
@@ -132,4 +139,5 @@ text = "Edit Config"
 [connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerStartButton" to="." method="_on_game_server_start_pressed"]
 [connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerRestartButton" to="." method="_on_game_server_restart_pressed"]
 [connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerStopButton" to="." method="_on_game_server_stop_pressed"]
+[connection signal="pressed" from="DevelopContent/Backend/BackendGenerateSdk" to="." method="_on_backend_generate_sdk_pressed"]
 [connection signal="pressed" from="DevelopContent/Backend/BackendEditConfig" to="." method="_on_backend_edit_config_pressed"]

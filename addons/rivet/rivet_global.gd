@@ -1,5 +1,6 @@
 
 extends Node
+class_name RivetGlobal
 ## Rivet [/br]
 ## Mainpoint of the Rivet plugin.
 ## It includes an easy access to APIs, helpers and tools. [/br]
@@ -17,6 +18,9 @@ var cloud_token: String
 var namespace_token: String 
 var game_id: String
 var api_endpoint: String
+
+## Add custom autoload via a global signal. Used for auto-generated SDK.s
+signal add_autoload(name: String, path: String)
 
 var matchmaker: _Packages.Matchmaker = _Packages.Matchmaker.new()
 
