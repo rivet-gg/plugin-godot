@@ -14,10 +14,10 @@ const ApiRequest = preload("api/rivet_request.gd")
 
 const _Packages = preload("api/rivet_packages.gd")
 
-var cloud_token: String
-var namespace_token: String 
-var game_id: String
 var api_endpoint: String
+var backend_endpoint: String 
+var cloud_token: String
+var game_id: String
 
 ## Add custom autoload via a global signal. Used for auto-generated SDK.s
 signal add_autoload(name: String, path: String)

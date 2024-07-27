@@ -42,11 +42,6 @@ static func _get_api_url():
 	var url_env = OS.get_environment("RIVET_API_ENDPOINT")
 	if url_env:
 		return url_env
-
-	# Use configuration shipped with game
-	var config = _get_configuration()
-	if config:
-		return config.api_endpoint
 	
 	# Fallback
 	return "https://api.rivet.gg"
@@ -65,41 +60,14 @@ static func _get_cloud_token():
 	else:
 		OS.crash("Rivet cloud token not found, this should only be called within the plugin")
 
-## Get authorization token used for making requests from within the game.
-##
-## The priority of tokens is:
-##
-## - If in editor, use the plugin token
-## - If provided by environment, then use that (allows for testing)
-## - Assume config is provided by the game client
-static func _get_runtime_token():
-	# Use plugin config if available
-	var bridge = _get_bridge()
-	if bridge != null:
-		var plugin = bridge.get_plugin()
-		if plugin:
-			return plugin.namespace_token
-
-	# Use configuration shipped with game
-	var token_env = OS.get_environment("RIVET_TOKEN")
-	if token_env:
-		return token_env
-
-	# Use configuration shipped with game
-	var config = _get_configuration()
-	if config and config.namespace_token:
-		return config.namespace_token
-	# Explicit else, since if OS.crash is called from the engine, it will just
-	# crash the editor.
-	else:
-		OS.crash("Rivet token not found, validate a config is shipped with the game in the .rivet folder")
-
 ## Builds the headers for a request, including the authorization token
 static func _build_headers(service: String) -> PackedStringArray:
-	var token = _get_cloud_token() if service == "cloud" else _get_runtime_token()
-	return [
-		"Authorization: Bearer " + token,
-	]
+	if service == "cloud":
+		return [
+			"Authorization: Bearer " + _get_cloud_token(),
+		]
+	else:
+		return []
 
 ## Builds a URL to Rivet cloud services
 static func _build_url(path: String, service: String) -> String:

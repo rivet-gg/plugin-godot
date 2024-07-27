@@ -12,7 +12,8 @@ signal bootstrapped
 const _global := preload("../rivet_global.gd")
 const _RivetEditorSettings = preload("./rivet_editor_settings.gd")
 
-static var game_namespaces: Array
+static var game_project = null
+static var game_environments: Array = []
 
 static var instance = RivetPluginBridge.new()
 
@@ -71,10 +72,8 @@ func save_configuration():
 	var plg = get_plugin()
 	var script: GDScript = GDScript.new()
 	script.source_code = RivetConstants.SCRIPT_TEMPLATE.format({
-		"api_endpoint": plg.api_endpoint,
-		"namespace_token": plg.namespace_token,
-		"cloud_token": plg.cloud_token,
-		"game_id": plg.game_id
+		"rivet_api_endpoint": plg.api_endpoint,
+		"backend_endpoint": plg.backend_endpoint,
 	})
 	var err: Error = ResourceSaver.save(script, RivetConstants.RIVET_CONFIGURATION_FILE_PATH)
 	if err: 
@@ -85,42 +84,56 @@ func bootstrap() -> Error:
 	if not plugin:
 		return FAILED
 
+	# Get bootstrap data from CLI
 	var result = await get_plugin().cli.run_and_wait([
 		"sidekick",
 		"get-bootstrap-data",
 	])
-
 	if result.exit_code != 0 or !("Ok" in result.output):
 		return FAILED
+	self.log("Loaded bootstrap data: %s" % result.output["Ok"])
 	
+	# Update config
 	get_plugin().api_endpoint = result.output["Ok"].api_endpoint
 	get_plugin().cloud_token = result.output["Ok"].token
 	get_plugin().game_id = result.output["Ok"].game_id
 
 	save_configuration()
 
-	var fetch_result = await _fetch_plugin_data()
-	if fetch_result == OK:
-		emit_signal("bootstrapped")
-	return fetch_result
+	# Fetch environments
+	var fetch_result = await _fetch_envs()
+	if fetch_result != OK:
+		return fetch_result
 
-func _fetch_plugin_data() -> Error:
-	var response = await get_plugin().GET("/cloud/games/%s" % get_plugin().game_id).wait_completed()
-	# response.body:
-	#	game.namespaces = {namespace_id, version_id, display_name}[]
-	#	game.versions = {version_id, display_name}[]
-	if response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
+	emit_signal("bootstrapped")
+
+	return OK
+
+## Fetch the project's environments.
+func _fetch_envs() -> Error:
+	var plugin = get_plugin()
+
+	# Get project
+	var proj_response = await plugin.GET("/cloud/games/%s/project" % plugin.game_id).wait_completed()
+	if proj_response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
+		return FAILED
+
+	if "project" not in proj_response.body:
+		RivetPluginBridge.log("TODO: Project does not exist, needs to be auto-created")
+		return FAILED
+	game_project = proj_response.body.project
+	self.log("Loaded project: %s" % game_project)
+
+	# Get environments
+	var envs_response = await plugin.GET("/cloud/backend/projects/%s/environments" % game_project.project_id).wait_completed()
+	if envs_response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
 		return FAILED
 	
-	var namespaces = response.body.game.namespaces
-	for space in namespaces:
-		var versions: Array = response.body.game.versions.filter(
-			func (version): return version.version_id == space.version_id
-		)
-		if versions.is_empty():
-			space["version"] = null
-		else:
-			space["version"] = versions[0]
+	game_environments = envs_response.body.environments
+	self.log("Loaded environments: %s" % game_environments)
 
-	game_namespaces = namespaces
 	return OK
+
+static func build_remote_env_host(env) -> String:
+	# TODO: Replace with data from API endpoint
+	return "https://%s--%s.backend.nathan16.gameinc.io" % [game_project.name_id, env.name_id]

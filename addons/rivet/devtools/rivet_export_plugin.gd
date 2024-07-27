@@ -15,7 +15,7 @@ func _export_begin(features: PackedStringArray, is_debug: bool, path: String, fl
 		push_warning("Rivet plugin not configured. Please configure it using plugin interface.")
 		return
 
-	# Set up the Rivet config file for this namespace
+	# Set up the Rivet config file
 	var configuration_file = FileAccess.open(RivetConstants.RIVET_CONFIGURATION_FILE_PATH, FileAccess.READ)
 	var source = configuration_file.get_as_text()
 	var script = GDScript.new()
