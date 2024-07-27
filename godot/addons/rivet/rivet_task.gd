@@ -45,10 +45,7 @@ func _init(name: String, input: Variant):
 	# Run command
 	#
 	# We need a dedicated RivetToolchain instance for each instance since we
-	# can have concurrent calls to nodes.
-	#
-	# We ser/de JSON on the main thread because of Godot's multithreading
-	# constraints.
+	# can't have concurrent sync calls to the same node.
 	var toolchain = RivetToolchain.new()
 	var run_config_json = JSON.stringify({
 		"abort_path": state_files.abort,

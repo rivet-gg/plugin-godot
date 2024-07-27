@@ -121,6 +121,3 @@ func _fetch_envs() -> Error:
 
 	return OK
 
-static func build_remote_env_host(env) -> String:
-	# TODO: Replace with data from API endpoint
-	return "https://%s--%s.backend.nathan16.gameinc.io" % [game_project.name_id, env.name_id]

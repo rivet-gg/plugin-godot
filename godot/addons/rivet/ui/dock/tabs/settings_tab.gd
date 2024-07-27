@@ -40,7 +40,7 @@ func _on_edit_settings(type: String):
 	elif type == "user":
 		path = paths["user_path"]
 	else:
-		push_error("Unreachable")
+		push_error("_on_edit_settings: unreachable")
 		return
 
 	# Open

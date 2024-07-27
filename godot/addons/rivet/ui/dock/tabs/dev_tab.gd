@@ -1,5 +1,7 @@
 @tool extends MarginContainer
 
+const _RivetGlobal = preload("../../../rivet_global.gd")
+
 # Environments
 @onready var _env_description: RichTextLabel = %EnvironmentDescription
 @onready var _warning: RichTextLabel = %WarningLabel
@@ -30,6 +32,7 @@ func _ready() -> void:
 
 	RivetPluginBridge.instance.bootstrapped.connect(_on_bootstrapped)
 	RivetPluginBridge.get_plugin().game_server_state_change.connect(_on_gs_state_change)
+	RivetPluginBridge.get_plugin().env_update.connect(_update_selected_env)
 	_env_selector.item_selected.connect(_on_env_selector_item_selected)
 
 	_on_gs_state_change.call_deferred(false)
@@ -41,18 +44,15 @@ func _on_env_selector_item_selected(_id: int) -> void:
 	_update_selected_env()
 		
 func _update_selected_env() -> void:
-	if _env_selector.selected_type == EnvMenuButton.SelectedType.LOCAL:
+	var plugin = RivetPluginBridge.get_plugin()
+	if plugin.env_type == _RivetGlobal.EnvType.LOCAL:
 		_warning.visible = false
-		_set_env_endpoint("http://localhost:6420")
-	elif _env_selector.selected_type == EnvMenuButton.SelectedType.REMOTE:
+	elif plugin.env_type == _RivetGlobal.EnvType.REMOTE:
 		_warning.visible = true
-		_set_env_endpoint(RivetPluginBridge.build_remote_env_host(_env_selector.selected_remote_env))
 	else:
-		push_error("Unknown env selector type: %s", _env_selector.selected_type)
+		push_error("Unknown env selector type: %s", plugin.env_type)
 
-func _set_env_endpoint(endpoint: String):
-	# Update config
-	RivetPluginBridge.get_plugin().backend_endpoint = endpoint
+	# Update the selected env
 	RivetPluginBridge.instance.save_configuration()
 
 func _all_actions_set_disabled(disabled: bool) -> void:
@@ -64,8 +64,9 @@ func _actions_disabled_while(fn: Callable) -> void:
 	_all_actions_set_disabled(false)
 
 func _on_deploy_button_pressed() -> void:
+	var plugin = RivetPluginBridge.get_plugin()
 	owner.change_tab(2)
-	owner.deploy_tab._env_selector.current_value = _env_selector.selected_remote_env
+	owner.deploy_tab._env_selector.current_value = plugin.remote_env
 	owner.deploy_tab._env_selector.selected = _env_selector.selected
 
 # MARK: Environments

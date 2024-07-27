@@ -58,10 +58,17 @@ func _enter_tree():
 	_backend_panel.auto_restart = true
 	_backend_panel.init_message = "Auto-started by Rivet plugin."
 	_backend_panel.get_task_config = func():
+		# Choose port to run on. This is to avoid potential conflicts with
+		# multiple projects running at the same time.
+		var choose_res = await global.run_toolchain_task("backend_choose_local_port")
+		global.local_backend_port = choose_res.port
+
+		# Run project
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
 			"name": "backend_dev",
 			"input": {
+				"port": choose_res.port,
 				"cwd": project_path,
 			}
 		}

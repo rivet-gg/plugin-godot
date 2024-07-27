@@ -1,5 +1,7 @@
 @tool extends MarginContainer
 
+const _RivetGlobal = preload("../../../rivet_global.gd")
+
 const _task_popup = preload("../../task_popup/task_popup.tscn")
 const _LoadingButton = preload("../../elements/loading_button.gd")
 
@@ -20,10 +22,16 @@ func _deploy():
 
 	var project_path = ProjectSettings.globalize_path("res://")
 
+	# Update selected env to remote
+	var plugin = RivetPluginBridge.get_plugin()
+	plugin.env_type = _RivetGlobal.EnvType.REMOTE
+	plugin.env_update.emit()
+
+	# Run deploy
 	var popup = _task_popup.instantiate()
 	popup.task_name = "deploy"
 	popup.task_input = {
-		"environment_id": env_selector.selected_remote_env.environment_id,
+		"environment_id": plugin.remote_env.environment_id,
 		"cwd": project_path,
 		"backend": deploy_steps_selector.selected == 0 or deploy_steps_selector.selected == 2,
 		"game_server": deploy_steps_selector.selected == 0 or deploy_steps_selector.selected == 1,

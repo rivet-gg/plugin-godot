@@ -20,8 +20,6 @@ impl IRefCounted for RivetToolchain {
 impl RivetToolchain {
     #[func]
     fn run_task(&mut self, run_config: String, name: String, input_json: String) -> String {
-        // godot_print!("[Rivet] [Task] {name} Input: {input_json}");
-
         let run_config = serde_json::from_str::<RunConfig>(&run_config).unwrap();
 
         let task_config = toolchain::tasks::get_task_config(&name);
@@ -33,8 +31,6 @@ impl RivetToolchain {
                 multithreaded: task_config.prefer_multithreaded,
             },
         );
-
-        // godot_print!("[Rivet] [Task] {name} Output: {output_json}");
 
         output_json
     }

@@ -26,7 +26,7 @@ func start_task(restart: bool = true):
 	stop_task()
 	
 	# Start new task
-	var config = get_task_config.call()
+	var config = await get_task_config.call()
 	task = _RivetTask.new(config.name, config.input)
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)

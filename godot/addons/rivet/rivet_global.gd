@@ -14,10 +14,62 @@ const ApiRequest = preload("api/rivet_request.gd")
 const _RivetTask = preload("rivet_task.gd")
 
 var api_endpoint: String
-var backend_endpoint: String 
 var game_version: String
 var cloud_token: String
 var game_id: String
+
+enum EnvType { LOCAL, REMOTE }
+
+## The type of env to connect to.
+var env_type = EnvType.LOCAL:
+	set(value):
+		env_type = value
+		env_update.emit()
+
+## ID of the selected environment.
+var remote_env_id = null:
+	set(value):
+		remote_env_id = value
+		env_update.emit()
+
+## The full data of the env being connected to.
+var remote_env = null:
+	get:
+		if env_type == EnvType.REMOTE:
+			for x in RivetPluginBridge.instance.game_environments:
+				if x.environment_id == remote_env_id:
+					return x
+
+			push_error("No env matching name id: %s" % remote_env_id)
+			return null
+		else:
+			return null
+
+# Port to run the backend on. This will be replaced on startup with a unique
+# port, 6420 is a fallback.
+var local_backend_port: int = 6420
+
+var local_backend_endpoint: String:
+	get:
+		return "http://localhost:%s" % local_backend_port
+
+# Endpoint to connect to.
+var backend_endpoint: String:
+	get:
+		if env_type == EnvType.LOCAL:
+			return local_backend_endpoint
+		elif env_type == EnvType.REMOTE:
+			return get_remote_env_endpoint(remote_env)
+		else:
+			push_error("backend_endpoint: unreachable")
+			return ""
+
+static func get_remote_env_endpoint(env) -> String:
+	if env != null:
+		# TODO: Replace with data from API endpoint
+		return "https://%s--%s.backend.nathan16.gameinc.io" % [RivetPluginBridge.instance.game_project.name_id, env.name_id]
+	else:
+		return "unknown"
 
 # Root nodes of all the plugin UI elements
 var plugin_nodes = []
@@ -34,6 +86,8 @@ signal start_backend()
 signal stop_backend()
 signal focus_backend()
 signal backend_state_change(running: bool)
+
+signal env_update()
 
 ## @experimental
 func POST(path: String, body: Dictionary) -> _api.RivetRequest:
