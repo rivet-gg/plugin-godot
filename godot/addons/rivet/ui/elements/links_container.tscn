@@ -1,25 +1,37 @@
-[gd_scene format=3 uid="uid://bk1uwgw1hhq2p"]
+[gd_scene load_steps=2 format=3 uid="uid://bk1uwgw1hhq2p"]
+
+[ext_resource type="Script" path="res://addons/rivet/ui/elements/links_container.gd" id="1_fejwt"]
 
 [node name="LinksContainer" type="HBoxContainer"]
 theme_override_constants/separation = 16
 alignment = 1
+script = ExtResource("1_fejwt")
 
-[node name="DashboardLink" type="LinkButton" parent="."]
+[node name="DashboardLink" type="Button" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Dashboard"
-uri = "https://hub.rivet.gg/"
+flat = true
 
-[node name="DocsLink" type="LinkButton" parent="."]
+[node name="DocsLink" type="Button" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Docs"
-uri = "https://rivet.gg/docs"
+flat = true
 
-[node name="DiscordLink" type="LinkButton" parent="."]
+[node name="DiscordLink" type="Button" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Discord"
-uri = "https://rivet.gg/discord"
+flat = true
 
-[node name="BugLInk" type="LinkButton" parent="."]
+[node name="BugLink" type="Button" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Report Bug"
-uri = "https://hub.rivet.gg/?modal=feedback&utm_source=godot"
+flat = true
+
+[connection signal="pressed" from="DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg"]]
+[connection signal="pressed" from="DocsLink" to="." method="_open_url" binds= ["https://rivet.gg/docs/godot"]]
+[connection signal="pressed" from="DiscordLink" to="." method="_open_url" binds= ["https://rivet.gg/discord"]]
+[connection signal="pressed" from="BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm_source=godot"]]

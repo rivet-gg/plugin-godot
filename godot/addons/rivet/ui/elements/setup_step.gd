@@ -3,6 +3,7 @@
 const _RivetLoadingButton = preload("loading_button.gd")
 
 # Config
+@export var icon: Texture2D
 @export_multiline var description: String
 @export var setup_text: String = "Setup"
 
@@ -18,12 +19,14 @@ var loading: bool:
 		_update_is_setup()
 
 # Elements
+@onready var _icon: TextureRect = %Icon
 @onready var _description: RichTextLabel = %Description
 @onready var _setup: _RivetLoadingButton = %Setup
 
 var _check_timer: Timer
 
 func _ready():
+	_icon.texture = icon
 	_description.text = description
 	_setup.text = setup_text
 
