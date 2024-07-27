@@ -95,7 +95,6 @@ size_flags_vertical = 3
 
 [node name="Login" parent="VBoxContainer/Control" instance=ExtResource("4_76k63")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -107,10 +106,5 @@ size_flags_vertical = 3
 
 [node name="Main" parent="VBoxContainer/Control" instance=ExtResource("5_3rpdd")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DocsLink" to="." method="_open_url" binds= ["https://rivet.gg/docs/godot"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm_source=godot"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DiscordLink" to="." method="_open_url" binds= ["https://rivet.gg/discord"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/GitHubLink" to="." method="_open_url" binds= ["https://github.com/rivet-gg/rivet"]]

@@ -2,8 +2,6 @@ extends RefCounted
 class_name RivetTask
 ## Handles running subprocess & piping logs.
 
-const _RivetThread = preload("rivet_thread.gd")
-
 enum LogType { STDOUT, STDERR }
 
 const POLL_LOGS_INTERVAL = 0.25
@@ -20,12 +18,13 @@ signal task_error(error: Variant)
 ## Called on either OK or error.
 signal task_output(error: Variant)
 
+# Config
 var _name: String
 var _input: Variant
 
 # State
-var is_running = true
 var thread
+var is_running = true
 var state_files
 
 func _init(name: String, input: Variant):
@@ -49,14 +48,18 @@ func _init(name: String, input: Variant):
 	# We ser/de JSON on the main thread because of Godot's multithreading
 	# constraints.
 	var toolchain = RivetToolchain.new()
-	var run_config = JSON.stringify({
+	var run_config_json = JSON.stringify({
 		"abort_path": state_files.abort,
 		"output_path": state_files.output,
 	})
 	var input_json = JSON.stringify(_input)
-	var output = _RivetThread.new(_run.bind(toolchain, run_config, input_json))
-	output.finished.connect(_on_finish)
-	output.killed.connect(_on_finish)
+
+	thread = Thread.new()
+	thread.start(func():
+		var output = _run(toolchain, run_config_json, input_json)
+		call_deferred("_on_finish")
+		return output
+	)
 
 	# Tail logs
 	_tail_logs(state_files.output)
@@ -64,17 +67,20 @@ func _init(name: String, input: Variant):
 func _run(toolchain: RivetToolchain, run_config_json: String, input_json: String):
 	return toolchain.run_task(run_config_json, _name, input_json)
 
-func _on_finish(output_json: String):
+func _on_finish():
+	# This will not block because this event is emitted after the task is cancelled
+	var output_json = thread.wait_to_finish()
+
 	is_running = false
 
 	var output = JSON.parse_string(output_json)
 
 	task_output.emit(output)
 	if "Ok" in output:
-		RivetPluginBridge.log("Task OK: %s" % output["Ok"])
+		RivetPluginBridge.log("[%s] Success: %s" % [_name, output["Ok"]])
 		task_ok.emit(output["Ok"])
 	else:
-		RivetPluginBridge.error("Task error: %s" % output["Err"])
+		RivetPluginBridge.error("[%s] Error: %s" % [_name, output["Err"]])
 		task_error.emit(output["Err"])
 
 func _on_killed():
