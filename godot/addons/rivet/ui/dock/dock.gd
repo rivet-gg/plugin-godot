@@ -44,7 +44,6 @@ func _get_screen_node(screen: Screen) -> Node:
 func _open_url(url: String):
 	OS.shell_open(url)
 
-
 func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		OS.shell_open("https://rivet.gg")

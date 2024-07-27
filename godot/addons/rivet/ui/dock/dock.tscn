@@ -62,14 +62,6 @@ icon = ExtResource("4_f062m")
 flat = true
 icon_alignment = 1
 
-[node name="BugLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-tooltip_text = "Report Bug & Feedback"
-mouse_default_cursor_shape = 2
-icon = ExtResource("5_sixqr")
-flat = true
-icon_alignment = 1
-
 [node name="DiscordLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 tooltip_text = "Discord"
@@ -78,7 +70,16 @@ icon = ExtResource("6_tqi4d")
 flat = true
 icon_alignment = 1
 
+[node name="BugLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Report Bug & Feedback"
+mouse_default_cursor_shape = 2
+icon = ExtResource("5_sixqr")
+flat = true
+icon_alignment = 1
+
 [node name="GitHubLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
 tooltip_text = "Discord"
 mouse_default_cursor_shape = 2
@@ -95,6 +96,7 @@ size_flags_vertical = 3
 
 [node name="Login" parent="VBoxContainer/Control" instance=ExtResource("4_76k63")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -106,5 +108,9 @@ size_flags_vertical = 3
 
 [node name="Main" parent="VBoxContainer/Control" instance=ExtResource("5_3rpdd")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DocsLink" to="." method="_open_url" binds= ["https://rivet.gg/docs"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DiscordLink" to="." method="_open_url" binds= ["https://rivet.gg/discord"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm=godot"]]

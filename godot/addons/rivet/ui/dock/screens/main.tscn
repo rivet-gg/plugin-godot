@@ -11,18 +11,17 @@
 [ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/ui/dock/tabs/settings_tab.tscn" id="5_xa4ex"]
 [ext_resource type="Texture2D" uid="uid://d036tjn7gksmn" path="res://addons/rivet/images/font_awesome/gear.svg" id="6_0xrve"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngw8t"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13csq"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 0.365, 0.365, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_detail = 1
+content_margin_bottom = 5.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="Settings" type="VBoxContainer"]
 offset_right = 428.0
@@ -83,7 +82,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_ngw8t")
+theme_override_styles/panel = SubResource("StyleBoxFlat_13csq")
 tabs_visible = false
 
 [node name="Setup" parent="TabContainer" instance=ExtResource("3_g3s5h")]
