@@ -43,27 +43,31 @@ func _init(name: String, input: Variant):
 
 	# Run command
 	#
-	# We need a deidcated RivetToolchain instance for each instance since we
-	# can have concurrent calls to nodes (TBD on why, this could be either
-	# Godot Rust or something specific to Godot)
-	var plugin = RivetPluginBridge.get_plugin()
+	# We need a dedicated RivetToolchain instance for each instance since we
+	# can have concurrent calls to nodes.
+	#
+	# We ser/de JSON on the main thread because of Godot's multithreading
+	# constraints.
 	var toolchain = RivetToolchain.new()
-	var run_config = {
+	var run_config = JSON.stringify({
 		"abort_path": state_files.abort,
 		"output_path": state_files.output,
-	}
-	var output = _RivetThread.new(_run.bind(toolchain, run_config))
+	})
+	var input_json = JSON.stringify(_input)
+	var output = _RivetThread.new(_run.bind(toolchain, run_config, input_json))
 	output.finished.connect(_on_finish)
 	output.killed.connect(_on_finish)
 
 	# Tail logs
 	_tail_logs(state_files.output)
 
-func _run(toolchain: RivetToolchain, run_config):
-	return toolchain.run_task(run_config, _name, _input)
+func _run(toolchain: RivetToolchain, run_config_json: String, input_json: String):
+	return toolchain.run_task(run_config_json, _name, input_json)
 
-func _on_finish(output):
+func _on_finish(output_json: String):
 	is_running = false
+
+	var output = JSON.parse_string(output_json)
 
 	task_output.emit(output)
 	if "Ok" in output:

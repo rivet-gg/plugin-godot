@@ -1,4 +1,5 @@
-use godot::{classes::Json, prelude::*};
+use godot::prelude::*;
+use toolchain::tasks::RunConfig;
 
 use crate::util::runtime::{block_on, BlockOnOpts};
 
@@ -18,22 +19,12 @@ impl IRefCounted for RivetToolchain {
 #[godot_api]
 impl RivetToolchain {
     #[func]
-    fn run_task(
-        &mut self,
-        run_config: Dictionary,
-        name: String,
-        input_variant: Variant,
-    ) -> Variant {
-        let input_json = Json::stringify(input_variant).to_string();
+    fn run_task(&mut self, run_config: String, name: String, input_json: String) -> String {
+        // godot_print!("[Rivet] [Task] {name} Input: {input_json}");
 
-        godot_print!("[Rivet] [Task] {name} Input: {input_json}");
+        let run_config = serde_json::from_str::<RunConfig>(&run_config).unwrap();
 
         let task_config = toolchain::tasks::get_task_config(&name);
-
-        let run_config = toolchain::tasks::RunConfig {
-            abort_path: run_config.at("abort_path").to(),
-            output_path: run_config.at("output_path").to(),
-        };
 
         let name_inner = name.clone();
         let output_json = block_on(
@@ -43,9 +34,8 @@ impl RivetToolchain {
             },
         );
 
-        godot_print!("[Rivet] [Task] {name} Output: {output_json}");
+        // godot_print!("[Rivet] [Task] {name} Output: {output_json}");
 
-        let output_variant = Json::parse_string(output_json.into());
-        output_variant
+        output_json
     }
 }

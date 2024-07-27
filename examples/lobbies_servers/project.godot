@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Rivet="*res://addons/rivet/rivet_global.gd"
 Backend="*res://addons/backend/backend.gd"
+Rivet="*res://addons/rivet/rivet_global.gd"
 
 [dotnet]
 

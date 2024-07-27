@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "Debug Project (Godot 4)",
+            "type": "lldb",
+            "request": "launch",
+            "preLaunchTask": "rust: cargo build",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "--path", "../examples/lobbies_servers",
+                "-e",
+                "-w",
+            ],
+            "linux": {
+                "program": "/usr/local/bin/godot4",
+            },
+            "windows": {
+                "program": "C:\\Program Files\\Godot\\Godot_v4.2.2.exe",
+            },
+            "osx": {
+                "program": "/Applications/Godot_mono.app/Contents/MacOS/Godot",
+            }
+        }
+    ]
+}
