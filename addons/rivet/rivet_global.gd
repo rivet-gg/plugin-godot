@@ -21,6 +21,8 @@ var game_id: String
 
 ## Add custom autoload via a global signal. Used for auto-generated SDK.s
 signal add_autoload(name: String, path: String)
+signal focus_game_server()
+signal focus_backend()
 
 var matchmaker: _Packages.Matchmaker = _Packages.Matchmaker.new()
 

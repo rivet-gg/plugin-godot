@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://d3l0arylk0h43"]
 
-[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_nj27r"]
+[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/elements/logo_container.tscn" id="1_nj27r"]
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/installer.gd" id="1_s8aji"]
-[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_rgtqq"]
-[ext_resource type="PackedScene" uid="uid://cdad7w76me3eu" path="res://addons/rivet/devtools/dock/elements/loading_button.tscn" id="4_ahrlb"]
+[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/elements/links_container.tscn" id="2_rgtqq"]
+[ext_resource type="PackedScene" uid="uid://cdad7w76me3eu" path="res://addons/rivet/devtools/elements/loading_button.tscn" id="4_ahrlb"]
 
 [node name="Installer" type="VBoxContainer"]
 offset_right = 500.0

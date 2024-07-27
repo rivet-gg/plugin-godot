@@ -9,26 +9,8 @@ const BACKEND_SINGLETON_NAME = "Backend"
 @onready var deploy_button: Button = %DeployButton
 @onready var env_selector = %AuthEnvSelector
 
-# Game Server
-var game_server_poll_timer: Timer
-var game_server_pid: int = -1
-@onready var game_server_start_button: Button = %GameServerStartButton
-@onready var game_server_stop_button: Button = %GameServerStopButton
-@onready var game_server_restart_button: Button = %GameServerRestartButton
-@onready var game_server_status_label: Label = %GameServerStatusLabel
-@onready var game_server_show_logs: CheckBox = %GameServerShowLogs
-
 # Backend
 @onready var backend_gerate_sdk_button: Button = %BackendGenerateSdk
-
-# Backend Server
-var backend_server_poll_timer: Timer
-var backend_server_pid: int = -1
-@onready var backend_server_start_button: Button = %BackendServerStartButton
-@onready var backend_server_stop_button: Button = %BackendServerStopButton
-@onready var backend_server_restart_button: Button = %BackendServerRestartButton
-@onready var backend_server_status_label: Label = %BackendServerStatusLabel
-@onready var backend_server_show_logs: CheckBox = %BackendServerShowLogs
 
 func _ready() -> void:
 	if get_tree().edited_scene_root == self:
@@ -57,26 +39,6 @@ func _ready() -> void:
 	RivetPluginBridge.instance.bootstrapped.connect(_on_bootstrapped)
 	env_selector.item_selected.connect(_on_env_selector_item_selected)
 	deploy_button.pressed.connect(_on_deploy_button_pressed)
-
-	# Game server
-	game_server_poll_timer = Timer.new()
-	game_server_poll_timer.wait_time = 0.5
-	game_server_poll_timer.paused = true
-	game_server_poll_timer.autostart = true
-	game_server_poll_timer.timeout.connect(_poll_game_server_status)
-	add_child(game_server_poll_timer)
-
-	_poll_game_server_status()
-
-	# Backend server
-	backend_server_poll_timer = Timer.new()
-	backend_server_poll_timer.wait_time = 0.5
-	backend_server_poll_timer.paused = true
-	backend_server_poll_timer.autostart = true
-	backend_server_poll_timer.timeout.connect(_poll_backend_server_status)
-	add_child(backend_server_poll_timer)
-
-	_poll_backend_server_status()
 
 func _on_bootstrapped() -> void:
 	_update_selected_env()
@@ -138,79 +100,6 @@ func _on_deploy_button_pressed() -> void:
 	owner.change_tab(1)
 	owner.deploy_tab.env_selector.current_value = env_selector.selected_remote_env
 	owner.deploy_tab.env_selector.selected = env_selector.selected
-
-# MARK: Game Server
-func _on_game_server_start_pressed():
-	start_game_server()
-
-func _on_game_server_stop_pressed():
-	stop_game_server()
-
-func _on_game_server_restart_pressed():
-	start_game_server()
-
-func start_game_server():
-	if game_server_pid != -1:
-		RivetPluginBridge.log("Restarting server, old pid %s" % game_server_pid)
-		stop_game_server()
-
-	if game_server_show_logs.button_pressed:
-		# Running with logs does not have a PID we can kill
-		game_server_pid = -1
-
-		# Run via Rivet CLI to show the terminal. Get the PID from the process
-		# the Rivet CLI spawned.
-		var full_args = ["sidekick", "show-term", "--", OS.get_executable_path()]
-		full_args.append_array(_game_server_run_args())
-		var result = RivetPluginBridge.get_plugin().cli.run_and_wait_sync(full_args)
-		if result.exit_code != 0 or !("Ok" in result.output):
-			RivetPluginBridge.display_cli_error(self, result)
-			return
-		RivetPluginBridge.log("Started server with logs")
-	else:
-		# TODO: Use background thread for this & collect output to a file
-		# Run natively without terminal
-		game_server_pid = OS.create_process(OS.get_executable_path(), _game_server_run_args())
-		RivetPluginBridge.log("Started server without logs %s" % game_server_pid)
-
-	_poll_game_server_status()
-
-func stop_game_server():
-	if game_server_pid != -1:
-		RivetPluginBridge.log("Stopped serer %s" % game_server_pid)
-		OS.kill(game_server_pid)
-		game_server_pid = -1
-		_poll_game_server_status()
-	else:
-		RivetPluginBridge.log("Server not running")
-
-func _game_server_run_args() -> PackedStringArray:
-	var project_path = ProjectSettings.globalize_path("res://")
-	return ["--path", project_path, "--headless", "--", "--server"]
-
-## Checks if the server process is still running.
-func _poll_game_server_status():
-	# Check if server still running
-	if game_server_pid != -1 and !OS.is_process_running(game_server_pid):
-		RivetPluginBridge.log("Server process exited %s" % game_server_pid)
-		game_server_pid = -1
-	
-	# Update stop button
-	if game_server_pid != -1:
-		game_server_poll_timer.paused = false
-		game_server_status_label.text = "Game server running (pid %s)" % game_server_pid
-		game_server_start_button.visible = false
-		game_server_stop_button.visible = true
-		game_server_restart_button.visible = true
-		game_server_status_label.visible = true
-		game_server_show_logs.visible = false
-	else:
-		game_server_poll_timer.paused = true
-		game_server_start_button.visible = true
-		game_server_stop_button.visible = false
-		game_server_restart_button.visible = false
-		game_server_status_label.visible = false
-		game_server_show_logs.visible = true
 
 # MARK: Backend
 func _on_backend_generate_sdk_pressed():
@@ -286,73 +175,11 @@ func _full_cli_error_alert(title, cmd_result):
 	alert.popup_centered_ratio(0.4)
 	return
 
-# MARK: Backend Server
-func _on_backend_server_start_pressed():
-	start_backend_server()
+func _on_manage_game_server_pressed():
+	# Focus the game server tab
+	RivetPluginBridge.get_plugin().focus_game_server.emit()
 
-func _on_backend_server_stop_pressed():
-	stop_backend_server()
 
-func _on_backend_server_restart_pressed():
-	start_backend_server()
-
-func start_backend_server():
-	if backend_server_pid != -1:
-		RivetPluginBridge.log("Restarting server, old pid %s" % backend_server_pid)
-		stop_backend_server()
-
-	if backend_server_show_logs.button_pressed:
-		# Running with logs does not have a PID we can kill
-		backend_server_pid = -1
-
-		# Run via Rivet CLI to show the terminal. Get the PID from the process
-		# the Rivet CLI spawned.
-		var result = await RivetPluginBridge.get_plugin().cli.run_and_wait(["sidekick", "--show-terminal", "backend-dev"])
-		if result.exit_code != 0 or !("Ok" in result.output):
-			RivetPluginBridge.display_cli_error(self, result)
-			return
-		RivetPluginBridge.log("Started backend server with logs")
-	else:
-		# TODO: Use background thread for this in order to get output response
-		# Run natively without terminal
-		backend_server_pid = RivetPluginBridge.get_plugin().cli.run_with_pid(["sidekick", "backend-dev", "--capture-output", "--no-color"])
-		RivetPluginBridge.log("Started backend server without logs %s" % backend_server_pid)
-
-	_poll_backend_server_status()
-
-func stop_backend_server():
-	if backend_server_pid != -1:
-		RivetPluginBridge.log("Stopped serer %s" % backend_server_pid)
-		OS.kill(backend_server_pid)
-		backend_server_pid = -1
-		_poll_backend_server_status()
-	else:
-		RivetPluginBridge.log("Server not running")
-
-func _server_run_args() -> PackedStringArray:
-	var project_path = ProjectSettings.globalize_path("res://")
-	return ["--path", project_path, "--headless", "--", "--server"]
-
-## Checks if the server process is still running.
-func _poll_backend_server_status():
-	# Check if server still running
-	if backend_server_pid != -1 and !OS.is_process_running(backend_server_pid):
-		RivetPluginBridge.log("Server process exited %s" % backend_server_pid)
-		backend_server_pid = -1
-	
-	# Update stop button
-	if backend_server_pid != -1:
-		backend_server_poll_timer.paused = false
-		backend_server_status_label.text = "Backend server running (pid %s)" % backend_server_pid
-		backend_server_start_button.visible = false
-		backend_server_stop_button.visible = true
-		backend_server_restart_button.visible = true
-		backend_server_status_label.visible = true
-		backend_server_show_logs.visible = false
-	else:
-		backend_server_poll_timer.paused = true
-		backend_server_start_button.visible = true
-		backend_server_stop_button.visible = false
-		backend_server_restart_button.visible = false
-		backend_server_status_label.visible = false
-		backend_server_show_logs.visible = true
+func _on_manage_backend_pressed():
+	# Focus the backend tab
+	RivetPluginBridge.get_plugin().focus_backend.emit()

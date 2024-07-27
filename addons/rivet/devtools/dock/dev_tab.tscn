@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvgoy5fid7fr5"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/dev_tab.gd" id="1_q8kto"]
-[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/dock/elements/env_menu_button.tscn" id="2_e4lc1"]
-[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/loading_button.gd" id="4_u02u4"]
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/elements/env_menu_button.tscn" id="2_e4lc1"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/elements/loading_button.gd" id="4_u02u4"]
 
 [node name="Develop" type="MarginContainer"]
 script = ExtResource("1_q8kto")
@@ -52,49 +52,6 @@ text = "Deploy"
 [node name="HSeparator" type="HSeparator" parent="DevelopContent"]
 layout_mode = 2
 
-[node name="Game Server" type="VBoxContainer" parent="DevelopContent"]
-layout_mode = 2
-
-[node name="GameServer" type="Label" parent="DevelopContent/Game Server"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Game Server"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="DevelopContent/Game Server"]
-layout_mode = 2
-
-[node name="GameServerStartButton" type="Button" parent="DevelopContent/Game Server/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Start"
-
-[node name="GameServerRestartButton" type="Button" parent="DevelopContent/Game Server/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Restart
-"
-
-[node name="GameServerStopButton" type="Button" parent="DevelopContent/Game Server/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Stop"
-
-[node name="GameServerStatusLabel" type="Label" parent="DevelopContent/Game Server"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Game server not running"
-
-[node name="GameServerShowLogs" type="CheckBox" parent="DevelopContent/Game Server"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Show Server Logs"
-
-[node name="HSeparator2" type="HSeparator" parent="DevelopContent"]
-layout_mode = 2
-
 [node name="Backend" type="VBoxContainer" parent="DevelopContent"]
 layout_mode = 2
 
@@ -113,55 +70,21 @@ script = ExtResource("4_u02u4")
 layout_mode = 2
 text = "Edit Config"
 
-[node name="HSeparator3" type="HSeparator" parent="DevelopContent"]
+[node name="HSeparator2" type="HSeparator" parent="DevelopContent"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DevelopContent"]
+[node name="Game Server" type="VBoxContainer" parent="DevelopContent"]
 layout_mode = 2
 
-[node name="BackendServer" type="Label" parent="DevelopContent/VBoxContainer"]
+[node name="ManageGameServer" type="Button" parent="DevelopContent/Game Server"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Backend Server
-"
+text = "Manage Game Server"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DevelopContent/VBoxContainer"]
+[node name="ManageBackend" type="Button" parent="DevelopContent/Game Server"]
 layout_mode = 2
+text = "Manage Backend Server"
 
-[node name="BackendServerStartButton" type="Button" parent="DevelopContent/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Start"
-
-[node name="BackendServerRestartButton" type="Button" parent="DevelopContent/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Restart
-"
-
-[node name="BackendServerStopButton" type="Button" parent="DevelopContent/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Stop"
-
-[node name="BackendServerStatusLabel" type="Label" parent="DevelopContent/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Game server not running"
-
-[node name="BackendServerShowLogs" type="CheckBox" parent="DevelopContent/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Show Server Logs"
-
-[connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerStartButton" to="." method="_on_game_server_start_pressed"]
-[connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerRestartButton" to="." method="_on_game_server_restart_pressed"]
-[connection signal="pressed" from="DevelopContent/Game Server/HBoxContainer/GameServerStopButton" to="." method="_on_game_server_stop_pressed"]
 [connection signal="pressed" from="DevelopContent/Backend/BackendGenerateSdk" to="." method="_on_backend_generate_sdk_pressed"]
 [connection signal="pressed" from="DevelopContent/Backend/BackendEditConfig" to="." method="_on_backend_edit_config_pressed"]
-[connection signal="pressed" from="DevelopContent/VBoxContainer/HBoxContainer/BackendServerStartButton" to="." method="_on_backend_server_start_pressed"]
-[connection signal="pressed" from="DevelopContent/VBoxContainer/HBoxContainer/BackendServerRestartButton" to="." method="_on_backend_server_restart_pressed"]
-[connection signal="pressed" from="DevelopContent/VBoxContainer/HBoxContainer/BackendServerStopButton" to="." method="_on_backend_server_stop_pressed"]
+[connection signal="pressed" from="DevelopContent/Game Server/ManageGameServer" to="." method="_on_manage_game_server_pressed"]
+[connection signal="pressed" from="DevelopContent/Game Server/ManageBackend" to="." method="_on_manage_backend_pressed"]

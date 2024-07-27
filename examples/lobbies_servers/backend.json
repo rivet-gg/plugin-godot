@@ -13,6 +13,7 @@
 		"lobbies": {
 			"config": {
 				"lobbies": {
+					"regions": ["local"],
 					"backend": {
 						"localDevelopment": {
 							"tags": { "test": "5" },

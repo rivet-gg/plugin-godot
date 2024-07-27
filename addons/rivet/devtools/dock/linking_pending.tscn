@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://cpiafwq88eamc"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/linking_pending.gd" id="1_2ygnd"]
-[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="1_oda17"]
-[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="2_c2osa"]
-[ext_resource type="Script" path="res://addons/rivet/devtools/dock/elements/rivet_rich_text_label.gd" id="4_1rtmw"]
+[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/elements/logo_container.tscn" id="1_oda17"]
+[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/elements/links_container.tscn" id="2_c2osa"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/elements/rivet_rich_text_label.gd" id="4_1rtmw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ibb0"]
 content_margin_left = 4.0

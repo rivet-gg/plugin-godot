@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://mag2n5yvyus8"]
 
 [ext_resource type="Script" path="res://addons/rivet/devtools/dock/login.gd" id="1_spqru"]
-[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/dock/elements/logo_container.tscn" id="2_qku2v"]
-[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/dock/elements/links_container.tscn" id="3_cecsx"]
+[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/devtools/elements/logo_container.tscn" id="2_qku2v"]
+[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/devtools/elements/links_container.tscn" id="3_cecsx"]
 
 [sub_resource type="Image" id="Image_3ub0h"]
 data = {

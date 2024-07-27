@@ -123,12 +123,14 @@ func setup_multiplayer():
 			peer = ENetMultiplayerPeer.new()
 			peer.set_bind_ip(_server_hostname)
 			peer.create_server(_server_port)
+			# TODO:  crash if create server fails
 			multiplayer.set_multiplayer_peer(peer)
 		elif transport == Transport.WEB_SOCKET:
 			BackendLogger.log("Starting WebSocket server: %s:%s" % [_server_hostname, _server_port])
 			
 			peer = WebSocketMultiplayerPeer.new()
 			peer.create_server(_server_port, _server_hostname)
+			# TODO:  crash if create server fails
 			multiplayer.set_multiplayer_peer(peer)
 		else:
 			BackendLogger.error("Unsupported transport: %s" % transport)
