@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://3ba6qgalgy87"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/task_panel/task_panel.gd" id="1_egn3a"]
+[ext_resource type="PackedScene" uid="uid://v3rf8tpycjfv" path="res://addons/rivet/devtools/elements/task_logs.tscn" id="2_2j001"]
+
+[node name="Panel" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_egn3a")
+
+[node name="TaskLogs" parent="." instance=ExtResource("2_2j001")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start"
+
+[node name="Stop" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Stop"
+
+[node name="Restart" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Restart"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ClearLogs" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Clear"
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Stop" to="." method="_on_stop_pressed"]
+[connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="VBoxContainer/ClearLogs" to="." method="_on_clear_logs_pressed"]

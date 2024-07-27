@@ -13,18 +13,26 @@
 		"lobbies": {
 			"config": {
 				"lobbies": {
-					"regions": ["local"],
+          "regions": ["atl"],
 					"backend": {
-						"localDevelopment": {
-							"tags": { "test": "5" },
+						"server": {
+              "environment": {
+                "SERVER_HOSTNAME": "0.0.0.0"
+              },
+							"tags": {},
 							"ports": {
-								"game": { "protocol": "udp", "port": 7777 }
-							}
+								"game": { "protocol": "udp", "serverPort": 7777 }
+							},
+              "resources": { "cpu": 50, "memory": 50 }
 						}
 					}
 				}
 			}
 		},
-		"rivet": {}
+		"rivet": {
+      "config": {
+        "apiEndpoint": "https://api.nathan16.gameinc.io"
+      }
+		}
 	}
 }

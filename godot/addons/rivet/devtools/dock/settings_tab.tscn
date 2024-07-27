@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxoly5h64g3ul"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/settings_tab.gd" id="1_qo1d8"]
+
+[node name="Settings" type="MarginContainer"]
+script = ExtResource("1_qo1d8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="UnlinkGameButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Unlink game"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Settings" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="User" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Edit User"
+
+[node name="Project" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Edit Project"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "TODO: Documentation"
+uri = "https://rivet.gg"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/User" to="." method="_on_edit_settings" binds= ["user"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Project" to="." method="_on_edit_settings" binds= ["project"]]

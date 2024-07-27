@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "rivet-plugin-godot",
+]
+

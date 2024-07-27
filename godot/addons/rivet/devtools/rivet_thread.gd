@@ -1,0 +1,44 @@
+extends RefCounted
+class_name RivetThread
+## A wrapper around Thread that allows you to wait for the thread to finish and get the result.
+## 
+## @experimental
+
+signal finished(output: Variant)
+signal killed()
+
+var is_running = true
+
+var _mutex: Mutex
+var _thread: Thread
+var _is_killed: bool = false
+
+## Result of the thread.
+var output: Variant = null
+
+## Returns the output of the thread.
+func wait_to_finish():
+	await finished
+	return output
+
+func _init(fn: Callable) -> void:
+	_thread = Thread.new()
+	_mutex = Mutex.new()
+	_thread.start(func():
+		var result = fn.call()
+		_mutex.lock()
+		is_running = false
+		if not _is_killed:
+			output = result
+			call_deferred("emit_signal", "finished", result)
+		_mutex.unlock()
+		return result
+	)
+
+# TODO: This doesn't actually kill the thread, it just ignores the finish signal.
+func kill() -> void:
+	_mutex.lock()
+	is_running = false
+	_is_killed = true
+	call_deferred("emit_signal", "killed")
+	_mutex.unlock()

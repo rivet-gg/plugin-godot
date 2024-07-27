@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://co3bixf3w528r"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/task_popup/task_popup.gd" id="1_xhgpl"]
+[ext_resource type="PackedScene" uid="uid://v3rf8tpycjfv" path="res://addons/rivet/devtools/elements/task_logs.tscn" id="2_x3eoc"]
+
+[node name="TaskPopup" type="Window"]
+initial_position = 1
+size = Vector2i(1500, 1000)
+script = ExtResource("1_xhgpl")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="TaskLogs" parent="Panel/VBoxContainer" instance=ExtResource("2_x3eoc")]
+unique_name_in_owner = true
+layout_mode = 2
+init_message = "Press start to start game server."
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Done" type="Button" parent="Panel/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="Panel/VBoxContainer/PanelContainer/Done" to="." method="_on_done_pressed"]

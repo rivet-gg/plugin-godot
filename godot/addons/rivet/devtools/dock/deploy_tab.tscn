@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=3 uid="uid://soum1c8oyrso"]
+
+[ext_resource type="Script" path="res://addons/rivet/devtools/dock/deploy_tab.gd" id="1_7k6ip"]
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/elements/env_menu_button.tscn" id="2_5hxk2"]
+[ext_resource type="Script" path="res://addons/rivet/devtools/elements/loading_button.gd" id="3_fobli"]
+
+[node name="Deploy" type="MarginContainer"]
+offset_right = 734.0
+offset_bottom = 109.0
+script = ExtResource("1_7k6ip")
+
+[node name="Deployment Fields" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Deployment Fields"]
+layout_mode = 2
+
+[node name="Environment" type="Label" parent="Deployment Fields/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Environment"
+
+[node name="ReloadEnvButton" type="LinkButton" parent="Deployment Fields/HBoxContainer2"]
+layout_mode = 2
+text = "Reload"
+
+[node name="DeployEnvSelector" parent="Deployment Fields" instance=ExtResource("2_5hxk2")]
+layout_mode = 2
+remote_only = true
+
+[node name="Environment" type="Label" parent="Deployment Fields"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Steps"
+
+[node name="DeployStepsSelector" type="OptionButton" parent="Deployment Fields"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Deploy Game Server & Backend"
+popup/item_0/id = 0
+popup/item_1/text = "Deploy Game Server"
+popup/item_1/id = 1
+popup/item_2/text = "Deploy Backend"
+popup/item_2/id = 2
+
+[node name="Spacer" type="Control" parent="Deployment Fields"]
+custom_minimum_size = Vector2(2.08165e-12, 10)
+layout_mode = 2
+
+[node name="DeployButton" type="Button" parent="Deployment Fields"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "Build & Deploy"
+script = ExtResource("3_fobli")
+
+[node name="Actions" type="HBoxContainer" parent="Deployment Fields"]
+visible = false
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="BuildsButton" type="Button" parent="Deployment Fields/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "TODO: Builds"
+
+[node name="LogsButton" type="Button" parent="Deployment Fields/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+text = "TODO: Logs"
+
+[connection signal="pressed" from="Deployment Fields/HBoxContainer2/ReloadEnvButton" to="." method="_on_reload_env_button_pressed"]
+[connection signal="pressed" from="Deployment Fields/DeployButton" to="." method="_on_deploy_button_pressed"]
+[connection signal="pressed" from="Deployment Fields/Actions/BuildsButton" to="." method="_on_open_link" binds= ["builds"]]
+[connection signal="pressed" from="Deployment Fields/Actions/LogsButton" to="." method="_on_open_link" binds= ["logs"]]
