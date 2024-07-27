@@ -1,4 +1,5 @@
 @tool extends Button
+class_name RivetLoadingButton
 
 @export var loading: bool: set = _set_loading
 

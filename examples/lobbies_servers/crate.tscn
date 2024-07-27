@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3eqk7x018tyk"]
+
+[ext_resource type="Texture2D" uid="uid://b066tp0dc5oiv" path="res://assets/crate.png" id="1_7fy22"]
+
+[node name="Crate" type="Node2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_7fy22")

@@ -26,7 +26,7 @@ project/assembly_name="Lobbies (Servers)"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/rivet/plugin.cfg")
+enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg", "res://addons/rivet/plugin.cfg")
 
 [rendering]
 

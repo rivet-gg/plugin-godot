@@ -35,3 +35,4 @@ func _export_file(path: String, type: String, features: PackedStringArray) -> vo
 	if path.contains("rivet/devtools/dock"):
 		print("Skipping file: " + path)
 		skip()
+

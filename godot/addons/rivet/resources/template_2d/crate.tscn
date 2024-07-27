@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d3eqk7x018tyk"]
+
+[node name="Crate" type="Node2D"]
+texture_filter = 1
+position = Vector2(0.0, 0.0)
+

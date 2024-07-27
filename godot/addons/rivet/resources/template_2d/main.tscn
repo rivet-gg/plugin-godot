@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfovnb0y6i6mr"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_bfam1"]
+[ext_resource type="PackedScene" path="res://crate.tscn" id="3_que67"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_bfam1")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("../World/Synchronized")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Background" type="Polygon2D" parent="World"]
+scale = Vector2(10000, 10000)
+color = Color(0.552941, 0.545098, 0.705882, 1)
+polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+zoom = Vector2(3, 3)
+
+[node name="Static" type="Node2D" parent="World"]
+
+[node name="Crate" parent="World/Static" instance=ExtResource("3_que67")]
+position = Vector2(-100.04, -20)
+
+[node name="Crate2" parent="World/Static" instance=ExtResource("3_que67")]
+position = Vector2(66.86, 60)
+
+[node name="Crate3" parent="World/Static" instance=ExtResource("3_que67")]
+position = Vector2(61, -53.69)
+
+[node name="Synchronized" type="Node2D" parent="World"]
+unique_name_in_owner = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="CenterContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_right = 1132.0
+offset_bottom = 637.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 2
+alignment = 1
+
+[node name="FindLobby" type="Button" parent="CanvasLayer/Menu/VBoxContainer"]
+layout_mode = 2
+text = "Find Lobby"
+
+[connection signal="pressed" from="CanvasLayer/Menu/VBoxContainer/FindLobby" to="." method="_on_find_lobby_pressed"]

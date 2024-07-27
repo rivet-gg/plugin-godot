@@ -1,0 +1,44 @@
+{
+	"registries": {
+		"default": {
+			"local": {
+				"directory": "/Users/nathan/rivet/opengb-modules/modules"
+			}
+		}
+	},
+	"modules": {
+		"users": {},
+		"rate_limit": {},
+		"tokens": {},
+		"lobbies": {
+			"config": {
+				"lobbies": {
+					"regions": ["local"],
+					"backend": {
+						"localDevelopment": {
+							"tags": { "test": "5" },
+							"ports": {
+								"game": { "protocol": "udp", "port": 7777 }
+							}
+						}
+					}
+				}
+			}
+		},
+		"rivet": {},
+		"auth": {
+			"config": {
+				"email": {
+					"fromEmail": "hello@rivet.gg"
+				}
+			}
+		},
+		"email": {
+			"config": {
+				"provider": {
+					"test": {}
+				}
+			}
+		}
+	}
+}

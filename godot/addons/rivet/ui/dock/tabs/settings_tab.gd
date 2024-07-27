@@ -8,10 +8,6 @@
 @onready var _backend_restart: Button = %BackendRestart
 
 func _ready() -> void:
-	_backend_description.add_theme_font_override(&"mono_font", get_theme_font(&"output_source_mono", &"EditorFonts"))
-	_backend_description.add_theme_font_override(&"bold_font", get_theme_font(&"bold", &"EditorFonts"))
-	_backend_description.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
-
 	RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 	unlink_game_button.pressed.connect(_on_unlink_game_button_pressed)
 

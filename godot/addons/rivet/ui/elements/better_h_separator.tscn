@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dtmxeuuk8dxdl"]
+
+[node name="HSeparator" type="HBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+offset_right = 200.0
+offset_bottom = 20.0
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
