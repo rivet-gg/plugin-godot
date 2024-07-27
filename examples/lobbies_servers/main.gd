@@ -1,8 +1,4 @@
-extends Node
-
-var hostname = "127.0.0.1"
-var port = 8910
-var peer: MultiplayerPeer
+extends BackendMultiplayerManager
 
 @export var player_scene: PackedScene
 
@@ -11,81 +7,36 @@ var peer: MultiplayerPeer
 var players: Dictionary = {}
 
 func _ready():
-	multiplayer.peer_connected.connect(peer_connected)
-	multiplayer.peer_disconnected.connect(peer_disconnected)
-	multiplayer.connected_to_server.connect(connected_to_server)
-	multiplayer.connection_failed.connect(connection_failed)
-	multiplayer.server_disconnected.connect(server_disconnected)
+	setup_multiplayer()
 
-func peer_connected(id):
-	print('Peer connected', id)
-	
-	if multiplayer.is_server():
-		add_player(id)
+	self.server_connected.connect(_on_server_connected)
+	self.client_connected.connect(_on_client_connected)
+	self.client_disconnected.connect(_on_client_disconnected)
 
-func peer_disconnected(id):
-	print('Peer disconnected', id)
-	
-	if multiplayer.is_server():
-		remove_player(id)
-
-func connected_to_server():
-	print('Connected to server')
-
-func connection_failed():
-	print('Connection failed')
-
-func server_disconnected():
-	print('Server disconnected')
-
-func _on_host_button_down():
-	host()
-
-func _on_join_button_down():
-	join()
-
-func host():
-	print('Hosting')
-
-	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port)
-	if (error):
-		print('Error starting server', error)
-		return
-
-	multiplayer.set_multiplayer_peer(peer)
-	
-	start_game()
-
-func join():
-	print('Joining')
-
-	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_client(hostname, port)
-	if (error):
-		print('Error creating client', error)
-		return
-	multiplayer.set_multiplayer_peer(peer)
-	
-	start_game()
-
-func start_game():
-	if multiplayer.is_server():
-		add_player(multiplayer.get_unique_id())
+func _on_server_connected():
+	print('Server connected')
 	$CanvasLayer.hide()
-	pass
 
-func add_player(id: int):
-	print('Adding player', id)
+func _on_client_connected(id: int):
+	print('Client connected %s' % id)
+	
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	players[id] = player
 	sync_parent.call_deferred("add_child", player)
-	
-func remove_player(id: int):
+
+func _on_client_disconnected(id: int):
+	print('Client disconnected %s' % id)
+
 	var player = players[id]
 	if player != null:
-		print("Player removed", id)
+		players.erase(id)
+		print("Player removed %s" % id)
 		sync_parent.call_deferred("remove_child", player)
 	else:
-		print("Player is null", id)
+		print("Player is null %s" % id)
+
+func _on_find_lobby_pressed():
+	var response = await Backend.lobbies.find({ "version": "default", "tags": {}, "players": [{}] }).async()
+	if response.is_ok():
+		connect_to_lobby(response.body.lobby, response.body.players[0])

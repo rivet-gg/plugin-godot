@@ -1,12 +1,12 @@
 <p align="center">
-    <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./addons/rivet/images/icon-text-white.svg">
-        <img src="./addons/rivet/images/icon-text-black.svg">
-    </picture>
+	<picture>
+		<source media="(prefers-color-scheme: dark)" srcset="./addons/rivet/images/icon-text-white.svg">
+		<img src="./addons/rivet/images/icon-text-black.svg">
+	</picture>
 </p>
 <h1 align="center">Rivet Godot Plugin</h1>
 <p align="center">
-    <a href="https://rivet.gg/discord"><img src="https://img.shields.io/discord/822914074136018994"></a>
+	<a href="https://rivet.gg/discord"><img src="https://img.shields.io/discord/822914074136018994"></a>
 </p>
 
 ---

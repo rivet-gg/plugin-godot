@@ -5,3 +5,4 @@ release-please-config.json export-ignore
 test.gd export-ignore
 test.tscn export-ignore
 .gitignore export-ignore
+*.png filter=lfs diff=lfs merge=lfs -text

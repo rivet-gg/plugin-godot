@@ -31,16 +31,8 @@ zoom = Vector2(3, 3)
 offset_right = 1132.0
 offset_bottom = 637.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu"]
+[node name="FindLobby" type="Button" parent="CanvasLayer/Menu"]
 layout_mode = 2
+text = "Find Lobby"
 
-[node name="Host" type="Button" parent="CanvasLayer/Menu/HBoxContainer"]
-layout_mode = 2
-text = "Host"
-
-[node name="Join" type="Button" parent="CanvasLayer/Menu/HBoxContainer"]
-layout_mode = 2
-text = "Join"
-
-[connection signal="button_down" from="CanvasLayer/Menu/HBoxContainer/Host" to="." method="_on_host_button_down"]
-[connection signal="button_down" from="CanvasLayer/Menu/HBoxContainer/Join" to="." method="_on_join_button_down"]
+[connection signal="pressed" from="CanvasLayer/Menu/FindLobby" to="." method="_on_find_lobby_pressed"]
