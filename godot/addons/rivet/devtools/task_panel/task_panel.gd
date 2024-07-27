@@ -9,6 +9,7 @@ signal state_change(running: bool)
 # Config
 var get_task_config: Callable
 var init_message: String
+var auto_restart: bool = false
 
 # State
 var task
@@ -16,9 +17,15 @@ var task
 func _ready():
 	_task_logs.add_log_line(init_message, TaskLogs.LogType.META)
 
-func start_task():
+func start_task(restart: bool = true):
+	# Do nothing if task already running
+	if !restart && task != null:
+		return
+
+	# Kill old task
 	stop_task()
 	
+	# Start new task
 	var config = get_task_config.call()
 	task = _RivetTask.new(config.name, config.input)
 	task.task_log.connect(_on_task_log)
@@ -53,10 +60,17 @@ func _on_task_output(output):
 	task = null
 	_on_state_change()
 
+	# Log output
 	if "Ok" in output:
 		_task_logs.add_log_line("Exited with exit code %s" % output["Ok"].exit_code, TaskLogs.LogType.META)
 	elif "Err" in output:
 		_task_logs.add_log_line("Task error: %s" % output["Err"], TaskLogs.LogType.META)
+	
+	# Restart if needed
+	if auto_restart:
+		_task_logs.add_log_line("Restarting in 2 seconds", TaskLogs.LogType.META)
+		await get_tree().create_timer(2.0).timeout
+		start_task()
 
 func _on_clear_logs_pressed():
 	_task_logs.clear_logs()

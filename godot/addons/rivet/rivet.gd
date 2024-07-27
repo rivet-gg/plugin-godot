@@ -55,6 +55,7 @@ func _enter_tree():
 
 	# Backend
 	_backend_panel = preload("devtools/task_panel/task_panel.tscn").instantiate()
+	_backend_panel.auto_restart = true
 	_backend_panel.init_message = "Auto-started by Rivet plugin."
 	_backend_panel.get_task_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
