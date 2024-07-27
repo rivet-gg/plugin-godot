@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bfovnb0y6i6mr"]
 
-[ext_resource type="Script" path="res://examples/lobbies_servers/menu.gd" id="1_enewc"]
-[ext_resource type="TileSet" uid="uid://b6cdvgpjiv632" path="res://examples/lobbies_servers/assets/tiles.tres" id="3_qchw6"]
-[ext_resource type="PackedScene" uid="uid://fe7mtfu0pw6w" path="res://examples/lobbies_servers/player.tscn" id="3_xo2tr"]
+[ext_resource type="Script" path="res://menu.gd" id="1_enewc"]
+[ext_resource type="TileSet" uid="uid://b6cdvgpjiv632" path="res://assets/tiles.tres" id="3_qchw6"]
+[ext_resource type="PackedScene" uid="uid://fe7mtfu0pw6w" path="res://player.tscn" id="3_xo2tr"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("sync_parent")]
 script = ExtResource("1_enewc")
@@ -10,7 +10,7 @@ player_scene = ExtResource("3_xo2tr")
 sync_parent = NodePath("World/Synchronized")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://examples/lobbies_servers/player.tscn")
+_spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("../World/Synchronized")
 
 [node name="World" type="Node2D" parent="."]

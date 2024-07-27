@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://civacw1yf0x5n"]
 
-[ext_resource type="TileSet" uid="uid://b6cdvgpjiv632" path="res://examples/lobbies_servers/assets/tiles.tres" id="1_44dhq"]
+[ext_resource type="TileSet" uid="uid://b6cdvgpjiv632" path="res://assets/tiles.tres" id="1_44dhq"]
 
 [node name="World" type="Node2D"]
 

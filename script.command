@@ -1,2 +1,0 @@
-#!/bin/bash
-cd "/Users/nathan/rivet/plugin-godot" && /Applications/Godot_mono.app/Contents/MacOS/Godot --path /Users/nathan/rivet/plugin-godot/ --headless -- --server && rm "/Users/nathan/rivet/plugin-godot/script.command"
