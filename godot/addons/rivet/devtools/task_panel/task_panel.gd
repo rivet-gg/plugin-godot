@@ -2,11 +2,9 @@
 
 const _RivetTask = preload("../rivet_task.gd")
 
-@onready var _start = %Start
-@onready var _stop = %Stop
-@onready var _restart = %Restart
-
 @onready var _task_logs: TaskLogs = %TaskLogs
+
+signal state_change(running: bool)
 
 # Config
 var get_task_config: Callable
@@ -26,7 +24,7 @@ func start_task():
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)
 
-	_update_ui()
+	_on_state_change()
 
 	_task_logs.add_log_line("Start", TaskLogs.LogType.META)
 
@@ -37,7 +35,7 @@ func stop_task():
 
 		_task_logs.add_log_line("Stop", TaskLogs.LogType.META)
 
-		_update_ui()
+		_on_state_change()
 
 func _on_task_log(logs, type):
 	var log_type
@@ -53,27 +51,15 @@ func _on_task_log(logs, type):
 
 func _on_task_output(output):
 	task = null
-	_update_ui()
+	_on_state_change()
 
 	if "Ok" in output:
 		_task_logs.add_log_line("Exited with exit code %s" % output["Ok"].exit_code, TaskLogs.LogType.META)
 	elif "Err" in output:
 		_task_logs.add_log_line("Task error: %s" % output["Err"], TaskLogs.LogType.META)
 
-func _on_start_pressed():
-	start_task()
-
-func _on_stop_pressed():
-	stop_task()
-
-func _on_restart_pressed():
-	start_task()
-
 func _on_clear_logs_pressed():
 	_task_logs.clear_logs()
 
-func _update_ui():
-	var running = task != null
-	_start.visible = !running
-	_stop.visible = running
-	_restart.visible = running
+func _on_state_change():
+	state_change.emit(task != null)

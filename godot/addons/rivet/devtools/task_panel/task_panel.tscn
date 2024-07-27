@@ -19,31 +19,8 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 2.08165e-12)
 layout_mode = 2
 
-[node name="Start" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Start"
-
-[node name="Stop" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Stop"
-
-[node name="Restart" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Restart"
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-layout_mode = 2
-
 [node name="ClearLogs" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Clear"
 
-[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Stop" to="." method="_on_stop_pressed"]
-[connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="VBoxContainer/ClearLogs" to="." method="_on_clear_logs_pressed"]

@@ -7,32 +7,48 @@
 		}
 	},
 	"modules": {
-		"users": {},
-		"rate_limit": {},
-		"tokens": {},
+		"users": {
+
+		},
+		"rate_limit": {
+
+		},
+		"tokens": {
+
+		},
 		"lobbies": {
 			"config": {
 				"lobbies": {
-          "regions": ["atl"],
+					"regions": [
+						"atl"
+					],
 					"backend": {
 						"server": {
-              "environment": {
-                "SERVER_HOSTNAME": "0.0.0.0"
-              },
-							"tags": {},
-							"ports": {
-								"game": { "protocol": "udp", "serverPort": 7777 }
+							"environment": {
+								"SERVER_HOSTNAME": "0.0.0.0"
 							},
-              "resources": { "cpu": 50, "memory": 50 }
+							"tags": {
+
+							},
+							"ports": {
+								"game": {
+									"protocol": "udp",
+									"serverPort": 7777
+								}
+							},
+							"resources": {
+								"cpu": 50,
+								"memory": 50
+							}
 						}
 					}
 				}
 			}
 		},
 		"rivet": {
-      "config": {
-        "apiEndpoint": "https://api.nathan16.gameinc.io"
-      }
+			"config": {
+				"apiEndpoint": "https://api.nathan16.gameinc.io"
+			}
 		}
 	}
 }

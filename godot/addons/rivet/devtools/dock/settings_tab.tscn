@@ -8,18 +8,22 @@ script = ExtResource("1_qo1d8")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
+[node name="Game" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Account"
+
 [node name="UnlinkGameButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Unlink game"
+text = "Sign Out"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="Settings" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Settings"
+text = "Plugin"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -37,8 +41,58 @@ text = "Edit Project"
 
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
 layout_mode = 2
-text = "TODO: Documentation"
+size_flags_horizontal = 4
+text = "Documentation"
 uri = "https://rivet.gg"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Backend" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Backend" type="Label" parent="VBoxContainer/Backend"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Local Backend Daemon"
+
+[node name="BackendDescription" type="RichTextLabel" parent="VBoxContainer/Backend"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Runs your local backend server used for development in the background. Rarely needs to be stopped."
+fit_content = true
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Backend"]
+layout_mode = 2
+
+[node name="BackendStart" type="Button" parent="VBoxContainer/Backend/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start"
+
+[node name="BackendStop" type="Button" parent="VBoxContainer/Backend/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Stop"
+
+[node name="BackendRestart" type="Button" parent="VBoxContainer/Backend/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart"
+
+[node name="BackendLogs" type="LinkButton" parent="VBoxContainer/Backend"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Show Logs"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/User" to="." method="_on_edit_settings" binds= ["user"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Project" to="." method="_on_edit_settings" binds= ["project"]]
+[connection signal="pressed" from="VBoxContainer/Backend/HBoxContainer/BackendStart" to="." method="_on_backend_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Backend/HBoxContainer/BackendStop" to="." method="_on_backend_stop_pressed"]
+[connection signal="pressed" from="VBoxContainer/Backend/HBoxContainer/BackendRestart" to="." method="_on_backend_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Backend/BackendLogs" to="." method="_on_backend_logs_pressed"]

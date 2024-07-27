@@ -24,8 +24,16 @@ var plugin_nodes = []
 
 ## Add custom autoload via a global signal. Used for auto-generated SDK.s
 signal add_autoload(name: String, path: String)
+
+signal start_game_server()
+signal stop_game_server()
 signal focus_game_server()
+signal game_server_state_change(running: bool)
+
+signal start_backend()
+signal stop_backend()
 signal focus_backend()
+signal backend_state_change(running: bool)
 
 ## @experimental
 func POST(path: String, body: Dictionary) -> _api.RivetRequest:

@@ -31,8 +31,7 @@ func _enter_tree():
 	# specific behavior to the dock.
 	global = _RivetGlobal.new()
 	global.add_autoload.connect(_on_add_autoload)
-	global.focus_game_server.connect(_on_focus_game_server)
-	global.focus_backend.connect(_on_focus_backend)
+
 	
 	# Dock
 	_dock = preload("devtools/dock/dock.tscn").instantiate()
@@ -42,7 +41,7 @@ func _enter_tree():
 
 	# Game server
 	_game_server_panel = preload("devtools/task_panel/task_panel.tscn").instantiate()
-	_game_server_panel.init_message = "Press start to start game server."
+	_game_server_panel.init_message = "Open \"Develop\" and press \"Start\" to start game server."
 	_game_server_panel.get_task_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
@@ -57,7 +56,7 @@ func _enter_tree():
 
 	# Backend
 	_backend_panel = preload("devtools/task_panel/task_panel.tscn").instantiate()
-	_backend_panel.init_message = "Press start to start backend server."
+	_backend_panel.init_message = "Auto-started by Rivet plugin."
 	_backend_panel.get_task_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
@@ -76,6 +75,17 @@ func _enter_tree():
 	_RivetEditorSettings.set_defaults()
 
 	global.plugin_nodes = [_dock, _game_server_panel, _backend_panel]
+
+	# Signals
+	global.start_game_server.connect(func(): _game_server_panel.start_task())
+	global.stop_game_server.connect(func(): _game_server_panel.stop_task())
+	global.focus_game_server.connect(_on_focus_game_server)
+	_game_server_panel.state_change.connect(func(running): global.game_server_state_change.emit(running))
+
+	global.start_backend.connect(func(): _backend_panel.start_task())
+	global.stop_backend.connect(func(): _backend_panel.stop_task())
+	global.focus_backend.connect(_on_focus_backend)
+	_backend_panel.state_change.connect(func(running): global.backend_state_change.emit(running))
 	
 func _exit_tree():
 	# Remove signal
