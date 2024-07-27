@@ -26,7 +26,7 @@ func _set_loading(value) -> void:
 			get_theme_icon("Progress9", "EditorIcons"),
 		]
 		for idx in icons.size():
-			_tween.tween_property(self, "icon", icons[idx], 0 if idx == 0 else 1)
+			_tween.tween_property(self, "icon", icons[idx], 0 if idx == 0 else 0.1)
 		_tween.set_loops()
 	else: 
 		icon = null
