@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdad7w76me3eu"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/elements/loading_button.gd" id="1_4ofna"]
+[ext_resource type="Script" path="res://addons/rivet/ui/elements/loading_button.gd" id="1_4ofna"]
 
 [node name="LoadingButton" type="Button"]
 anchors_preset = 15

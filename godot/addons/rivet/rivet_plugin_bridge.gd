@@ -9,7 +9,7 @@ class_name RivetPluginBridge
 
 signal bootstrapped
 
-const _global := preload("../rivet_global.gd")
+const _global := preload("rivet_global.gd")
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 const _RivetThread = preload("rivet_thread.gd")
 

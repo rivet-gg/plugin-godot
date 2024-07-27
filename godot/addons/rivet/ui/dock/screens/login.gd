@@ -11,7 +11,7 @@ func prepare(_args: Dictionary) -> Error:
 	if result == null || !result.logged_in:
 		return FAILED
 
-	owner.change_current_screen(owner.Screen.Settings)
+	owner.change_current_screen(owner.Screen.Main)
 	
 	return OK
 
@@ -49,7 +49,7 @@ func _on_button_pressed() -> Error:
 	task.task_output.connect(
 		func(result) -> void:
 			if "Ok" in result:
-				owner.change_current_screen(owner.Screen.Settings)
+				owner.change_current_screen(owner.Screen.Main)
 			else:
 				log_in_button.disabled = false
 				owner.change_current_screen(owner.Screen.Login)

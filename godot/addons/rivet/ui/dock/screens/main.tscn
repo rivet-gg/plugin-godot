@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://ceovepvn1782o"]
+
+[ext_resource type="Script" path="res://addons/rivet/ui/dock/screens/main.gd" id="1_tcdrj"]
+[ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/ui/elements/buttons_bar.tscn" id="2_n6ccy"]
+[ext_resource type="PackedScene" uid="uid://dvgoy5fid7fr5" path="res://addons/rivet/ui/dock/tabs/dev_tab.tscn" id="3_q3eyp"]
+[ext_resource type="PackedScene" uid="uid://soum1c8oyrso" path="res://addons/rivet/ui/dock/tabs/deploy_tab.tscn" id="4_ye0fb"]
+[ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/ui/dock/tabs/settings_tab.tscn" id="5_xa4ex"]
+
+[node name="Settings" type="VBoxContainer"]
+theme_override_constants/separation = 16
+script = ExtResource("1_tcdrj")
+
+[node name="ErrorDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+size = Vector2i(112, 100)
+dialog_text = "Configuration for this project couldn't be fetched. Have you run rivet init?"
+
+[node name="ButtonsBar" parent="." node_paths=PackedStringArray("tab_container") instance=ExtResource("2_n6ccy")]
+unique_name_in_owner = true
+layout_mode = 2
+tab_container = NodePath("../TabContainer")
+
+[node name="DevelopButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_pressed = true
+text = "Develop"
+
+[node name="DeployButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Deploy"
+
+[node name="SettingsButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Settings"
+
+[node name="TabContainer" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tabs_visible = false
+
+[node name="Develop" parent="TabContainer" instance=ExtResource("3_q3eyp")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Deploy" parent="TabContainer" instance=ExtResource("4_ye0fb")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Settings" parent="TabContainer" instance=ExtResource("5_xa4ex")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2

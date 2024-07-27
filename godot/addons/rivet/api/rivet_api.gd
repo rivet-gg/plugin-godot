@@ -6,7 +6,7 @@ static var CONFIGURATION_CACHE
 # This is needed to make sure that at runtime, 
 static func _get_bridge() -> Variant:
 	if Engine.is_editor_hint():
-		return load("res://addons/rivet/devtools/rivet_plugin_bridge.gd")
+		return load("res://addons/rivet/rivet_plugin_bridge.gd")
 	else:
 		return null
 

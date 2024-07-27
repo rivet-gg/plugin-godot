@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://3ba6qgalgy87"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/task_panel/task_panel.gd" id="1_egn3a"]
-[ext_resource type="PackedScene" uid="uid://v3rf8tpycjfv" path="res://addons/rivet/devtools/elements/task_logs.tscn" id="2_2j001"]
+[ext_resource type="Script" path="res://addons/rivet/ui/task_panel/task_panel.gd" id="1_gfc86"]
+[ext_resource type="PackedScene" uid="uid://v3rf8tpycjfv" path="res://addons/rivet/ui/elements/task_logs.tscn" id="2_oyjuy"]
 
 [node name="Panel" type="HBoxContainer"]
 anchors_preset = 15
@@ -9,9 +9,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_egn3a")
+script = ExtResource("1_gfc86")
 
-[node name="TaskLogs" parent="." instance=ExtResource("2_2j001")]
+[node name="TaskLogs" parent="." instance=ExtResource("2_oyjuy")]
 unique_name_in_owner = true
 layout_mode = 2
 

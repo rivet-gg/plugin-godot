@@ -11,7 +11,7 @@ const _api = preload("api/rivet_api.gd")
 const ApiResponse = preload("api/rivet_response.gd")
 const ApiRequest = preload("api/rivet_request.gd")
 
-const _RivetTask = preload("devtools/rivet_task.gd")
+const _RivetTask = preload("rivet_task.gd")
 
 var api_endpoint: String
 var backend_endpoint: String 

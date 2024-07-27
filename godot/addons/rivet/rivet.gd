@@ -5,7 +5,7 @@ class_name RivetPlugin
 # MARK: Plugin
 const AUTO_LOAD_RIVET_GLOBAL = "Rivet"
 
-const _RivetEditorSettings := preload("devtools/rivet_editor_settings.gd")
+const _RivetEditorSettings := preload("rivet_editor_settings.gd")
 const _RivetGlobal := preload("rivet_global.gd")
 
 var _dock: Control
@@ -33,13 +33,13 @@ func _enter_tree():
 	global.add_autoload.connect(_on_add_autoload)
 	
 	# Dock
-	_dock = preload("devtools/dock/dock.tscn").instantiate()
+	_dock = preload("ui/dock/dock.tscn").instantiate()
 	_dock.add_child(global)
 
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, _dock)
 
 	# Game server
-	_game_server_panel = preload("devtools/task_panel/task_panel.tscn").instantiate()
+	_game_server_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_game_server_panel.init_message = "Open \"Develop\" and press \"Start\" to start game server."
 	_game_server_panel.get_task_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
@@ -54,7 +54,7 @@ func _enter_tree():
 	add_control_to_bottom_panel(_game_server_panel, "Game Server")
 
 	# Backend
-	_backend_panel = preload("devtools/task_panel/task_panel.tscn").instantiate()
+	_backend_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_backend_panel.auto_restart = true
 	_backend_panel.init_message = "Auto-started by Rivet plugin."
 	_backend_panel.get_task_config = func():
@@ -68,7 +68,7 @@ func _enter_tree():
 	add_control_to_bottom_panel(_backend_panel, "Backend")
 
 	# Add export plugin
-	_export_plugin = preload("devtools/rivet_export_plugin.gd").new()
+	_export_plugin = preload("rivet_export_plugin.gd").new()
 	add_export_plugin(_export_plugin)
 
 	# Settings

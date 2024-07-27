@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://v3rf8tpycjfv"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/elements/task_logs.gd" id="1_n1yhw"]
+[ext_resource type="Script" path="res://addons/rivet/ui/elements/task_logs.gd" id="1_n1yhw"]
 
 [sub_resource type="Image" id="Image_lntgf"]
 data = {

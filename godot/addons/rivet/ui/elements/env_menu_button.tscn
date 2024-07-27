@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bogw8dj8rr202"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/elements/env_menu_button.gd" id="1_pws6h"]
+[ext_resource type="Script" path="res://addons/rivet/ui/elements/env_menu_button.gd" id="1_pws6h"]
 
 [node name="EnvMenuButton" type="OptionButton"]
 unique_name_in_owner = true

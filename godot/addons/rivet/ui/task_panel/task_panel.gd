@@ -1,6 +1,6 @@
 @tool extends Node
 
-const _RivetTask = preload("../rivet_task.gd")
+const _RivetTask = preload("../../rivet_task.gd")
 
 @onready var _task_logs: TaskLogs = %TaskLogs
 

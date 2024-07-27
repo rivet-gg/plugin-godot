@@ -1,7 +1,7 @@
 @tool extends MarginContainer
 
-const _task_popup = preload("../task_popup/task_popup.tscn")
-const _LoadingButton = preload("../elements/loading_button.gd")
+const _task_popup = preload("../../task_popup/task_popup.tscn")
+const _LoadingButton = preload("../../elements/loading_button.gd")
 
 @onready var env_selector: OptionButton = %DeployEnvSelector
 @onready var deploy_steps_selector: OptionButton = %DeployStepsSelector

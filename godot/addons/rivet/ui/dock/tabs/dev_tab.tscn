@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvgoy5fid7fr5"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/dock/dev_tab.gd" id="1_q8kto"]
-[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/devtools/elements/env_menu_button.tscn" id="2_e4lc1"]
-[ext_resource type="Script" path="res://addons/rivet/devtools/elements/loading_button.gd" id="4_u02u4"]
+[ext_resource type="Script" path="res://addons/rivet/ui/dock/tabs/dev_tab.gd" id="1_fxn6e"]
+[ext_resource type="PackedScene" uid="uid://bogw8dj8rr202" path="res://addons/rivet/ui/elements/env_menu_button.tscn" id="2_65kt5"]
+[ext_resource type="Script" path="res://addons/rivet/ui/elements/loading_button.gd" id="3_3f06i"]
 
 [node name="Develop" type="MarginContainer"]
-script = ExtResource("1_q8kto")
+script = ExtResource("1_fxn6e")
 
 [node name="DevelopContent" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -25,7 +25,7 @@ text = "Environment"
 layout_mode = 2
 text = "Reload"
 
-[node name="EnvSelector" parent="DevelopContent/Environment" instance=ExtResource("2_e4lc1")]
+[node name="EnvSelector" parent="DevelopContent/Environment" instance=ExtResource("2_65kt5")]
 layout_mode = 2
 
 [node name="EnvironmentDescription" type="RichTextLabel" parent="DevelopContent/Environment"]
@@ -103,7 +103,7 @@ text = "Backend"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Generate SDK"
-script = ExtResource("4_u02u4")
+script = ExtResource("3_3f06i")
 
 [node name="BackendEditConfig" type="Button" parent="DevelopContent/Backend"]
 layout_mode = 2

@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://l8cfdaru7ibw"]
+
+[ext_resource type="Script" path="res://addons/rivet/ui/dock/dock.gd" id="1_vjk51"]
+[ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/ui/elements/logo_container.tscn" id="2_83n20"]
+[ext_resource type="PackedScene" uid="uid://bk1uwgw1hhq2p" path="res://addons/rivet/ui/elements/links_container.tscn" id="3_3qi56"]
+[ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/ui/dock/screens/login.tscn" id="4_76k63"]
+[ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/ui/dock/screens/main.tscn" id="5_3rpdd"]
+[ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/ui/dock/screens/linking_pending.tscn" id="6_7pk2p"]
+
+[node name="Rivet" type="MarginContainer"]
+offset_top = 92.0
+offset_right = 1152.0
+offset_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_vjk51")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LogoContainer" parent="VBoxContainer" instance=ExtResource("2_83n20")]
+layout_mode = 2
+
+[node name="LinksContainer" parent="VBoxContainer" instance=ExtResource("3_3qi56")]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Login" parent="VBoxContainer/Control" instance=ExtResource("4_76k63")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="LinkingPending" parent="VBoxContainer/Control" instance=ExtResource("6_7pk2p")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Main" parent="VBoxContainer/Control" instance=ExtResource("5_3rpdd")]
+unique_name_in_owner = true
+layout_mode = 2

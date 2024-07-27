@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://co3bixf3w528r"]
 
-[ext_resource type="Script" path="res://addons/rivet/devtools/task_popup/task_popup.gd" id="1_xhgpl"]
-[ext_resource type="PackedScene" uid="uid://v3rf8tpycjfv" path="res://addons/rivet/devtools/elements/task_logs.tscn" id="2_x3eoc"]
+[ext_resource type="Script" path="res://addons/rivet/ui/task_popup/task_popup.gd" id="1_xhgpl"]
+[ext_resource type="PackedScene" uid="uid://v3rf8tpycjfv" path="res://addons/rivet/ui/elements/task_logs.tscn" id="2_x3eoc"]
 
 [node name="TaskPopup" type="Window"]
 initial_position = 1

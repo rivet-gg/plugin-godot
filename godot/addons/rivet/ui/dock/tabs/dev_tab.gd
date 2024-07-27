@@ -2,7 +2,7 @@
 
 const BACKEND_SINGLETON_NAME = "Backend"
 
-const _task_popup = preload("../task_popup/task_popup.tscn")
+const _task_popup = preload("../../task_popup/task_popup.tscn")
 
 # Environments
 @onready var _env_description: RichTextLabel = %EnvironmentDescription

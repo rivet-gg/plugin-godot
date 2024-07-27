@@ -1,7 +1,7 @@
 @tool extends Window
 class_name TaskPopup
 
-const _RivetTask = preload("../rivet_task.gd")
+const _RivetTask = preload("../../rivet_task.gd")
 
 signal task_output(output: Variant)
 
