@@ -4,6 +4,10 @@
 @onready var errorDialog: AcceptDialog = %ErrorDialog
 @onready var buttons_bar: HBoxContainer = %ButtonsBar
 @onready var deploy_tab = %Deploy
+
+func _ready():
+	%TabContainer.add_theme_stylebox_override("panel", get_theme_stylebox("panel", "Tree"))
+	#%TabContainer.add_theme_stylebox_override("panel", get_theme_stylebox("DictionaryAddItem", "EditorStyles"))
 	
 func prepare(_args: Dictionary) -> void:
 	var error = await RivetPluginBridge.instance.bootstrap()

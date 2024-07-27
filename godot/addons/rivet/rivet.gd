@@ -114,8 +114,6 @@ func _exit_tree():
 	remove_control_from_bottom_panel(_backend_panel)
 	_backend_panel.free()
 
-	global.plugin_nodes = []
-
 func _on_add_autoload(name: String, path: String):
 	add_autoload_singleton(name, path)
 

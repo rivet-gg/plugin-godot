@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Backend="*res://addons/backend/backend.gd"
-Rivet="*res://addons/rivet/rivet_global.gd"
 
 [dotnet]
 
@@ -26,7 +25,7 @@ project/assembly_name="Lobbies (Servers)"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg", "res://addons/rivet/plugin.cfg")
+enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg")
 
 [rendering]
 

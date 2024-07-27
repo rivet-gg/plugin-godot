@@ -14,7 +14,8 @@ pub fn block_on<Output>(fut: impl Future<Output = Output>, opts: BlockOnOpts) ->
     // TODO: Add back once confirmed fixed
     // Build temporary runtime
     let mut builder = if opts.multithreaded || FORCE_MULTI_THREAD {
-        tokio::runtime::Builder::new_multi_thread()
+        // tokio::runtime::Builder::new_multi_thread()
+        tokio::runtime::Builder::new_current_thread()
     } else {
         tokio::runtime::Builder::new_current_thread()
     };

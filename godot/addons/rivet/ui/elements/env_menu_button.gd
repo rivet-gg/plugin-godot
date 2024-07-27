@@ -1,4 +1,4 @@
-@tool extends OptionButton
+@tool extends RivetBetterOptionButton
 class_name EnvMenuButton
 ## A control that displays a list of environments and allows the user to select one.
 
@@ -30,6 +30,8 @@ var environments: Array:
 	get: return RivetPluginBridge.instance.game_environments
 
 func _ready():
+	super()
+	
 	if RivetPluginBridge.is_part_of_edited_scene(self):
 		return
 	disabled = true

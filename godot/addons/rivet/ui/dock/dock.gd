@@ -14,7 +14,8 @@ enum Screen {
 
 func _ready() -> void:
 	change_current_screen(Screen.Login)
-
+	
+	(%LogoButton as Control).gui_input.connect(_on_gui_input)
 
 func reload() -> void:
 	var instance = load("res://addons/rivet/devtools/dock/dock.tscn").instantiate()
@@ -39,3 +40,11 @@ func _get_screen_node(screen: Screen) -> Node:
 	else:
 		push_error("unknown screen")
 		return null
+
+func _open_url(url: String):
+	OS.shell_open(url)
+
+
+func _on_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		OS.shell_open("https://rivet.gg")
