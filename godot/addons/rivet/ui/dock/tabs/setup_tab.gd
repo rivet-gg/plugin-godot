@@ -7,6 +7,9 @@ func _ready():
 	_advanced_config_button.icon = get_theme_icon("GuiTreeArrowRight", "EditorIcons")
 	_advanced_config.visible = false
 
+	# Hide by default until requirements load
+	%RequirementsContainer.visible = false
+
 	# Steps
 	%StepProjectConfig.check_setup = _project_config_check
 	%StepProjectConfig.call_setup = _project_config_call
@@ -26,6 +29,38 @@ func _ready():
 	%StepDevelop.call_setup = _develop_call
 
 	%StepDeploy.call_setup = _deploy_call
+	
+	# Check requirements
+	_check_requirements()
+
+func _check_requirements():
+	# If being called again, hide requirements
+	%RequirementsContainer.visible = false
+
+	# Check requirements
+	var plugin = RivetPluginBridge.get_plugin()
+	var requirements = await plugin.run_toolchain_task("check_system_requirements")
+	
+	# Prerequisites
+	if requirements.errors.size() > 0:
+		# Build body
+		var body = "[b]System Requirements[/b]\n[indent]"
+		for error in requirements.errors:
+			body += "\n[b]%s[/b]\n%s" % [error.title, error.body]
+			if "docs_url" in error:
+				body += " [url=%s]Learn More[/url]" % error.docs_url
+			body += "\n"
+		body += "[/indent]"
+		%Requirements.text = body
+
+		# Show container
+		%RequirementsContainer.visible = true
+		%Requirements.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
+		%Requirements.add_theme_color_override(&"default_color", get_theme_color(&"warning_color", &"Editor"))
+		%RequirementsIcon.modulate = get_theme_color(&"warning_color", &"Editor")
+	else:
+		%RequirementsContainer.visible = false
+
 
 func _on_advanced_config_button_pressed():
 	var open = !_advanced_config.visible
