@@ -58,7 +58,6 @@ func save_configuration():
 	var plugin = get_plugin()
 	var script: GDScript = GDScript.new()
 	script.source_code = RivetConstants.SCRIPT_TEMPLATE.format({
-		"rivet_api_endpoint": plugin.api_endpoint,
 		"backend_endpoint": plugin.backend_endpoint,
 		"game_version": plugin.game_version,
 	})
