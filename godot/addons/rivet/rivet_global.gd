@@ -6,17 +6,14 @@ class_name RivetGlobal
 ## @tutorial: https://rivet.gg/learn/godot
 ## @experimental
 
-const _api = preload("api/rivet_api.gd")
-
-const ApiResponse = preload("api/rivet_response.gd")
-const ApiRequest = preload("api/rivet_request.gd")
-
 const _RivetTask = preload("rivet_task.gd")
 
 var api_endpoint: String
 var game_version: String
 var cloud_token: String
 var game_id: String
+var backend_project
+var backend_environments
 
 enum EnvType { LOCAL, REMOTE }
 
@@ -36,7 +33,7 @@ var remote_env_id = null:
 var remote_env = null:
 	get:
 		if env_type == EnvType.REMOTE:
-			for x in RivetPluginBridge.instance.game_environments:
+			for x in backend_environments:
 				if x.environment_id == remote_env_id:
 					return x
 
@@ -67,7 +64,8 @@ var backend_endpoint: String:
 static func get_remote_env_endpoint(env) -> String:
 	if env != null:
 		# TODO: Replace with data from API endpoint
-		return "https://%s--%s.backend.nathan16.gameinc.io" % [RivetPluginBridge.instance.game_project.name_id, env.name_id]
+		var plugin = RivetPluginBridge.get_plugin()
+		return "https://%s--%s.backend.nathan16.gameinc.io" % [plugin.backend_project.name_id, env.name_id]
 	else:
 		return "unknown"
 
@@ -88,18 +86,6 @@ signal focus_backend()
 signal backend_state_change(running: bool)
 
 signal env_update()
-
-## @experimental
-func POST(path: String, body: Dictionary) -> _api.RivetRequest:
-	return _api.POST(self, path, body)
-
-## @experimental
-func GET(path: String, body: Dictionary = {}) -> _api.RivetRequest:
-	return _api.GET(self, path, body)
-
-## @experimental
-func PUT(path: String, body: Dictionary = {}) -> _api.RivetRequest:
-	return _api.PUT(self, path, body)
 
 ## Helper func to spawn a task and show an alert on failure.
 func run_toolchain_task(name: String, input: Variant = {}) -> Variant:

@@ -12,9 +12,6 @@ signal bootstrapped
 const _global := preload("rivet_global.gd")
 const _RivetEditorSettings = preload("rivet_editor_settings.gd")
 
-static var game_project = null
-static var game_environments: Array = []
-
 static var instance = RivetPluginBridge.new()
 
 static func _find_plugin():
@@ -84,40 +81,12 @@ func bootstrap() -> Error:
 	plugin.api_endpoint = result.api_endpoint
 	plugin.cloud_token = result.token
 	plugin.game_id = result.game_id
+	plugin.backend_project = result.backend_project
+	plugin.backend_environments = result.backend_environments
 
 	save_configuration()
 
-	# Fetch environments
-	var fetch_result = await _fetch_envs()
-	if fetch_result != OK:
-		return fetch_result
-
 	emit_signal("bootstrapped")
-
-	return OK
-
-## Fetch the project's environments.
-func _fetch_envs() -> Error:
-	var plugin = get_plugin()
-
-	# Get project
-	var proj_response = await plugin.GET("/cloud/games/%s/project" % plugin.game_id).wait_completed()
-	if proj_response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
-		return FAILED
-
-	if "project" not in proj_response.body:
-		RivetPluginBridge.log("TODO: Project does not exist, needs to be auto-created")
-		return FAILED
-	game_project = proj_response.body.project
-	self.log("Loaded project: %s" % game_project)
-
-	# Get environments
-	var envs_response = await plugin.GET("/cloud/backend/projects/%s/environments" % game_project.project_id).wait_completed()
-	if envs_response.response_code != HTTPClient.ResponseCode.RESPONSE_OK:
-		return FAILED
-	
-	game_environments = envs_response.body.environments
-	self.log("Loaded environments")
 
 	return OK
 

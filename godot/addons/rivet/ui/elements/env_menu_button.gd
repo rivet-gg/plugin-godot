@@ -19,7 +19,12 @@ var _envs_idx_offset:
 			return 3
 
 var environments: Array: 
-	get: return RivetPluginBridge.instance.game_environments
+	get:
+		var plugin = RivetPluginBridge.get_plugin()
+		if plugin.backend_environments != null:
+			return plugin.backend_environments
+		else:
+			return []
 
 func _ready():
 	super()
