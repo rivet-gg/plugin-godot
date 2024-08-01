@@ -1,15 +1,6 @@
 {
-	"registries": {
-		"default": {
-			"local": {
-				"directory": "/Users/nathan/rivet/opengb-modules/modules"
-			}
-		}
-	},
+	"extends": "backend.json",
 	"modules": {
-		"users": {},
-		"rate_limit": {},
-		"tokens": {},
 		"lobbies": {
 			"config": {
 				"lobbies": {
@@ -22,21 +13,6 @@
 							}
 						}
 					}
-				}
-			}
-		},
-		"rivet": {},
-		"auth": {
-			"config": {
-				"email": {
-					"fromEmail": "hello@rivet.gg"
-				}
-			}
-		},
-		"email": {
-			"config": {
-				"provider": {
-					"test": {}
 				}
 			}
 		}
