@@ -13,5 +13,6 @@ godot = { git = "https://github.com/godot-rust/gdext", branch = "master", featur
 serde = "1.0"
 serde_json = "1.0"
 tokio = { version = "1.27", default-features = false, features = ["rt"] }
-toolchain = { path = "../../../cli/rivet-toolchain", package = "rivet-toolchain" }
+# toolchain = { path = "../../../cli/rivet-toolchain", package = "rivet-toolchain" }
+toolchain = { git = "https://github.com/rivet-gg/cli.git", rev = "f2fde5227f4672e408e54d2f95d017a919f39b4b", package = "rivet-toolchain" }
 

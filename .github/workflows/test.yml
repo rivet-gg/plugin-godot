@@ -1,32 +1,14 @@
-name: release-please
+name: test
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-      release_sha: ${{ steps.release.outputs.sha }}
-
-    steps:
-      - id: release
-        uses: googleapis/release-please-action@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          config-file: release-please-config.json
-
   build:
-    needs: release-please
-    if: needs.release-please.outputs.release_created == 'true'
     name: Build for ${{ matrix.os }} ${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -71,8 +53,7 @@ jobs:
         path: rust/target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
 
   publish:
-    needs: [release-please, build]
-    if: needs.release-please.outputs.release_created == 'true'
+    needs: [build]
     runs-on: ubuntu-latest
     name: Publish to Godot Asset Store
 
@@ -87,18 +68,18 @@ jobs:
 
       - name: Prepare release assets
         run: |
-          rm -rf godot/addons/rivet/native/
-          mkdir -p godot/addons/rivet/native/
-          cp artifacts/ubuntu-latest-x86_64-cdylib/* godot/addons/rivet/native/linux-x86_64/
-          cp artifacts/windows-latest-x86_64-cdylib/* godot/addons/rivet/native/windows-x86_64/
-          cp artifacts/macos-latest-x86_64-cdylib/* godot/addons/rivet/native/macos-x86_64/
-          cp artifacts/macos-latest-arm64-cdylib/* godot/addons/rivet/native/macos-arm64/
+          rm -rf addons/rivet/native/
+          mkdir -p addons/rivet/native/
+          cp artifacts/ubuntu-latest-x86_64-cdylib/* addons/rivet/native/linux-x86_64/
+          cp artifacts/windows-latest-x86_64-cdylib/* addons/rivet/native/windows-x86_64/
+          cp artifacts/macos-latest-x86_64-cdylib/* addons/rivet/native/macos-x86_64/
+          cp artifacts/macos-latest-arm64-cdylib/* addons/rivet/native/macos-arm64/
           sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
           sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
 
       - name: Update gdextension config
         run: |
-          cat > godot/addons/rivet/rivet_toolchain.gdextension << EOL
+          cat > addons/rivet/rivet_toolchain.gdextension << EOL
           [configuration]
           entry_symbol = "gdext_rust_init"
           compatibility_minimum = 4.1
@@ -117,7 +98,6 @@ jobs:
 
       - name: Godot Asset Lib
         uses: deep-entertainment/godot-asset-lib-action@v0.4.0
-        working-directory: godot/
         with:
           action: addEdit
           username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
