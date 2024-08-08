@@ -89,6 +89,10 @@ jobs:
         run: |
           rm -rf godot/addons/rivet/native/
           mkdir -p godot/addons/rivet/native/
+          mkdir -p addons/rivet/native/linux-x86_64
+          mkdir -p addons/rivet/native/windows-x86_64
+          mkdir -p addons/rivet/native/macos-x86_64
+          mkdir -p addons/rivet/native/macos-arm64
           cp artifacts/ubuntu-latest-x86_64-cdylib/* godot/addons/rivet/native/linux-x86_64/
           cp artifacts/windows-latest-x86_64-cdylib/* godot/addons/rivet/native/windows-x86_64/
           cp artifacts/macos-latest-x86_64-cdylib/* godot/addons/rivet/native/macos-x86_64/
@@ -117,7 +121,6 @@ jobs:
 
       - name: Godot Asset Lib
         uses: deep-entertainment/godot-asset-lib-action@v0.4.0
-        working-directory: godot/
         with:
           action: addEdit
           username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
