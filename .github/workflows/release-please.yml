@@ -119,6 +119,24 @@ jobs:
           macos.release.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
           EOL
 
+      - name: Create zip file
+        run: |
+          zip -r release.zip .
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.release-please.outputs.upload_url }}
+          asset_path: ./release.zip
+          asset_name: release.zip
+          asset_content_type: application/zip
+
+      # Print out the download URL and upload URL
+      - name: Debug
+        run: |
+          echo "Download URL: ${{ needs.release-please.outputs.html_url }}/download/release.zip"
+          echo "Upload URL: ${{ needs.release-please.outputs.upload_url }}"
+
       - name: Godot Asset Lib
         uses: deep-entertainment/godot-asset-lib-action@v0.4.0
         with:
@@ -128,3 +146,4 @@ jobs:
           assetId: 1881
           assetTemplate: .asset-template.json
           baseUrl: https://godotengine.org/asset-library/api
+          downloadUrl: ${{ needs.release-please.outputs.html_url }}/download/release.zip
