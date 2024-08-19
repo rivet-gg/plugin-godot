@@ -5,6 +5,7 @@ class_name RivetTask
 enum LogType { STDOUT, STDERR }
 
 const POLL_LOGS_INTERVAL = 0.25
+const RIVET_EXECUTOR = "cli"
 
 ## Task logged something
 signal task_log(logs: String, type: LogType)
@@ -43,10 +44,6 @@ func _init(name: String, input: Variant):
 		return
 
 	# Run command
-	#
-	# We need a dedicated RivetToolchain instance for each instance since we
-	# can't have concurrent sync calls to the same node.
-	var toolchain = RivetToolchain.new()
 	var run_config_json = JSON.stringify({
 		"abort_path": state_files.abort,
 		"output_path": state_files.output,
@@ -55,7 +52,7 @@ func _init(name: String, input: Variant):
 
 	_thread = Thread.new()
 	_thread.start(func():
-		var output = _run(toolchain, run_config_json, input_json)
+		var output = _run(run_config_json, input_json)
 		call_deferred("_on_finish")
 		return output
 	)
@@ -63,8 +60,35 @@ func _init(name: String, input: Variant):
 	# Tail logs
 	_tail_logs(state_files.output)
 
-func _run(toolchain: RivetToolchain, run_config_json: String, input_json: String):
-	return toolchain.run_task(run_config_json, _name, input_json)
+func _run(run_config_json: String, input_json: String):
+	if RIVET_EXECUTOR == "cli":
+		var cli_path: String
+		match OS.get_name():
+			"Windows":
+				cli_path = "addons/rivet/cli/rivet_windows.exe"
+			"macOS":
+				cli_path = "addons/rivet/cli/rivet_x86_apple"
+			"Linux":
+				cli_path = "addons/rivet/cli/rivet_linux"
+			_:
+				push_error("Unsupported operating system")
+				return
+
+		var args = [
+			"task",
+			"run",
+			"--name",
+			self._name.c_escape(),
+			"--run-config",
+			run_config_json.c_escape(),
+			"--input",
+			input_json.c_escape(),
+		]
+		
+		var output = []
+		OS.execute(cli_path, args, output, true)
+
+		return output
 
 func _on_finish():
 	# This will not block because this event is emitted after the task is cancelled
@@ -73,7 +97,7 @@ func _on_finish():
 
 	is_running = false
 
-	var output = JSON.parse_string(output_json)
+	var output = JSON.parse_string(output_json[0].c_unescape())
 
 	task_output.emit(output)
 	if "Ok" in output:

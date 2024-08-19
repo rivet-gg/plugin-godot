@@ -12,7 +12,6 @@ var _dock: Control
 var _game_server_panel: Control
 var _backend_panel: Control
 var _export_plugin: EditorExportPlugin
-var toolchain: RivetToolchain = RivetToolchain.new()
 
 ## The global singleton for the Rivet plugin, only available in the editor.
 var global: _RivetGlobal
@@ -48,7 +47,7 @@ func _enter_tree():
 			"input": {
 				"cwd": project_path,
 				"cmd": OS.get_executable_path(),
-				"args": ["--path", project_path, "--headless", "--", "--server"]
+				"args": ["--project", project_path, "--headless", "--", "--server"]
 			}
 		}
 	add_control_to_bottom_panel(_game_server_panel, "Game Server")

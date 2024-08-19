@@ -6,3 +6,11 @@ test.gd export-ignore
 test.tscn export-ignore
 .gitignore export-ignore
 *.png filter=lfs diff=lfs merge=lfs -text
+
+addons/rivet/native/*.dll filter=lfs diff=lfs merge=lfs -text
+addons/rivet/native/*.so filter=lfs diff=lfs merge=lfs -text
+addons/rivet/native/*.dylib filter=lfs diff=lfs merge=lfs -text
+addons/rivet/cli/rivet_aarch64_apple filter=lfs diff=lfs merge=lfs -text
+addons/rivet/cli/rivet_linux filter=lfs diff=lfs merge=lfs -text
+addons/rivet/cli/rivet_windows.exe filter=lfs diff=lfs merge=lfs -text
+addons/rivet/cli/rivet_x86_apple filter=lfs diff=lfs merge=lfs -text
