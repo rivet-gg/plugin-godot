@@ -12,8 +12,8 @@ var api_endpoint: String
 var game_version: String
 var cloud_token: String
 var game_id: String
-var backend_project
-var backend_environments
+var envs
+var backends
 
 enum EnvType { LOCAL, REMOTE }
 
@@ -33,11 +33,11 @@ var remote_env_id = null:
 var remote_env = null:
 	get:
 		if env_type == EnvType.REMOTE:
-			for x in backend_environments:
-				if x.environment_id == remote_env_id:
+			for x in envs:
+				if x.id == remote_env_id:
 					return x
 
-			push_error("No env matching name id: %s" % remote_env_id)
+			push_error("No env matching id: %s" % remote_env_id)
 			return null
 		else:
 			return null
@@ -65,7 +65,7 @@ static func get_remote_env_endpoint(env) -> String:
 	if env != null:
 		# TODO: Replace with data from API endpoint
 		var plugin = RivetPluginBridge.get_plugin()
-		return "https://%s--%s.backend.nathan16.gameinc.io" % [plugin.backend_project.name_id, env.name_id]
+		return plugin.backends[env.id].endpoint
 	else:
 		return "unknown"
 

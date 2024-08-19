@@ -75,13 +75,13 @@ func bootstrap() -> Error:
 	if result == null:
 		return FAILED
 	self.log("Loaded bootstrap data: %s" % result)
-	
+
 	# Update config
 	plugin.api_endpoint = result.api_endpoint
 	plugin.cloud_token = result.token
 	plugin.game_id = result.game_id
-	plugin.backend_project = result.backend_project
-	plugin.backend_environments = result.backend_environments
+	plugin.envs = result.envs
+	plugin.backends = result.backends
 
 	save_configuration()
 

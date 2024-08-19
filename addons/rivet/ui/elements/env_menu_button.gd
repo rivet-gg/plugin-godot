@@ -21,8 +21,8 @@ var _envs_idx_offset:
 var environments: Array: 
 	get:
 		var plugin = RivetPluginBridge.get_plugin()
-		if plugin.backend_environments != null:
-			return plugin.backend_environments
+		if plugin.envs != null:
+			return plugin.envs
 		else:
 			return []
 
@@ -54,7 +54,7 @@ func _update_menu_button() -> void:
 		add_separator("Remote")
 
 	for env in environments:
-		add_item("%s (%s)" % [env.display_name, env.name_id])
+		add_item("%s (%s)" % [env.name, env.slug])
 	add_item("+ Create Environment")
 
 	# Update selected
@@ -67,7 +67,7 @@ func _update_menu_button() -> void:
 		elif plugin.env_type == _RivetGlobal.EnvType.REMOTE:
 			var env_idx = null
 			for i in environments.size():
-				if environments[i].environment_id == plugin.remote_env_id:
+				if environments[i].id == plugin.remote_env_id:
 					env_idx = i
 					break
 			if env_idx != null:
@@ -94,7 +94,7 @@ func _select_menu_item(idx: int) -> void:
 		plugin.env_type = _RivetGlobal.EnvType.LOCAL
 	elif idx >= _envs_idx_offset and idx < environments.size() + _envs_idx_offset:
 		plugin.env_type = _RivetGlobal.EnvType.REMOTE
-		plugin.remote_env_id = environments[idx - _envs_idx_offset].environment_id
+		plugin.remote_env_id = environments[idx - _envs_idx_offset].id
 	elif idx == environments.size() + _envs_idx_offset:
 		_open_create_remote()
 	else:
