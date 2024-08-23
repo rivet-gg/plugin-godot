@@ -24,54 +24,54 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
 
-  build:
-    needs: release-please
-    if: needs.release-please.outputs.release_created == 'true'
-    name: Build for ${{ matrix.os }} ${{ matrix.arch }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            arch: x86_64
-            artifact_name: librivet_plugin_godot.so
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            arch: x86_64
-            artifact_name: librivet_plugin_godot.dylib
-          - os: macos-latest
-            target: aarch64-apple-darwin
-            arch: arm64
-            artifact_name: librivet_plugin_godot.dylib
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            arch: x86_64
-            artifact_name: rivet_plugin_godot.dll
+  # build:
+  #   needs: release-please
+  #   if: needs.release-please.outputs.release_created == 'true'
+  #   name: Build for ${{ matrix.os }} ${{ matrix.arch }}
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       include:
+  #         - os: ubuntu-latest
+  #           target: x86_64-unknown-linux-gnu
+  #           arch: x86_64
+  #           artifact_name: librivet_plugin_godot.so
+  #         - os: macos-latest
+  #           target: x86_64-apple-darwin
+  #           arch: x86_64
+  #           artifact_name: librivet_plugin_godot.dylib
+  #         - os: macos-latest
+  #           target: aarch64-apple-darwin
+  #           arch: arm64
+  #           artifact_name: librivet_plugin_godot.dylib
+  #         - os: windows-latest
+  #           target: x86_64-pc-windows-msvc
+  #           arch: x86_64
+  #           artifact_name: rivet_plugin_godot.dll
 
-    steps:
-    - uses: actions/checkout@v2
+  #   steps:
+  #   - uses: actions/checkout@v2
     
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        target: ${{ matrix.target }}
-        override: true
+  #   - name: Install Rust
+  #     uses: actions-rs/toolchain@v1
+  #     with:
+  #       toolchain: stable
+  #       target: ${{ matrix.target }}
+  #       override: true
     
-    - name: Build
-      run: |
-        cd rust/rivet-plugin-godot
-        cargo build --release --target ${{ matrix.target }}
+  #   - name: Build
+  #     run: |
+  #       cd rust/rivet-plugin-godot
+  #       cargo build --release --target ${{ matrix.target }}
     
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ matrix.os }}-${{ matrix.arch }}-cdylib
-        path: rust/target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
+  #   - name: Upload artifact
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: ${{ matrix.os }}-${{ matrix.arch }}-cdylib
+  #       path: rust/target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
 
   publish:
-    needs: [release-please, build]
+    needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
     name: Publish to Godot Asset Store
@@ -80,44 +80,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Download all artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: artifacts
+      # - name: Download all artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     path: artifacts
 
-      - name: Prepare release assets
+      # - name: Prepare release assets
+      #   run: |
+      #     rm -rf godot/addons/rivet/native/
+      #     mkdir -p godot/addons/rivet/native/
+      #     mkdir -p addons/rivet/native/linux-x86_64
+      #     mkdir -p addons/rivet/native/windows-x86_64
+      #     mkdir -p addons/rivet/native/macos-x86_64
+      #     mkdir -p addons/rivet/native/macos-arm64
+      #     cp artifacts/ubuntu-latest-x86_64-cdylib/* godot/addons/rivet/native/linux-x86_64/
+      #     cp artifacts/windows-latest-x86_64-cdylib/* godot/addons/rivet/native/windows-x86_64/
+      #     cp artifacts/macos-latest-x86_64-cdylib/* godot/addons/rivet/native/macos-x86_64/
+      #     cp artifacts/macos-latest-arm64-cdylib/* godot/addons/rivet/native/macos-arm64/
+      #     sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
+      #     sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
+
+      # - name: Update gdextension config
+      #   run: |
+      #     cat > godot/addons/rivet/rivet_toolchain.gdextension << EOL
+      #     [configuration]
+      #     entry_symbol = "gdext_rust_init"
+      #     compatibility_minimum = 4.1
+      #     reloadable = true
+
+      #     [libraries]
+      #     linux.debug.x86_64 = "res://addons/rivet/native/linux-x86_64/librivet_plugin_godot.so"
+      #     linux.release.x86_64 = "res://addons/rivet/native/linux-x86_64/librivet_plugin_godot.so"
+      #     windows.debug.x86_64 = "res://addons/rivet/native/windows-x86_64/rivet_plugin_godot.dll"
+      #     windows.release.x86_64 = "res://addons/rivet/native/windows-x86_64/rivet_plugin_godot.dll"
+      #     macos.debug.x86_64 = "res://addons/rivet/native/macos-x86_64/librivet_plugin_godot.dylib"
+      #     macos.release.x86_64 = "res://addons/rivet/native/macos-x86_64/librivet_plugin_godot.dylib"
+      #     macos.debug.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
+      #     macos.release.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
+      #     EOL
+
+      - name: Replace placeholders in asset template
         run: |
-          rm -rf godot/addons/rivet/native/
-          mkdir -p godot/addons/rivet/native/
-          mkdir -p addons/rivet/native/linux-x86_64
-          mkdir -p addons/rivet/native/windows-x86_64
-          mkdir -p addons/rivet/native/macos-x86_64
-          mkdir -p addons/rivet/native/macos-arm64
-          cp artifacts/ubuntu-latest-x86_64-cdylib/* godot/addons/rivet/native/linux-x86_64/
-          cp artifacts/windows-latest-x86_64-cdylib/* godot/addons/rivet/native/windows-x86_64/
-          cp artifacts/macos-latest-x86_64-cdylib/* godot/addons/rivet/native/macos-x86_64/
-          cp artifacts/macos-latest-arm64-cdylib/* godot/addons/rivet/native/macos-arm64/
           sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
           sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
-
-      - name: Update gdextension config
-        run: |
-          cat > godot/addons/rivet/rivet_toolchain.gdextension << EOL
-          [configuration]
-          entry_symbol = "gdext_rust_init"
-          compatibility_minimum = 4.1
-          reloadable = true
-
-          [libraries]
-          linux.debug.x86_64 = "res://addons/rivet/native/linux-x86_64/librivet_plugin_godot.so"
-          linux.release.x86_64 = "res://addons/rivet/native/linux-x86_64/librivet_plugin_godot.so"
-          windows.debug.x86_64 = "res://addons/rivet/native/windows-x86_64/rivet_plugin_godot.dll"
-          windows.release.x86_64 = "res://addons/rivet/native/windows-x86_64/rivet_plugin_godot.dll"
-          macos.debug.x86_64 = "res://addons/rivet/native/macos-x86_64/librivet_plugin_godot.dylib"
-          macos.release.x86_64 = "res://addons/rivet/native/macos-x86_64/librivet_plugin_godot.dylib"
-          macos.debug.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
-          macos.release.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
-          EOL
+      
 
       - name: Godot Asset Lib
         uses: deep-entertainment/godot-asset-lib-action@v0.4.0
