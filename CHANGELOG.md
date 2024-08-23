@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/rivet-gg/plugin-godot/compare/v2.0.1...v2.0.2) (2024-08-23)
+
+
+### Chores
+
+* lock asset icon to pre-lfs ([#182](https://github.com/rivet-gg/plugin-godot/issues/182)) ([85b628b](https://github.com/rivet-gg/plugin-godot/commit/85b628bf5a07dc1c07f6dd076b35bea8a9632136))
+
 ## [2.0.1](https://github.com/rivet-gg/plugin-godot/compare/v2.0.0...v2.0.1) (2024-08-23)
 
 
