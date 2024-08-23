@@ -6,6 +6,7 @@ enum LogType { STDOUT, STDERR }
 
 const POLL_LOGS_INTERVAL = 0.25
 const RIVET_EXECUTOR = "cli"
+const RIVET_CLI_VERSION = "v2.0.0-rc.4"
 
 ## Task logged something
 signal task_log(logs: String, type: LogType)
@@ -62,18 +63,6 @@ func _init(name: String, input: Variant):
 
 func _run(run_config_json: String, input_json: String):
 	if RIVET_EXECUTOR == "cli":
-		var cli_path: String
-		match OS.get_name():
-			"Windows":
-				cli_path = "addons/rivet/cli/rivet_windows.exe"
-			"macOS":
-				cli_path = "addons/rivet/cli/rivet_x86_apple"
-			"Linux":
-				cli_path = "addons/rivet/cli/rivet_linux"
-			_:
-				push_error("Unsupported operating system")
-				return
-
 		var args = [
 			"task",
 			"run",
@@ -86,9 +75,36 @@ func _run(run_config_json: String, input_json: String):
 		]
 		
 		var output = []
-		OS.execute(cli_path, args, output, true)
+		OS.execute(_get_cli_bin_path()[0].path_join(_get_cli_bin_path()[1]), args, output, true)
 
 		return output
+
+static func _check_cli():
+	return FileAccess.file_exists(_get_cli_bin_path()[0].path_join(_get_cli_bin_path()[1]))
+
+static func _get_cli_bin_path():
+	var target: String
+	match OS.get_name():
+		"Windows":
+			target = "x86-windows.exe"
+		"macOS":
+			target = "x86-mac"
+		"Linux":
+			target = "x86-linux"
+		_:
+			push_error("Unsupported operating system")
+			return
+
+	var home_path: String = OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	
+	# Convert any backslashes to forward slashes
+	# https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#path-separators
+	home_path = home_path.replace("\\", "/")
+
+	var rivet_cli_dir = home_path.path_join(".rivet").path_join(RIVET_CLI_VERSION).path_join("bin")
+	
+	return [rivet_cli_dir, "rivet-cli-%s" % target]
+
 
 func _on_finish():
 	# This will not block because this event is emitted after the task is cancelled

@@ -74,7 +74,6 @@ func bootstrap() -> Error:
 	var result = await plugin.run_toolchain_task("get_bootstrap_data")
 	if result == null:
 		return FAILED
-	self.log("Loaded bootstrap data: %s" % result)
 
 	# Update config
 	plugin.api_endpoint = result.api_endpoint
