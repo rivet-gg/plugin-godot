@@ -9,5 +9,5 @@
     "download_commit": "{{ env.GITHUB_SHA }}",
     "browse_url": "{{ context.repository.html_url }}",
     "issues_url": "{{ context.repository.html_url }}/issues",
-    "icon_url": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/{{ env.GITHUB_SHA }}/media/icon.png"
+    "icon_url": "https://raw.githubusercontent.com/rivet-gg/plugin-godot/ba69c71c80334650c6db485c01ba1ee6a5169112/media/icon.png"
 }
