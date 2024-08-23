@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/rivet-gg/plugin-godot/compare/v2.0.0...v2.0.1) (2024-08-23)
+
+
+### Continuous Integration
+
+* revert to just asset upload ([#180](https://github.com/rivet-gg/plugin-godot/issues/180)) ([36c5172](https://github.com/rivet-gg/plugin-godot/commit/36c51729ebea2f52133e80fd2296e3241d18df87))
+
 ## [2.0.0](https://github.com/rivet-gg/plugin-godot/compare/v2.0.0-rc.1...v2.0.0) (2024-08-23)
 
 
