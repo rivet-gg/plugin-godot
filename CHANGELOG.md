@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0](https://github.com/rivet-gg/plugin-godot/compare/v2.0.0-rc.1...v2.0.0) (2024-08-23)
+
+
+### Bug Fixes
+
+* install CLI as backup ([#178](https://github.com/rivet-gg/plugin-godot/issues/178)) ([f6310d8](https://github.com/rivet-gg/plugin-godot/commit/f6310d8cb6e8f28a69ce13eb7c1dc060c055a340))
+
+
+### Chores
+
+* release 2.0.0 ([f12b778](https://github.com/rivet-gg/plugin-godot/commit/f12b77863deacdc6fd3a3b6cbbb50e80e2805585))
+
 ## [2.0.0-rc.1](https://github.com/rivet-gg/plugin-godot/compare/v1.4.0...v2.0.0-rc.1) (2024-08-19)
 
 
