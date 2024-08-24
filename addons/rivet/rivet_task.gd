@@ -167,6 +167,12 @@ func _touch_file(path: String):
 
 ## Tail a file and print it to the console in realtime.
 func _tail_logs(path: String):
+	# We can't do this on Windows for now because of how files are opened and
+	# written to.
+	# https://github.com/rivet-gg/plugin-godot/issues/184
+	if OS.get_name() == "Windows":
+		return
+
 	# Open file
 	_log_file = FileAccess.open(path, FileAccess.READ)
 	if _log_file == null:
