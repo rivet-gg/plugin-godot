@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/rivet-gg/plugin-godot/compare/v2.0.2...v2.0.3) (2024-08-24)
+
+
+### Bug Fixes
+
+* disable windows tail_logs ([#185](https://github.com/rivet-gg/plugin-godot/issues/185)) ([f5d26db](https://github.com/rivet-gg/plugin-godot/commit/f5d26db92affc15376fd07b2878b9282e5f1d570))
+
 ## [2.0.2](https://github.com/rivet-gg/plugin-godot/compare/v2.0.1...v2.0.2) (2024-08-23)
 
 
