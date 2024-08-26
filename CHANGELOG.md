@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.4](https://github.com/rivet-gg/plugin-godot/compare/v2.0.3...v2.0.4) (2024-08-26)
+
+
+### Bug Fixes
+
+* correctly pass values to prevent threading crash ([#189](https://github.com/rivet-gg/plugin-godot/issues/189)) ([d863c65](https://github.com/rivet-gg/plugin-godot/commit/d863c65593ba6a6e7391ff7c83ee861ce9323ad2))
+
+
+### Chores
+
+* delete unneeded files before submitting to asset store ([#192](https://github.com/rivet-gg/plugin-godot/issues/192)) ([a79442a](https://github.com/rivet-gg/plugin-godot/commit/a79442a4579d88f16a9cd0472c53b8f3d7b4ccf2))
+* upgrade to godot 4.3 ([#191](https://github.com/rivet-gg/plugin-godot/issues/191)) ([1ef1286](https://github.com/rivet-gg/plugin-godot/commit/1ef128635fcf4876d5f9e15336eb42a79d8c1649))
+
 ## [2.0.3](https://github.com/rivet-gg/plugin-godot/compare/v2.0.2...v2.0.3) (2024-08-24)
 
 
