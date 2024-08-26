@@ -124,6 +124,9 @@ jobs:
           sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
           sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
       
+      - name: Delete unnecessary files
+        run: |
+          find . -type f -not -path "./addons/rivet/*" -not -name ".asset-template.json" -not -name "LICENSE" -delete
 
       - name: Godot Asset Lib
         uses: deep-entertainment/godot-asset-lib-action@v0.4.0
