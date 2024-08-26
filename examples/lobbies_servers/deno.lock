@@ -3,6 +3,7 @@
   "packages": {
     "specifiers": {
       "npm:@prisma/adapter-pg@^5.12.0": "npm:@prisma/adapter-pg@5.16.1_pg@8.12.0",
+      "npm:drizzle-orm@0.33.0": "npm:drizzle-orm@0.33.0_pg@8.12.0",
       "npm:pg@^8.11.3": "npm:pg@8.12.0",
       "npm:zod-validation-error@3.3.0": "npm:zod-validation-error@3.3.0_zod@3.23.8",
       "npm:zod@3.23.8": "npm:zod@3.23.8"
@@ -24,6 +25,12 @@
         "integrity": "sha512-QGnxw6FMts2/YSeZY3+A/kxyGQV2Be8oLLLrczdy8uM0oc2RREHUtpD14MyOOIaCytnJK7kwCbORcBhgk41+tQ==",
         "dependencies": {
           "@prisma/debug": "@prisma/debug@5.16.1"
+        }
+      },
+      "drizzle-orm@0.33.0_pg@8.12.0": {
+        "integrity": "sha512-SHy72R2Rdkz0LEq0PSG/IdvnT3nGiWuRk+2tXZQ90GVq/XQhpCzu/EFT3V2rox+w8MlkBQxifF8pCStNYnERfA==",
+        "dependencies": {
+          "pg": "pg@8.12.0"
         }
       },
       "pg-cloudflare@1.1.1": {

@@ -52,22 +52,18 @@ func _init(name: String, input: Variant):
 	var input_json = JSON.stringify(_input)
 
 	_thread = Thread.new()
-	_thread.start(func():
-		var output = _run(run_config_json, input_json)
-		call_deferred("_on_finish")
-		return output
-	)
+	_thread.start(_run.bind(name, run_config_json, input_json))
 
 	# Tail logs
 	_tail_logs(state_files.output)
 
-func _run(run_config_json: String, input_json: String):
+func _run(name: String, run_config_json: String, input_json: String):
 	if RIVET_EXECUTOR == "cli":
 		var args = [
 			"task",
 			"run",
 			"--name",
-			self._name.c_escape(),
+			name.c_escape(),
 			"--run-config",
 			run_config_json.c_escape(),
 			"--input",
@@ -77,7 +73,9 @@ func _run(run_config_json: String, input_json: String):
 		var output = []
 		OS.execute(_get_cli_bin_path()[0].path_join(_get_cli_bin_path()[1]), args, output, true)
 
-		return output
+		call_deferred("_on_finish", output)
+	else:
+		push_error("Unimplemented")
 
 static func _check_cli():
 	return FileAccess.file_exists(_get_cli_bin_path()[0].path_join(_get_cli_bin_path()[1]))
@@ -106,9 +104,10 @@ static func _get_cli_bin_path():
 	return [rivet_cli_dir, "rivet-cli-%s" % target]
 
 
-func _on_finish():
+func _on_finish(output_json):
 	# This will not block because this event is emitted after the task is cancelled
-	var output_json = _thread.wait_to_finish()
+	# var output_json = _thread.wait_to_finish()
+	_thread.wait_to_finish()
 	_finish_logs()
 
 	is_running = false
@@ -219,4 +218,3 @@ func _read_log_tail():
 				task_log.emit(parsed["Stdout"], LogType.STDOUT)
 			elif "Stderr" in parsed:
 				task_log.emit(parsed["Stderr"], LogType.STDERR)
-
