@@ -2,7 +2,7 @@
     "title": "Rivet - Multiplayer Game Servers and Backend",
     "description": "The only backend your game needs:\n\n- Launch quickly, scale painlessly\n- Customizable\n- All-in-one\n- No vendor locking\n- Open-source & self-hostable\n\nFeatures:\n\n- DDoS Mitigation\n- No downtime deploys & instant rollbacks\n- Version history for rollbacks\n- Log & metrics aggregation\n- Automatic SSL for WebSockets & TLS\n- Crash reporting\n- Analytics\n- Automatic geographic routing\n\nExtend with backend modules:\n\n- Matchmaker\n- Parties\n- Presence\n- Auth\n- Users\n- Friends\n\nLearn more at https://rivet.gg",
     "category_id": "6",
-    "godot_version": "4.2",
+    "godot_version": "4.3",
     "version_string": "{{ context.release.tag_name }}",
     "cost": "Apache-2.0",
     "download_provider": "GitHub",
