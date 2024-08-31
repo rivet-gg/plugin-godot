@@ -3,7 +3,7 @@
 extends Node
 class_name RivetCliManager
 
-const RIVET_CLI_VERSION = "v2.0.0-rc.4"
+const RIVET_CLI_VERSION = "v2.0.0-rc.5"
 
 signal cli_installed
 
