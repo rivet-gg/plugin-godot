@@ -27,7 +27,6 @@ var _input: Variant
 # State
 var is_running = true
 var state_files
-var _thread
 var _log_file
 var _log_last_position
 
@@ -51,8 +50,7 @@ func _init(name: String, input: Variant):
 	})
 	var input_json = JSON.stringify(_input)
 
-	_thread = Thread.new()
-	_thread.start(_run.bind(name, run_config_json, input_json))
+	WorkerThreadPool.add_task(_run.bind(name, run_config_json, input_json))
 
 	# Tail logs
 	_tail_logs(state_files.output)
@@ -75,8 +73,6 @@ func _run(name: String, run_config_json: String, input_json: String):
 	call_deferred("_on_finish", output)
 
 func _on_finish(output_json):
-	# This will not block because this event is emitted after the task is cancelled
-	_thread.wait_to_finish()
 	_finish_logs()
 
 	is_running = false
