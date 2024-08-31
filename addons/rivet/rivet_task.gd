@@ -2,11 +2,11 @@ extends RefCounted
 class_name RivetTask
 ## Handles running subprocess & piping logs.
 
+const _RivetCliManager = preload("rivet_cli_manager.gd")
+
 enum LogType { STDOUT, STDERR }
 
 const POLL_LOGS_INTERVAL = 0.25
-const RIVET_EXECUTOR = "cli"
-const RIVET_CLI_VERSION = "v2.0.0-rc.4"
 
 ## Task logged something
 signal task_log(logs: String, type: LogType)
@@ -58,55 +58,24 @@ func _init(name: String, input: Variant):
 	_tail_logs(state_files.output)
 
 func _run(name: String, run_config_json: String, input_json: String):
-	if RIVET_EXECUTOR == "cli":
-		var args = [
-			"task",
-			"run",
-			"--name",
-			name.c_escape(),
-			"--run-config",
-			run_config_json.c_escape(),
-			"--input",
-			input_json.c_escape(),
-		]
-		
-		var output = []
-		OS.execute(_get_cli_bin_path()[0].path_join(_get_cli_bin_path()[1]), args, output, true)
-
-		call_deferred("_on_finish", output)
-	else:
-		push_error("Unimplemented")
-
-static func _check_cli():
-	return FileAccess.file_exists(_get_cli_bin_path()[0].path_join(_get_cli_bin_path()[1]))
-
-static func _get_cli_bin_path():
-	var target: String
-	match OS.get_name():
-		"Windows":
-			target = "x86-windows.exe"
-		"macOS":
-			target = "x86-mac"
-		"Linux":
-			target = "x86-linux"
-		_:
-			push_error("Unsupported operating system")
-			return
-
-	var home_path: String = OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	var args = [
+		"task",
+		"run",
+		"--name",
+		name.c_escape(),
+		"--run-config",
+		run_config_json.c_escape(),
+		"--input",
+		input_json.c_escape(),
+	]
 	
-	# Convert any backslashes to forward slashes
-	# https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#path-separators
-	home_path = home_path.replace("\\", "/")
+	var output = []
+	OS.execute(_RivetCliManager.get_bin_path(), args, output, true)
 
-	var rivet_cli_dir = home_path.path_join(".rivet").path_join(RIVET_CLI_VERSION).path_join("bin")
-	
-	return [rivet_cli_dir, "rivet-cli-%s" % target]
-
+	call_deferred("_on_finish", output)
 
 func _on_finish(output_json):
 	# This will not block because this event is emitted after the task is cancelled
-	# var output_json = _thread.wait_to_finish()
 	_thread.wait_to_finish()
 	_finish_logs()
 

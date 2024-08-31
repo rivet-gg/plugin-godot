@@ -4,10 +4,10 @@ class_name RivetPlugin
 
 # MARK: Plugin
 const AUTO_LOAD_RIVET_GLOBAL = "Rivet"
-const RIVET_CLI_VERSION = "v2.0.0-rc.4"
 
 const _RivetEditorSettings := preload("rivet_editor_settings.gd")
 const _RivetGlobal := preload("rivet_global.gd")
+const _RivetCliManager = preload("rivet_cli_manager.gd")
 
 var _dock: Control
 var _game_server_panel: Control
@@ -17,7 +17,9 @@ var _dialog: AcceptDialog
 
 ## The global singleton for the Rivet plugin, only available in the editor.
 var global: _RivetGlobal
-# var game_server_global: _RivetGlobal
+
+## Manages installing the CLI.
+var cli_manager: _RivetCliManager
 
 func _init() -> void:
 	name = "RivetPlugin"
@@ -31,51 +33,13 @@ func _enter_tree():
 	# This gets added under Dock. This could be any node we own, it has no
 	# specific behavior to the dock.
 	global = _RivetGlobal.new()
-	global.add_autoload.connect(_on_add_autoload)
+	global.add_autoload.connect(_on_add_autoload)  # Allow calling the plugin from global
 
-	install_cli()
-
-func install_cli():
-	# If the CLI is already installed, skip to the rest of initialization
-	if global.check_cli():
-		_on_cli_installed()
-	else:
-		_dialog = AcceptDialog.new()
-		_dialog.title = "Installing Rivet CLI"
-		_dialog.dialog_text = "The Rivet CLI is being downloaded"
-		_dialog.remove_button(_dialog.get_ok_button())
-		
-		add_child(_dialog)
-
-		var http_request = HTTPRequest.new()
-		var path = global.get_cli_path()
-
-		DirAccess.make_dir_recursive_absolute(path[0])
-		http_request.set_download_file(path[0].path_join(path[1]))
-		http_request.request_completed.connect(_on_cli_download_completed)
-		add_child(http_request)
-		
-		# Show the dialog
-		_dialog.popup_centered()
-
-		var target: String
-		if OS.get_name() == "macOS":
-			target = "rivet-cli-x86-mac"
-		elif OS.get_name() == "Windows":
-			target = "rivet-cli-x86-windows.exe"
-		else:
-			target = "rivet-cli-x86-linux"
-
-		http_request.request("https://releases.rivet.gg/cli/%s/%s" % [RIVET_CLI_VERSION, target])
-
-func _on_cli_download_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	# # If we aren't on Windows, set the executable bit
-	if OS.get_name() != "Windows":
-		var path = global.get_cli_path()
-		var command = "chmod +x " + path[0].path_join(path[1])
-		OS.execute("/bin/sh", ["-c", command])
-
-	_on_cli_installed()
+	# CLI manager
+	cli_manager = _RivetCliManager.new()
+	cli_manager.cli_installed.connect(_on_cli_installed)
+	add_child(cli_manager)
+	cli_manager.install_cli()
 
 func _on_cli_installed():
 	# Dock
@@ -98,11 +62,6 @@ func _on_cli_installed():
 			}
 		}
 	add_control_to_bottom_panel(_game_server_panel, "Game Server")
-
-	# Close the dialog if it exists
-	if _dialog:
-		remove_child(_dialog)
-		_dialog.free()
 
 	# Backend
 	_backend_panel = preload("ui/task_panel/task_panel.tscn").instantiate()

@@ -8,6 +8,7 @@ class_name RivetGlobal
 
 const _RivetTask = preload("rivet_task.gd")
 
+# Data
 var api_endpoint: String
 var game_version: String
 var cloud_token: String
@@ -101,12 +102,6 @@ func run_toolchain_task(name: String, input: Variant = {}) -> Variant:
 		add_child(alert)
 		alert.popup_centered_ratio(0.4)
 		return null
-
-func check_cli():
-	return _RivetTask._check_cli()
-
-func get_cli_path():
-	return _RivetTask._get_cli_bin_path()
 
 ## Differentiates @tool nodes from running inside of the editor vs running
 ## inside of the plugin UI.
