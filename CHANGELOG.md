@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.6](https://github.com/rivet-gg/plugin-godot/compare/v2.0.5...v2.0.6) (2024-08-31)
+
+
+### Bug Fixes
+
+* make description utf8 ([#199](https://github.com/rivet-gg/plugin-godot/issues/199)) ([#199](https://github.com/rivet-gg/plugin-godot/issues/199)) ([fef2be4](https://github.com/rivet-gg/plugin-godot/commit/fef2be4d8a429eaa3ff5095ed3da1059a1700ef2))
+
 ## [2.0.5](https://github.com/rivet-gg/plugin-godot/compare/v2.0.4...v2.0.5) (2024-08-31)
 
 
