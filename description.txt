@@ -1,4 +1,4 @@
-Build multiplayer painlessly with 🖥️ Game Servers, ♟️ Matchmaking, and 🔐 Authentication. Customize endlessly using ⚙️ Backend Scripting. Scale effortlessly with 🛡️ DDoS Mitigation and 📊 Monitoring.
+Build multiplayer painlessly with Game Servers, Matchmaking, and Authentication. Customize endlessly using Backend Scripting. Scale effortlessly with DDoS Mitigation and Monitoring.
 
 Powering millions of multiplayer play sessions per day for FPS, MOBA, battle royale, MMO, racing, RTS, and turn-based games. Supports desktop, mobile, web, and console.
 
