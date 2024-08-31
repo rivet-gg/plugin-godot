@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.5](https://github.com/rivet-gg/plugin-godot/compare/v2.0.4...v2.0.5) (2024-08-31)
+
+
+### Bug Fixes
+
+* incorrect environment id on deploy ([#195](https://github.com/rivet-gg/plugin-godot/issues/195)) ([7cd1fca](https://github.com/rivet-gg/plugin-godot/commit/7cd1fca292d56bfb899603e6f98ead04aa87459a))
+
+
+### Chores
+
+* clean up cli installer code ([#193](https://github.com/rivet-gg/plugin-godot/issues/193)) ([7d3cf9a](https://github.com/rivet-gg/plugin-godot/commit/7d3cf9af03c2e50702ef97d1261344105770e621))
+* switch to thread pool for running tasks ([#194](https://github.com/rivet-gg/plugin-godot/issues/194)) ([f1a272f](https://github.com/rivet-gg/plugin-godot/commit/f1a272fd2c17a73a5cfbc6a66db8cdbdf67f2878))
+* update cli to 2.0.0-rc.5 ([#196](https://github.com/rivet-gg/plugin-godot/issues/196)) ([c644b27](https://github.com/rivet-gg/plugin-godot/commit/c644b27f3f651e0b867302c84ced3a807c9ad1a7))
+* update description ([#198](https://github.com/rivet-gg/plugin-godot/issues/198)) ([6a885f8](https://github.com/rivet-gg/plugin-godot/commit/6a885f8b888289498c47dd433efe8d1445b80673))
+
 ## [2.0.4](https://github.com/rivet-gg/plugin-godot/compare/v2.0.3...v2.0.4) (2024-08-26)
 
 
