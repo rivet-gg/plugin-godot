@@ -1,23 +1,21 @@
 use std::future::Future;
 use tokio::time::Duration;
 
-const FORCE_MULTI_THREAD: bool = true;
-
-pub struct BlockOnOpts {
-    pub multithreaded: bool,
-}
+pub struct BlockOnOpts {}
 
 /**
 * Create a temporary Tokio runtime to run the given future.
 */
-pub fn block_on<Output>(fut: impl Future<Output = Output>, opts: BlockOnOpts) -> Output {
+pub fn block_on<Output>(fut: impl Future<Output = Output>, _opts: BlockOnOpts) -> Output {
     // Build temporary runtime
-    let mut builder = if opts.multithreaded || FORCE_MULTI_THREAD {
-        tokio::runtime::Builder::new_multi_thread()
-    } else {
-        tokio::runtime::Builder::new_current_thread()
-    };
-    let rt = builder.enable_all().build().unwrap();
+    //
+    // Multithreaded is required in order to be able to use blocking threads. We reduce the worker
+    // thread count to reduce footprint.
+    let rt = tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(2)
+        .enable_all()
+        .build()
+        .unwrap();
 
     // Run future
     let output = rt.block_on(fut);

@@ -1,0 +1,14 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 =     "res://addons/rivet/native/debug/librivet_plugin_godot_linux_x86_64.so"
+linux.release.x86_64 =   "res://addons/rivet/native/release/librivet_plugin_godot_linux_x86_64.so"
+windows.debug.x86_64 =   "res://addons/rivet/native/debug/rivet_plugin_godot_window_x86_64.dll"
+windows.release.x86_64 = "res://addons/rivet/native/release/rivet_plugin_godot_window_x86_64.dll"
+macos.debug =            "res://addons/rivet/native/debug/librivet_plugin_godot_x86_64.dylib"
+macos.release =          "res://addons/rivet/native/release/librivet_plugin_godo_x86_64t.dylib"
+macos.debug.arm64 =      "res://addons/rivet/native/debug/librivet_plugin_godot_macos_arm64.dylib"
+macos.release.arm64 =    "res://addons/rivet/native/release/librivet_plugin_godot_macos_arm64.dylib"

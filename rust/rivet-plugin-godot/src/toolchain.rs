@@ -1,5 +1,6 @@
 use godot::prelude::*;
-use toolchain::tasks::RunConfig;
+use tokio::task::block_in_place;
+use toolchain::util::task;
 
 use crate::util::runtime::{block_on, BlockOnOpts};
 
@@ -19,33 +20,39 @@ impl IRefCounted for RivetToolchain {
 #[godot_api]
 impl RivetToolchain {
     #[func]
-    fn run_task(
-        &mut self,
-        run_config: String,
-        name: String,
-        input_json: String,
-        on_output_event: Callable,
-    ) -> String {
-        let run_config = serde_json::from_str::<RunConfig>(&run_config).unwrap();
-
-        let task_config = toolchain::tasks::get_task_config(&name);
-
+    fn run_task(&mut self, name: String, input_json: String, on_output_event: Callable) {
         let name_inner = name.clone();
-        let output_json = block_on(
+        block_on(
             async move {
-                toolchain::tasks::run_task_json(
-                    run_config,
-                    &name_inner,
-                    &input_json,
-                    move |event_json| output.callv(event_json),
-                )
-                .await
-            },
-            BlockOnOpts {
-                multithreaded: task_config.prefer_multithreaded,
-            },
-        );
+                let (run_config, mut handles) = task::RunConfig::build();
 
-        output_json
+                // TODO: Add aborter
+
+                // Spawn task
+                tokio::task::spawn(async move {
+                    toolchain::tasks::run_task_json(run_config, &name_inner, &input_json).await
+                });
+
+                // Pass events to Godot
+                //
+                // Do this in the current thread since `Callable` is not `Send`
+                while let Some(event) = handles.event_rx.recv().await {
+                    block_in_place(|| {
+                        // Serialize event
+                        let event_json = match serde_json::to_string(&event) {
+                            Ok(x) => x,
+                            Err(err) => {
+                                eprintln!("error with event: {err:?}");
+                                return;
+                            }
+                        };
+
+                        // Call Godot
+                        on_output_event.callv(godot::builtin::array![Variant::from(event_json)]);
+                    });
+                }
+            },
+            BlockOnOpts {},
+        );
     }
 }

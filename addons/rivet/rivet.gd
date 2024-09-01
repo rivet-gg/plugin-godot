@@ -7,7 +7,6 @@ const AUTO_LOAD_RIVET_GLOBAL = "Rivet"
 
 const _RivetEditorSettings := preload("rivet_editor_settings.gd")
 const _RivetGlobal := preload("rivet_global.gd")
-const _RivetCliManager = preload("rivet_cli_manager.gd")
 
 var _dock: Control
 var _game_server_panel: Control
@@ -17,9 +16,6 @@ var _dialog: AcceptDialog
 
 ## The global singleton for the Rivet plugin, only available in the editor.
 var global: _RivetGlobal
-
-## Manages installing the CLI.
-var cli_manager: _RivetCliManager
 
 func _init() -> void:
 	name = "RivetPlugin"
@@ -35,13 +31,6 @@ func _enter_tree():
 	global = _RivetGlobal.new()
 	global.add_autoload.connect(_on_add_autoload)  # Allow calling the plugin from global
 
-	# CLI manager
-	cli_manager = _RivetCliManager.new()
-	cli_manager.cli_installed.connect(_on_cli_installed)
-	add_child(cli_manager)
-	cli_manager.install_cli()
-
-func _on_cli_installed():
 	# Dock
 	_dock = preload("ui/dock/dock.tscn").instantiate()
 	_dock.add_child(global)

@@ -4,6 +4,7 @@
     "specifiers": {
       "npm:@prisma/adapter-pg@^5.12.0": "npm:@prisma/adapter-pg@5.16.1_pg@8.12.0",
       "npm:drizzle-orm@0.33.0": "npm:drizzle-orm@0.33.0_pg@8.12.0",
+      "npm:pg@8.12.0": "npm:pg@8.12.0",
       "npm:pg@^8.11.3": "npm:pg@8.12.0",
       "npm:zod-validation-error@3.3.0": "npm:zod-validation-error@3.3.0_zod@3.23.8",
       "npm:zod@3.23.8": "npm:zod@3.23.8"
@@ -193,6 +194,10 @@
     "https://deno.land/std@0.224.0/internal/format.ts": "0a98ee226fd3d43450245b1844b47003419d34d210fa989900861c79820d21c2",
     "https://deno.land/std@0.224.0/internal/mod.ts": "534125398c8e7426183e12dc255bb635d94e06d0f93c60a297723abe69d3b22e",
     "https://esm.sh/nanoevents@9.0.0": "29ccd1d8839f2d7dd8d28ad9ec5d18723a7dbf966bf29179063442b1e88b3a4f",
-    "https://esm.sh/v135/nanoevents@9.0.0/denonext/nanoevents.mjs": "666c9d584019a64758bd3071e561051747454da64299ac06b79ede7210fe5e85"
+    "https://esm.sh/v135/nanoevents@9.0.0/denonext/nanoevents.mjs": "666c9d584019a64758bd3071e561051747454da64299ac06b79ede7210fe5e85",
+    "https://esm.sh/v135/zod-validation-error@3.3.0/denonext/zod-validation-error.mjs": "4efabd593e1430c31a044f79d299a62120946a3e701159b29922b50f3223c186",
+    "https://esm.sh/v135/zod@3.23.8/denonext/zod.mjs": "b3707b03ddc01aab11b740436ab23c0fcc8d15fed072be20085c1fd611016b61",
+    "https://esm.sh/zod-validation-error@3.3.0": "d8825ca67952b6adff6b35026dc465f9638d4923dbd54fe9e8e81fbfddca9630",
+    "https://esm.sh/zod@3.23.8": "728819c1f651800179a5a80daf24b3e54b2ddea87828bd10e63875a604bcb94e"
   }
 }
