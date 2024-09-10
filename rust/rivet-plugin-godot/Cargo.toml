@@ -12,12 +12,11 @@ lto = true
 strip = true
 
 [dependencies]
-futures = "0.3"
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features = ["serde", "experimental-threads"] }
 serde = "1.0"
 serde_json = "1.0"
 tokio = { version = "1.27", default-features = false, features = ["rt"] }
-# toolchain = { path = "../../../cli/rivet-toolchain", package = "rivet-toolchain" }
-toolchain = { git = "https://github.com/rivet-gg/cli.git", rev = "b9c944f48aed90877c14bd7a55fe4eabab822a26", package = "rivet-toolchain" }
+toolchain = { path = "../../../toolchain/packages/toolchain", package = "rivet-toolchain" }
+# toolchain = { git = "https://github.com/rivet-gg/cli.git", rev = "b9c944f48aed90877c14bd7a55fe4eabab822a26", package = "rivet-toolchain" }
 lazy_static = "1.5"
 
