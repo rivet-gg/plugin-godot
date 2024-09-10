@@ -103,8 +103,8 @@ func _container_call():
 
 # MARK: Gen SDK
 func _gen_sdk_check() -> bool:
-	# Check if addons/backend exists
-	return DirAccess.dir_exists_absolute("res://addons/backend")
+	# Check if addons/rivet_sdk exists
+	return DirAccess.dir_exists_absolute("res://addons/rivet_sdk")
 
 func _gen_sdk_call():
 	%StepGenSDK.loading = true

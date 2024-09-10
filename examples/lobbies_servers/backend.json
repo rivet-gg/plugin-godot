@@ -1,11 +1,4 @@
 {
-	"registries": {
-		"default": {
-			"local": {
-				"directory": "/Users/nathan/rivet/opengb-modules/modules"
-			}
-		}
-	},
 	"modules": {
 		"users": {},
 		"rate_limit": {},
@@ -13,12 +6,19 @@
 		"lobbies": {
 			"config": {
 				"lobbies": {
-					"regions": ["local"],
+					"regions": ["lax"],
 					"backend": {
-						"localDevelopment": {
-							"tags": { "test": "5" },
+						"server": {
+							"environment": {
+								"SERVER_HOSTNAME": "0.0.0.0"
+							},
+							"tags": {},
 							"ports": {
-								"game": { "protocol": "udp", "port": 7777 }
+								"game": { "protocol": "udp", "internalPort": 7777 }
+							},
+							"resources": {
+								"cpu": 250,
+								"memory": 250
 							}
 						}
 					}

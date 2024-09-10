@@ -78,11 +78,11 @@ cargo build --manifest-path rust/Cargo.toml --target aarch64-apple-darwin --rele
 '
 
 echo "Copying libraries"
+rm -rf addons/rivet/native/debug addons/rivet/native/release
 mkdir -p addons/rivet/native/release
-rm -rf addons/rivet/native/debug
 
-cp rust/target/x86_64-unknown-linux-gnu/release/librivet_plugin_godot.so addons/rivet/native/librivet_plugin_godot_linux_x86_64.so
-cp rust/target/x86_64-pc-windows-gnu/release/rivet_plugin_godot.dll addons/rivet/native/librivet_plugin_godot_windows_x86_64.dll
-cp rust/target/x86_64-apple-darwin/release/librivet_plugin_godot.dylib addons/rivet/native/librivet_plugin_godot_macos_x86_64.dylib
-cp rust/target/aarch64-apple-darwin/release/librivet_plugin_godot.dylib addons/rivet/native/librivet_plugin_godot_macos_arm64.dylib
+cp rust/target/x86_64-unknown-linux-gnu/release/librivet_plugin_godot.so addons/rivet/native/release/librivet_plugin_godot_linux_x86_64.so
+cp rust/target/x86_64-pc-windows-gnu/release/rivet_plugin_godot.dll addons/rivet/native/release/librivet_plugin_godot_windows_x86_64.dll
+cp rust/target/x86_64-apple-darwin/release/librivet_plugin_godot.dylib addons/rivet/native/release/librivet_plugin_godot_macos_x86_64.dylib
+cp rust/target/aarch64-apple-darwin/release/librivet_plugin_godot.dylib addons/rivet/native/release/librivet_plugin_godot_macos_arm64.dylib
 

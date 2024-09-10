@@ -82,6 +82,7 @@ func _handle_on_output_event(event_json):
 	elif "set_backend_port" in event:
 		var plugin = RivetPluginBridge.get_plugin()
 		plugin.local_backend_port = event["set_backend_port"].port
+		RivetPluginBridge.instance.save_configuration()
 		RivetPluginBridge.log("Set backend port %s" % plugin.local_backend_port)
 	else:
 		RivetPluginBridge.warning("Unknown event %s" % event_json)

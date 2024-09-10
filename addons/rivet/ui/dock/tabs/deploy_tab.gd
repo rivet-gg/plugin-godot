@@ -46,8 +46,10 @@ func _on_deploy_complete(output):
 
 	if "Ok" in output:
 		# Save version
-		var version = output["Ok"].version
-		if !version.is_empty():
+		var game_server = output["Ok"].game_server
+		if game_server != null:
+			var version = output["Ok"]["game_server"].version_name
+			RivetPluginBridge.log("Version updated: %s" % version)
 			RivetPluginBridge.get_plugin().game_version = version
 			RivetPluginBridge.instance.save_configuration()
 

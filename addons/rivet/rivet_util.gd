@@ -2,7 +2,7 @@ class_name RivetUtil
 
 const _task_popup = preload("ui/task_popup/task_popup.tscn")
 
-const BACKEND_SINGLETON_NAME = "Backend"
+const BACKEND_SINGLETON_NAME = "Rivet"
 
 static func generate_sdk(node: Node, complete: Callable):
 	var project_path = ProjectSettings.globalize_path("res://")
@@ -11,7 +11,7 @@ static func generate_sdk(node: Node, complete: Callable):
 	popup.task_name = "backend_sdk_gen"
 	popup.task_input = {
 		"cwd": project_path,
-		"fallback_sdk_path": "addons/backend",
+		"fallback_sdk_path": "addons/rivet_sdk",
 		"target": "godot",
 	}
 	node.add_child(popup)
@@ -30,6 +30,6 @@ static func generate_sdk(node: Node, complete: Callable):
 				EditorInterface.get_file_system_dock().navigate_to_path(sdk_resource_path)
 
 				# Add singleton
-				RivetPluginBridge.get_plugin().add_autoload.emit(BACKEND_SINGLETON_NAME, "%s/backend.gd" % sdk_resource_path)
+				RivetPluginBridge.get_plugin().add_autoload.emit(BACKEND_SINGLETON_NAME, "%s/rivet.gd" % sdk_resource_path)
 	)
 

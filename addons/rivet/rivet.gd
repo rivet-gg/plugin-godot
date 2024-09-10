@@ -3,8 +3,6 @@ class_name RivetPlugin
 ## Mainpoint for the Rivet editor plugin.
 
 # MARK: Plugin
-const AUTO_LOAD_RIVET_GLOBAL = "Rivet"
-
 const _RivetEditorSettings := preload("rivet_editor_settings.gd")
 const _RivetGlobal := preload("rivet_global.gd")
 
@@ -24,9 +22,6 @@ func _enter_tree():
 	# Setup runtime
 	var toolchain = RivetToolchain.new()
 	toolchain.setup()
-
-	# Add singleton
-	add_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL, "rivet_global.gd")
 
 	# Global
 	#
@@ -106,9 +101,6 @@ func _exit_tree():
 	# Stop processes
 	_game_server_panel.stop_task()
 	_backend_panel.stop_task()
-
-	# Remove singleton
-	remove_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL)
 
 	# Remove export plugin
 	remove_export_plugin(_export_plugin)
