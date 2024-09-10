@@ -1,35 +1,5 @@
 # Changelog
 
-## [2.0.7](https://github.com/rivet-gg/plugin-godot/compare/v2.0.6...v2.0.7) (2024-09-10)
-
-
-### Bug Fixes
-
-* fix saving version & backend port saving & new sdk ([#218](https://github.com/rivet-gg/plugin-godot/issues/218)) ([8eb21bf](https://github.com/rivet-gg/plugin-godot/commit/8eb21bf2bf28adb99dc31233d257e10f18ff78a4))
-* update dll path on windows ([#207](https://github.com/rivet-gg/plugin-godot/issues/207)) ([00f8d49](https://github.com/rivet-gg/plugin-godot/commit/00f8d49caaf8165baa8d02dfe0cae9fb6ecf35cf))
-
-
-### Continuous Integration
-
-* build ffi in ci ([#219](https://github.com/rivet-gg/plugin-godot/issues/219)) ([b35ac04](https://github.com/rivet-gg/plugin-godot/commit/b35ac04b3af6b1d6c02df0424552bc732121d5e8))
-
-
-### Chores
-
-* add shared tokio runtime ([#205](https://github.com/rivet-gg/plugin-godot/issues/205)) ([67b6da2](https://github.com/rivet-gg/plugin-godot/commit/67b6da2d5f580cf6f94a805c7339c918a6f2b1eb))
-* clean up build_cross.sh script ([#203](https://github.com/rivet-gg/plugin-godot/issues/203)) ([1299b31](https://github.com/rivet-gg/plugin-godot/commit/1299b31abccb064e18d6a0331cdd9172a34664c4))
-* fix backend host on windows ([#213](https://github.com/rivet-gg/plugin-godot/issues/213)) ([0da7aec](https://github.com/rivet-gg/plugin-godot/commit/0da7aec5d2ebc19bc31746b975dcc4b690309d8d))
-* ignore native ([#209](https://github.com/rivet-gg/plugin-godot/issues/209)) ([b8a4aae](https://github.com/rivet-gg/plugin-godot/commit/b8a4aae1563db7989499d710869838605b0335e3))
-* implement new process manager ([#216](https://github.com/rivet-gg/plugin-godot/issues/216)) ([6eafeaf](https://github.com/rivet-gg/plugin-godot/commit/6eafeafaf86026a58fecc927e68627bf8a27676b))
-* implement new process manager & add setup + shutdown handlers to tokio ([#217](https://github.com/rivet-gg/plugin-godot/issues/217)) ([aa165e3](https://github.com/rivet-gg/plugin-godot/commit/aa165e37bd541323cda53e4a342408ef089d8cc8))
-* migrate output to read from output file ([#201](https://github.com/rivet-gg/plugin-godot/issues/201)) ([446808e](https://github.com/rivet-gg/plugin-godot/commit/446808ea173880b8720f5a0ca76a645e692c4a3d))
-* remove unneeded dep ([#215](https://github.com/rivet-gg/plugin-godot/issues/215)) ([5a13d4e](https://github.com/rivet-gg/plugin-godot/commit/5a13d4e323b0774da5bffe9ebd4d5e4a7e58f05b))
-* remove use of global-error ([#214](https://github.com/rivet-gg/plugin-godot/issues/214)) ([a25d474](https://github.com/rivet-gg/plugin-godot/commit/a25d474292e00c6a437ba9d30f9f33c5f5ac5869))
-* switch from cli -&gt; ffi ([#202](https://github.com/rivet-gg/plugin-godot/issues/202)) ([e796833](https://github.com/rivet-gg/plugin-godot/commit/e796833b31579c5e2699a3bddd498b1b1db990b0))
-* update build_dev to work cross platofrm ([#206](https://github.com/rivet-gg/plugin-godot/issues/206)) ([4b2fbd5](https://github.com/rivet-gg/plugin-godot/commit/4b2fbd57e2da76068b9c4a692337f2aefbf4ccbd))
-* update toolchain ([#208](https://github.com/rivet-gg/plugin-godot/issues/208)) ([3838c35](https://github.com/rivet-gg/plugin-godot/commit/3838c35c815dcb80953d49c8d7a5f815831e4932))
-* update windows symlink instructions ([#204](https://github.com/rivet-gg/plugin-godot/issues/204)) ([d5eb4d5](https://github.com/rivet-gg/plugin-godot/commit/d5eb4d5aebdf1ab3e1d746e73bd6517f98189005))
-
 ## [2.0.6](https://github.com/rivet-gg/plugin-godot/compare/v2.0.5...v2.0.6) (2024-08-31)
 
 
