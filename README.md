@@ -75,3 +75,34 @@ _and much more coming soon!_
 3. Rivet team will review your changes.
 4. Don't forget to join [Rivet's Discord](https://rivet.gg/discord) to hang out
    with the devs, or to pairprogram together!
+
+## Examples
+
+Each folder in the `examples/` folder is its own independent Godot project.
+
+### Enabling support for symbolic links on windows
+
+This repository relies on use of symbolic links in order to re-use the `addons/rivet/` folder inside of `examples/*/addons/rivet/`.
+
+If you don't files in the folder `examples/*/addons/rivet/`, do the following:
+
+**Enable developer mode**
+
+1. Open _Settings_
+2. Navigate to _Updates & Security > For Developers_
+3. Enable _Developer Mode_
+
+    <img src="./media/readme/windows-developer-mode.png" width="600" alt="Developer mode">
+
+**Enable symlinks in Git**
+
+1. Delete the `plugin-godot` folder
+2. Download and run the Git installer (even if Git is already installed)
+3. Uncheck _Only show new options_ at the bottom of the window
+4. Click _Next_ until you see the _Configuring extra options_ screen
+5. Check _Enable symbolic links_
+6. Finish the installation
+7. Re-clone the repository. You should see files under `examples/*/addons/rivet/`.
+
+    <img src="./media/readme/windows-symlinks.png" width="600" alt="Symbolic link">
+
