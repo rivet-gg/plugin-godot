@@ -7,7 +7,8 @@ const _RivetTask = preload("../../rivet_task.gd")
 signal state_change(running: bool)
 
 # Config
-var get_task_config: Callable
+var get_start_config: Callable
+var get_stop_config: Callable
 var init_message: String
 var auto_restart: bool = false
 
@@ -26,7 +27,7 @@ func start_task(restart: bool = true):
 	stop_task()
 	
 	# Start new task
-	var config = await get_task_config.call()
+	var config = await get_start_config.call()
 	task = _RivetTask.new(config.name, config.input)
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)
@@ -41,6 +42,11 @@ func stop_task():
 		task = null
 
 		_task_logs.add_log_line("Stop", TaskLogs.LogType.META)
+
+		# HACK: Run stop task
+		var config = await get_stop_config.call()
+		var stop_task = _RivetTask.new(config.name, config.input)
+		stop_task.task_log.connect(_on_task_log)
 
 		_on_state_change()
 

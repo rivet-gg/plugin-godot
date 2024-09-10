@@ -1,5 +1,4 @@
 @tool extends Control
-## A button that logs the user in to the Rivet using Rivet CLI.
 
 @onready var log_in_button: Button = %LogInButton
 @onready var api_endpoint_line_edit: LineEdit = %ApiEndpointLineEdit

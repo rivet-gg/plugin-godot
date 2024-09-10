@@ -1,7 +1,9 @@
 #!/usr/bin/env -S deno run --allow-net --allow-env --allow-read --allow-write --allow-run
 
 import { ensureDir } from "jsr:@std/fs";
-import { dirname } from "jsr:@std/path";
+import { dirname, fromFileUrl, join } from "jsr:@std/path";
+
+const __dirname = dirname(fromFileUrl(Deno.mainModule));
 
 const platform = Deno.build.os;
 const arch = Deno.build.arch;
@@ -32,7 +34,11 @@ if (platform === "linux" && arch === "x86_64") {
 }
 
 const buildCmd = new Deno.Command("cargo", {
-  args: ["build", "--manifest-path", "rust/Cargo.toml"],
+  args: [
+    "build",
+    "--manifest-path",
+    join(__dirname, "..", "rust", "Cargo.toml"),
+  ],
   stdin: "inherit",
   stdout: "inherit",
   stderr: "inherit",
@@ -48,8 +54,23 @@ if (buildOutput.success) {
   Deno.exit(1);
 }
 
-const rustTargetPath = `rust/target/debug/${rustLibName}`;
-const godotNativePath = `addons/rivet/native/debug/${libName}`;
+const rustTargetPath = join(
+  __dirname,
+  "..",
+  "rust",
+  "target",
+  "debug",
+  rustLibName,
+);
+const godotNativePath = join(
+  __dirname,
+  "..",
+  "addons",
+  "rivet",
+  "native",
+  "debug",
+  libName,
+);
 
 console.log(`Copying ${rustTargetPath} to ${godotNativePath}`);
 try {

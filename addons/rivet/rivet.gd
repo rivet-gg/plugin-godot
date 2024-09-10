@@ -21,6 +21,10 @@ func _init() -> void:
 	name = "RivetPlugin"
 
 func _enter_tree():
+	# Setup runtime
+	var toolchain = RivetToolchain.new()
+	toolchain.setup()
+
 	# Add singleton
 	add_autoload_singleton(AUTO_LOAD_RIVET_GLOBAL, "rivet_global.gd")
 
@@ -40,15 +44,20 @@ func _enter_tree():
 	# Game server
 	_game_server_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_game_server_panel.init_message = "Open \"Develop\" and press \"Start\" to start game server."
-	_game_server_panel.get_task_config = func():
+	_game_server_panel.get_start_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
-			"name": "exec_command",
+			"name": "game_server_start",
 			"input": {
 				"cwd": project_path,
 				"cmd": OS.get_executable_path(),
 				"args": ["--project", project_path, "--headless", "--", "--server"]
 			}
+		}
+	_game_server_panel.get_stop_config = func():
+		return {
+			"name": "game_server_stop",
+			"input": {}
 		}
 	add_control_to_bottom_panel(_game_server_panel, "Game Server")
 
@@ -56,7 +65,7 @@ func _enter_tree():
 	_backend_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_backend_panel.auto_restart = true
 	_backend_panel.init_message = "Auto-started by Rivet plugin."
-	_backend_panel.get_task_config = func():
+	_backend_panel.get_start_config = func():
 		# Choose port to run on. This is to avoid potential conflicts with
 		# multiple projects running at the same time.
 		var choose_res = await global.run_toolchain_task("backend_choose_local_port")
@@ -65,11 +74,16 @@ func _enter_tree():
 		# Run project
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
-			"name": "backend_dev",
+			"name": "backend_start",
 			"input": {
 				"port": choose_res.port,
 				"cwd": project_path,
 			}
+		}
+	_backend_panel.get_stop_config = func():
+		return {
+			"name": "backend_stop",
+			"input": {}
 		}
 	add_control_to_bottom_panel(_backend_panel, "Backend")
 
@@ -119,6 +133,10 @@ func _exit_tree():
 	# Remove backend
 	remove_control_from_bottom_panel(_backend_panel)
 	_backend_panel.free()
+
+	# Shutdown runtime
+	var toolchain = RivetToolchain.new()
+	toolchain.shutdown()
 
 func _on_add_autoload(name: String, path: String):
 	add_autoload_singleton(name, path)
