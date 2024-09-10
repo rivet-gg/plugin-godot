@@ -68,7 +68,7 @@ ar = "aarch64-apple-darwin20.4-ar"\n\
 ' > /root/.cargo/config.toml
 EOF
 
-docker run -it --rm -v "$(pwd)":/app rust-cross-compiler /bin/sh -c '
+docker run --rm -v "$(pwd)":/app rust-cross-compiler /bin/sh -c '
 set -e
 echo "Building for x86 Linux..."
 OVERRIDE_TARGET=x86_64-unknown-linux-gnu cargo build --manifest-path rust/Cargo.toml --target x86_64-unknown-linux-gnu --release
