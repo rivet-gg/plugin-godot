@@ -8,7 +8,7 @@ class_name BackendConfiguration
 ## Backend configuration.
 
 ## Endpoint to send requests to.
-var endpoint: String = "http://localhost:6420"
+var endpoint: String = "http://127.0.0.1:6420"
 
 ## The version of the game.
 var game_version: String = "unknown"
@@ -48,7 +48,7 @@ func _get_configuration():
 ## Derive the backend endpoint in order of priority:
 ## - Environment variable (if running from deployed server)
 ## - Configuration (if running in a client)
-## - Fallback to localhost
+## - Fallback to 127.0.0.1
 func _get_backend_endpoint():
 	# Use environment variable
 	var url_env = OS.get_environment("BACKEND_ENDPOINT")
@@ -62,14 +62,14 @@ func _get_backend_endpoint():
 		return config.backend_endpoint
 
 	# Fallback
-	push_warning("Could not find backend endpoint, falling back to localhost:6420")
+	push_warning("Could not find backend endpoint, falling back to 127.0.0.1:6420")
 	BackendLogger.log('Using default endpoint')
-	return "http://localhost:6420"
+	return "http://127.0.0.1:6420"
 
 ## Derive the backend endpoint in order of priority:
 ## - Environment variable (if running from deployed server)
 ## - Configuration (if running in a client)
-## - Fallback to localhost
+## - Fallback to 127.0.0.1
 func _get_game_version():
 	# Use environment variable
 	var url_env = OS.get_environment("GAME_VERSION")
@@ -85,4 +85,3 @@ func _get_game_version():
 	# Fallback
 	push_warning("Could not find game version endpoint")
 	return "unknown"
-

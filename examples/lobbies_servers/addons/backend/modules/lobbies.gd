@@ -69,6 +69,3 @@ func set_player_disconnected(body: Dictionary = {}) -> BackendRequest:
 ## Finds an existing lobby with a given query. This will not create a new lobby, see `find_or_create` instead.
 func find(body: Dictionary = {}) -> BackendRequest:
 	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/find/call", body)
-
-
-

@@ -49,7 +49,7 @@ var local_backend_port: int = 6420
 
 var local_backend_endpoint: String:
 	get:
-		return "http://localhost:%s" % local_backend_port
+		return "http://127.0.0.1:%s" % local_backend_port
 
 # Endpoint to connect to.
 var backend_endpoint: String:

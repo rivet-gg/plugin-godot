@@ -16,4 +16,3 @@ static func warning(args):
 static func error(args):
 	print("[Backend] ", args)
 	push_error("[Backend] ", args)
-
