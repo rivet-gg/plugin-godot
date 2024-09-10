@@ -17,7 +17,13 @@ RUN apt-get update && apt-get install -y \
     llvm-dev \
     uuid-dev \
     libssl-dev \
+    curl \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Deno
+RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+ENV PATH="/root/.deno/bin:$PATH"
 
 # Install osxcross
 RUN git config --global --add safe.directory '*'
@@ -64,17 +70,14 @@ EOF
 
 docker run -it --rm -v "$(pwd)":/app rust-cross-compiler /bin/sh -c '
 set -e
-# echo "which"
-# ls /root/osxcross/target/bin
-# exit 1
 echo "Building for x86 Linux..."
-cargo build --manifest-path rust/Cargo.toml --target x86_64-unknown-linux-gnu --release
+OVERRIDE_TARGET=x86_64-unknown-linux-gnu cargo build --manifest-path rust/Cargo.toml --target x86_64-unknown-linux-gnu --release
 echo "Building for x86 Windows..."
-cargo build --manifest-path rust/Cargo.toml --target x86_64-pc-windows-gnu --release
+OVERRIDE_TARGET=x86_64-pc-windows-gnu cargo build --manifest-path rust/Cargo.toml --target x86_64-pc-windows-gnu --release
 echo "Building for x86 macOS..."
-cargo build --manifest-path rust/Cargo.toml --target x86_64-apple-darwin --release
+OVERRIDE_TARGET=x86_64-apple-darwin cargo build --manifest-path rust/Cargo.toml --target x86_64-apple-darwin --release
 echo "Building for ARM macOS..."
-cargo build --manifest-path rust/Cargo.toml --target aarch64-apple-darwin --release
+OVERRIDE_TARGET=aarch64-apple-darwin cargo build --manifest-path rust/Cargo.toml --target aarch64-apple-darwin --release
 '
 
 echo "Copying libraries"

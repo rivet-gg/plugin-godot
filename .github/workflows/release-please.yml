@@ -100,24 +100,9 @@ jobs:
       #     sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
       #     sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
 
-      # - name: Update gdextension config
-      #   run: |
-      #     cat > godot/addons/rivet/rivet_toolchain.gdextension << EOL
-      #     [configuration]
-      #     entry_symbol = "gdext_rust_init"
-      #     compatibility_minimum = 4.1
-      #     reloadable = true
-
-      #     [libraries]
-      #     linux.debug.x86_64 = "res://addons/rivet/native/linux-x86_64/librivet_plugin_godot.so"
-      #     linux.release.x86_64 = "res://addons/rivet/native/linux-x86_64/librivet_plugin_godot.so"
-      #     windows.debug.x86_64 = "res://addons/rivet/native/windows-x86_64/rivet_plugin_godot.dll"
-      #     windows.release.x86_64 = "res://addons/rivet/native/windows-x86_64/rivet_plugin_godot.dll"
-      #     macos.debug.x86_64 = "res://addons/rivet/native/macos-x86_64/librivet_plugin_godot.dylib"
-      #     macos.release.x86_64 = "res://addons/rivet/native/macos-x86_64/librivet_plugin_godot.dylib"
-      #     macos.debug.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
-      #     macos.release.arm64 = "res://addons/rivet/native/macos-arm64/librivet_plugin_godot.dylib"
-      #     EOL
+      - name: Run build-cross script
+        run: |
+          ./scripts/build_cross.sh
 
       - name: Replace placeholders in asset template
         run: |
@@ -127,6 +112,17 @@ jobs:
       - name: Delete unnecessary files
         run: |
           find . -type f -not -path "./addons/rivet/*" -not -name ".asset-template.json" -not -name "LICENSE" -delete
+
+      - name: Create ZIP archive
+        run: |
+          mkdir -p /tmp/artifacts
+          zip -r /tmp/artifacts/plugin-rivet.zip .
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rivet-plugin
+          path: /tmp/artifacts/plugin-rivet.zip
 
       - name: Godot Asset Lib
         uses: deep-entertainment/godot-asset-lib-action@v0.4.0
