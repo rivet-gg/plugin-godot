@@ -71,3 +71,7 @@ Cargo.lock
 
 ### OpenGB ###
 .opengb/
+
+### Godot ###
+**/rivet/native/
+
