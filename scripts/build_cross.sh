@@ -1,3 +1,6 @@
+#!/bin/sh
+set -e
+
 docker build -t rust-cross-compiler - << 'EOF'
 FROM rust:1.80
 RUN apt-get update && apt-get install -y \
@@ -65,18 +68,6 @@ set -e
 # ls /root/osxcross/target/bin
 # exit 1
 echo "Building for x86 Linux..."
-cargo build --manifest-path rust/Cargo.toml --target x86_64-unknown-linux-gnu
-echo "Building for x86 Windows..."
-cargo build --manifest-path rust/Cargo.toml --target x86_64-pc-windows-gnu
-echo "Building for x86 macOS..."
-cargo build --manifest-path rust/Cargo.toml --target x86_64-apple-darwin
-echo "Building for ARM macOS..."
-cargo build --manifest-path rust/Cargo.toml --target aarch64-apple-darwin
-'
-
-docker run -it --rm -v "$(pwd)":/app rust-cross-compiler /bin/sh -c '
-set -e
-echo "Building for x86 Linux..."
 cargo build --manifest-path rust/Cargo.toml --target x86_64-unknown-linux-gnu --release
 echo "Building for x86 Windows..."
 cargo build --manifest-path rust/Cargo.toml --target x86_64-pc-windows-gnu --release
@@ -86,13 +77,12 @@ echo "Building for ARM macOS..."
 cargo build --manifest-path rust/Cargo.toml --target aarch64-apple-darwin --release
 '
 
-echo "Build process completed."
-echo "Built libraries can be found at:"
-echo "x86 Linux:   target/x86_64-unknown-linux-gnu/release/"
-echo "x86 Windows: target/x86_64-pc-windows-gnu/release/"
-echo "x86 macOS:   target/x86_64-apple-darwin/release/"
-echo "ARM macOS:   target/aarch64-apple-darwin/release/"
-echo "x86 Linux:   target/x86_64-unknown-linux-gnu/debug/"
-echo "x86 Windows: target/x86_64-pc-windows-gnu/debug/"
-echo "x86 macOS:   target/x86_64-apple-darwin/debug/"
-echo "ARM macOS:   target/aarch64-apple-darwin/debug/"
+echo "Copying libraries"
+mkdir -p addons/rivet/native/release
+rm -rf addons/rivet/native/debug
+
+cp rust/target/x86_64-unknown-linux-gnu/release/librivet_plugin_godot.so addons/rivet/native/librivet_plugin_godot_linux_x86_64.so
+cp rust/target/x86_64-pc-windows-gnu/release/rivet_plugin_godot.dll addons/rivet/native/librivet_plugin_godot_windows_x86_64.dll
+cp rust/target/x86_64-apple-darwin/release/librivet_plugin_godot.dylib addons/rivet/native/librivet_plugin_godot_macos_x86_64.dylib
+cp rust/target/aarch64-apple-darwin/release/librivet_plugin_godot.dylib addons/rivet/native/librivet_plugin_godot_macos_arm64.dylib
+
