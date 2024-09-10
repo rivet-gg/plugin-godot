@@ -13,7 +13,6 @@ strip = true
 
 [dependencies]
 futures = "0.3"
-global-error = {  git = "https://github.com/rivet-gg/rivet.git", rev = "22baf31efa3ffcdad65ecc72ce25425ab61b9c6f" }
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features = ["serde", "experimental-threads"] }
 serde = "1.0"
 serde_json = "1.0"
