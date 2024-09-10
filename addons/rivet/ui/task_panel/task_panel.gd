@@ -10,13 +10,24 @@ signal state_change(running: bool)
 var get_start_config: Callable
 var get_stop_config: Callable
 var init_message: String
-var auto_restart: bool = false
+var auto_start: bool = false
 
 # State
 var task
+var _stop_task
 
 func _ready():
+	# Init
 	_task_logs.add_log_line(init_message, TaskLogs.LogType.META)
+
+	# Hook existing process (or start if auto-started)
+	var config = await get_start_config.call("StartOrHook" if auto_start else "HookOnly")
+	task = _RivetTask.new(config.name, config.input)
+	task.task_log.connect(_on_task_log)
+	task.task_output.connect(_on_task_output)
+
+	# Publish state chagne after defer so signals can be connected
+	call_deferred("_on_state_change")
 
 func start_task(restart: bool = true):
 	# Do nothing if task already running
@@ -27,7 +38,7 @@ func start_task(restart: bool = true):
 	stop_task()
 	
 	# Start new task
-	var config = await get_start_config.call()
+	var config = await get_start_config.call("StartOrHook")
 	task = _RivetTask.new(config.name, config.input)
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)
@@ -38,15 +49,17 @@ func start_task(restart: bool = true):
 
 func stop_task():
 	if task != null:
+		# Abort running task
 		task.kill()
 		task = null
 
 		_task_logs.add_log_line("Stop", TaskLogs.LogType.META)
 
-		# HACK: Run stop task
-		var config = await get_stop_config.call()
-		var stop_task = _RivetTask.new(config.name, config.input)
-		stop_task.task_log.connect(_on_task_log)
+		# Run stop task
+		#
+		# Save in global scope so it doesn't get dropped before getting called
+		var stop_config = await get_stop_config.call()
+		_stop_task = _RivetTask.new(stop_config.name, stop_config.input)
 
 		_on_state_change()
 
@@ -73,7 +86,7 @@ func _on_task_output(output):
 		_task_logs.add_log_line("Task error: %s" % output["Err"], TaskLogs.LogType.META)
 	
 	# Restart if needed
-	if auto_restart:
+	if auto_start:
 		_task_logs.add_log_line("Restarting in 2 seconds", TaskLogs.LogType.META)
 		await get_tree().create_timer(2.0).timeout
 		start_task()

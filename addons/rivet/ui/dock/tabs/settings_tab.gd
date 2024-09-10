@@ -62,4 +62,3 @@ func _on_backend_state_change(running: bool):
 	_backend_start.visible = !running
 	_backend_stop.visible = running
 	_backend_restart.visible = running
-

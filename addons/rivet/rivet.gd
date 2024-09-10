@@ -44,11 +44,12 @@ func _enter_tree():
 	# Game server
 	_game_server_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_game_server_panel.init_message = "Open \"Develop\" and press \"Start\" to start game server."
-	_game_server_panel.get_start_config = func():
+	_game_server_panel.get_start_config = func(start_mode):
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
 			"name": "game_server_start",
 			"input": {
+				"start_mode": start_mode,
 				"cwd": project_path,
 				"cmd": OS.get_executable_path(),
 				"args": ["--project", project_path, "--headless", "--", "--server"]
@@ -63,20 +64,14 @@ func _enter_tree():
 
 	# Backend
 	_backend_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
-	_backend_panel.auto_restart = true
+	_backend_panel.auto_start = true
 	_backend_panel.init_message = "Auto-started by Rivet plugin."
-	_backend_panel.get_start_config = func():
-		# Choose port to run on. This is to avoid potential conflicts with
-		# multiple projects running at the same time.
-		var choose_res = await global.run_toolchain_task("backend_choose_local_port")
-		global.local_backend_port = choose_res.port
-
-		# Run project
+	_backend_panel.get_start_config = func(start_mode):
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
 			"name": "backend_start",
 			"input": {
-				"port": choose_res.port,
+				"start_mode": start_mode,
 				"cwd": project_path,
 			}
 		}
@@ -106,9 +101,6 @@ func _enter_tree():
 	global.stop_backend.connect(func(): _backend_panel.stop_task())
 	global.focus_backend.connect(_on_focus_backend)
 	_backend_panel.state_change.connect(func(running): global.backend_state_change.emit(running))
-
-	# Start backend
-	_backend_panel.start_task.call_deferred()
 	
 func _exit_tree():
 	# Stop processes

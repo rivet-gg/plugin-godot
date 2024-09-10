@@ -59,28 +59,29 @@ func _update_menu_button() -> void:
 
 	# Update selected
 	var plugin = RivetPluginBridge.get_plugin()
-	if !remote_only && plugin.env_type == _RivetGlobal.EnvType.LOCAL:
-		select(1)
-	elif plugin.remote_env_id != null:
-		if plugin.env_type == _RivetGlobal.EnvType.LOCAL:
-			select(1)
-		elif plugin.env_type == _RivetGlobal.EnvType.REMOTE:
-			var env_idx = null
-			for i in environments.size():
-				if environments[i].id == plugin.remote_env_id:
-					env_idx = i
-					break
-			if env_idx != null:
-				select(env_idx + _envs_idx_offset)
-			else:
-				push_error("_update_menu_button: unreachable on find index (%s %s)" % [plugin.remote_env_id, environments])
-				return
+
+
+	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
+		var remote_env_idx = null
+		for i in environments.size():
+			if environments[i].id == plugin.remote_env_id:
+				remote_env_idx = i
+				break
+
+		if remote_env_idx != null:
+			# Select remote env
+			select(remote_env_idx + _envs_idx_offset)
 		else:
-			push_error("_update_menu_button: unreachable %s" % plugin.env_type)
-			return
-	else:
-		# No env selected yet
-		select(_envs_idx_offset)
+			# Could not find env
+			RivetPluginBridge.warning("_update_menu_button: could not find remote env idx for %s" % plugin.remote_env_id)
+			select(-1)
+	elif plugin.env_type == _RivetGlobal.EnvType.LOCAL:
+		if remote_only:
+			# No local env
+			select(-1)
+		else:
+			# Select local
+			select(1)
 
 func _on_item_selected(idx: int):
 	_select_menu_item(idx)
@@ -116,4 +117,3 @@ func _on_plugin_bootstrapped() -> void:
 	disabled = false
 	selected = 0
 	_update_menu_button()
-	_select_menu_item(0)

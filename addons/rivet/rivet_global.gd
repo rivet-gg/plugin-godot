@@ -38,7 +38,7 @@ var remote_env = null:
 				if x.id == remote_env_id:
 					return x
 
-			push_error("No env matching id: %s" % remote_env_id)
+			# Likely has not loaded yet
 			return null
 		else:
 			return null

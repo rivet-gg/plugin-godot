@@ -1,3 +1,4 @@
+mod task_handle;
 mod toolchain;
 mod util;
 
@@ -7,4 +8,3 @@ struct RivetPlugin;
 
 #[gdextension]
 unsafe impl ExtensionLibrary for RivetPlugin {}
-
