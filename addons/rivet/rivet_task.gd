@@ -8,6 +8,8 @@ enum LogType { STDOUT, STDERR }
 
 const POLL_LOGS_INTERVAL = 0.25
 
+const EXECUTE_METHOD = "ffi"
+
 ## Task logged something
 signal task_log(logs: String, type: LogType)
 
@@ -28,11 +30,12 @@ var _input: Variant
 var is_running = true
 var state_files
 var _log_file
-var _log_last_position
+var _log_last_position = 0
+var _log_output  # Will be passed when receives `output` event from log to be passed to task_output later
 
 func _init(name: String, input: Variant):
 	if name == null or input == null:
-		push_error("RivetTask initiated without required args")
+		RivetPluginBridge.error("RivetTask initiated without required args")
 		return
 
 	self._name = name
@@ -43,6 +46,13 @@ func _init(name: String, input: Variant):
 	if state_files == null:
 		return
 
+	if EXECUTE_METHOD == "cli":
+		# Open log file
+		_log_file = FileAccess.open(state_files.output, FileAccess.READ)
+		if _log_file == null:
+			RivetPluginBridge.error("Failed to open file: %s" % state_files.output)
+			return
+
 	# Run command
 	var run_config_json = JSON.stringify({
 		"abort_path": state_files.abort,
@@ -52,40 +62,53 @@ func _init(name: String, input: Variant):
 
 	WorkerThreadPool.add_task(_run.bind(name, run_config_json, input_json))
 
-	# Tail logs
-	_tail_logs(state_files.output)
-
 func _run(name: String, run_config_json: String, input_json: String):
-	var args = [
-		"task",
-		"run",
-		"--name",
-		name.c_escape(),
-		"--run-config",
-		run_config_json.c_escape(),
-		"--input",
-		input_json.c_escape(),
-	]
 	
-	var output = []
-	OS.execute(_RivetCliManager.get_bin_path(), args, output, true)
+	if EXECUTE_METHOD == "ffi":
+		var toolchain = RivetToolchain.new()
+		toolchain.run_task(run_config_json, _name, input_json, _on_output_event)
+	elif EXECUTE_METHOD == "cli":
+		# c_escape required for passing JSON-encoded strings with weird charagers to args
+		var args = [
+			"task",
+			"run",
+			"--name",
+			name.c_escape(),
+			"--run-config",
+			run_config_json.c_escape(),
+			"--input",
+			input_json.c_escape(),
+		]
 
-	call_deferred("_on_finish", output)
+		# Run command
+		var output = []
+		var exit_code = OS.execute(_RivetCliManager.get_bin_path(), args, output, true)
+		if exit_code != 0:
+			RivetPluginBridge.error("Task execute failed with exit code %d:\n%s" % [exit_code, output])
+			return
+	else:
+		RivetPluginBridge.error("Unreachable")
 
-func _on_finish(output_json):
+	call_deferred("_on_finish")
+
+func _on_finish():
 	_finish_logs()
 
 	is_running = false
 
-	var output = JSON.parse_string(output_json[0].c_unescape())
+	if _log_output == null:
+		RivetPluginBridge.error("Received no output from task")
+		return
 
-	task_output.emit(output)
-	if "Ok" in output:
-		RivetPluginBridge.log("[%s] Success: %s" % [_name, output["Ok"]])
-		task_ok.emit(output["Ok"])
+	var output_result = _log_output["result"]
+
+	task_output.emit(output_result)
+	if "Ok" in output_result:
+		RivetPluginBridge.log("[%s] Success: %s" % [_name, output_result["Ok"]])
+		task_ok.emit(output_result["Ok"])
 	else:
-		RivetPluginBridge.error("[%s] Error: %s" % [_name, output["Err"]])
-		task_error.emit(output["Err"])
+		RivetPluginBridge.error("[%s] Error: %s" % [_name, output_result["Err"]])
+		task_error.emit(output_result["Err"])
 
 func _on_killed():
 	var error = "Process killed"
@@ -131,26 +154,11 @@ func _touch_file(path: String):
 
 ## Tail a file and print it to the console in realtime.
 func _tail_logs(path: String):
-	# We can't do this on Windows for now because of how files are opened and
-	# written to.
-	# https://github.com/rivet-gg/plugin-godot/issues/184
-	if OS.get_name() == "Windows":
-		return
-
-	# Open file
-	_log_file = FileAccess.open(path, FileAccess.READ)
-	if _log_file == null:
-		RivetPluginBridge.error("Failed to open file: %s" % path)
-		return
-	
 	# Poll file
-	_log_last_position = 0
-	while true:
-		# Stop polling file if process stopped. Do this after reading the end of
-		# the file before the process exited.
-		if not is_running:
-			break
-
+	#
+	# Stop polling file if process stopped. _finish_logs is responsible for
+	# reading the end of the file.
+	while is_running:
 		# Read logs
 		_read_log_tail()
 		
@@ -179,7 +187,12 @@ func _read_log_tail():
 			if parsed == null:
 				print('Failed to parse: %s' % line)
 				continue
-			elif "Stdout" in parsed:
-				task_log.emit(parsed["Stdout"], LogType.STDOUT)
-			elif "Stderr" in parsed:
-				task_log.emit(parsed["Stderr"], LogType.STDERR)
+			_on_output_event(parsed)
+
+func _on_output_event(event):
+	elif "stdout" in event:
+		task_log.emit(event["stdout"], LogType.STDOUT)
+	elif "stderr" in event:
+		task_log.emit(event["stderr"], LogType.STDERR)
+	elif "output" in event:
+		_log_output = event["output"]
