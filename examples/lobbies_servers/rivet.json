@@ -9,19 +9,12 @@
 		"lobbies": {
 			"config": {
 				"lobbies": {
-					"regions": ["lax"],
+					"regions": ["local"],
 					"backend": {
-						"server": {
-							"environment": {
-								"SERVER_HOSTNAME": "0.0.0.0"
-							},
-							"tags": {},
+						"localDevelopment": {
+							"tags": { "test": "5" },
 							"ports": {
-								"game": { "protocol": "udp", "internalPort": 7777 }
-							},
-							"resources": {
-								"cpu": 250,
-								"memory": 250
+								"game": { "protocol": "udp", "port": 7777 }
 							}
 						}
 					}

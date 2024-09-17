@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ceovepvn1782o"]
+[gd_scene load_steps=14 format=3 uid="uid://ceovepvn1782o"]
 
 [ext_resource type="Script" path="res://addons/rivet/ui/dock/screens/main.gd" id="1_tcdrj"]
 [ext_resource type="PackedScene" uid="uid://bdpu38hakasqq" path="res://addons/rivet/ui/elements/buttons_bar.tscn" id="2_n6ccy"]
@@ -10,8 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://b5pdk6lhhlrhj" path="res://addons/rivet/images/font_awesome/cloud-arrow-up.svg" id="5_u52sb"]
 [ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/ui/dock/tabs/settings_tab.tscn" id="5_xa4ex"]
 [ext_resource type="Texture2D" uid="uid://d036tjn7gksmn" path="res://addons/rivet/images/font_awesome/gear.svg" id="6_0xrve"]
+[ext_resource type="Texture2D" uid="uid://bdabu2ie8j4is" path="res://addons/rivet/images/font_awesome/puzzle.svg" id="6_de7yl"]
+[ext_resource type="PackedScene" uid="uid://dpbt1rjht2tef" path="res://addons/rivet/ui/dock/tabs/modules_tab.tscn" id="11_oo0gp"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2bc7i"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k0fsq"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -69,7 +71,17 @@ text = "Deploy"
 icon = ExtResource("5_u52sb")
 flat = true
 
+[node name="ModulesButton" type="Button" parent="ButtonsBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Modules"
+icon = ExtResource("6_de7yl")
+flat = true
+
 [node name="SettingsButton" type="Button" parent="ButtonsBar"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
@@ -82,7 +94,8 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_2bc7i")
+theme_override_styles/panel = SubResource("StyleBoxFlat_k0fsq")
+current_tab = 0
 tabs_visible = false
 
 [node name="Setup" parent="TabContainer" instance=ExtResource("3_g3s5h")]
@@ -92,6 +105,7 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
 
 [node name="Develop" parent="TabContainer" instance=ExtResource("3_q3eyp")]
 unique_name_in_owner = true
@@ -101,6 +115,7 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 1
 
 [node name="Deploy" parent="TabContainer" instance=ExtResource("4_ye0fb")]
 unique_name_in_owner = true
@@ -110,6 +125,17 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 2
+
+[node name="Modules" parent="TabContainer" instance=ExtResource("11_oo0gp")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 3
 
 [node name="Settings" parent="TabContainer" instance=ExtResource("5_xa4ex")]
 unique_name_in_owner = true
@@ -119,3 +145,4 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 4

@@ -3,6 +3,7 @@
 
 @onready var errorDialog: AcceptDialog = %ErrorDialog
 @onready var buttons_bar: HBoxContainer = %ButtonsBar
+
 @onready var deploy_tab = %Deploy
 
 func _ready():

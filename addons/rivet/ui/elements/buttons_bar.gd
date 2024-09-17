@@ -33,6 +33,5 @@ func _select_button(curr: int) -> void:
 			child.set_pressed_no_signal(curr==i)
 	selected.emit()
 
-
 func set_current_button(button: int) -> void:
 	_select_button(button)

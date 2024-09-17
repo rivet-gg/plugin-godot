@@ -48,4 +48,3 @@ func _on_setup_pressed():
 	if call_setup != null:
 		call_setup.call()
 		_update_is_setup()
-

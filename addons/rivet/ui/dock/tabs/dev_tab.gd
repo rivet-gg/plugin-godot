@@ -97,18 +97,3 @@ func _on_backend_generate_sdk_pressed():
 		self,
 		func(): _backend_sdk_gen.loading = false
 	)
-
-func _on_backend_edit_config_pressed():
-	var backend_json = load("res://rivet.json")
-	if backend_json == null:
-		var alert = AcceptDialog.new()
-		alert.title = "Backend Config Does Not Exist"
-		alert.dialog_text = "The rivet.json file should have been automatically created. Run 'rivet backend init' to create a new config."
-		alert.dialog_autowrap = true
-		alert.close_requested.connect(func(): alert.queue_free() )
-		add_child(alert)
-		alert.popup_centered()
-		return
-
-	EditorInterface.edit_resource(backend_json)
-
