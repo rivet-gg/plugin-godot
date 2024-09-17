@@ -92,6 +92,7 @@ signal start_backend()
 signal stop_backend()
 signal focus_backend()
 signal backend_state_change(running: bool)
+signal backend_config_update(event)
 
 signal env_update()
 

@@ -1,7 +1,10 @@
 {
-  "sdks": [
-    { "target": "godot", "output": "addons/rivet_sdk" }
-  ],
+	"sdks": [
+		{
+			"target": "godot",
+			"output": "addons/rivet_sdk"
+		}
+	],
 	"modules": {
 		"users": {},
 		"rate_limit": {},
@@ -9,18 +12,35 @@
 		"lobbies": {
 			"config": {
 				"lobbies": {
-					"regions": ["local"],
+					"regions": [
+						"local"
+					],
 					"backend": {
 						"localDevelopment": {
-							"tags": { "test": "5" },
+							"tags": {
+								"test": "5"
+							},
 							"ports": {
-								"game": { "protocol": "udp", "port": 7777 }
+								"game": {
+									"protocol": "udp",
+									"port": 7777
+								}
 							}
 						}
 					}
 				}
 			}
 		},
-		"rivet": {}
+		"rivet": {
+			"config": {
+				"apiEndpoint": "https://api.rivet.gg",
+				"apiEndpointVariable": "RIVET_API_ENDPOINT",
+				"serviceTokenVariable": "RIVET_SERVICE_TOKEN",
+				"gameIdVariable": "RIVET_GAME_ID",
+				"environmentIdVariable": "RIVET_ENVIRONMENT_ID"
+			}
+		},
+		"user_passwords": {},
+		"auth_username_password": {}
 	}
 }
