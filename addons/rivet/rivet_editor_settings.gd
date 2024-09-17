@@ -1,5 +1,5 @@
-const RIVET_DEBUG_SETTING ={
-	"name": "rivet/debug",
+const RIVET_DEBUG_SETTING = {
+	"name": "rivet/debug_logs",
 	"type": TYPE_BOOL,
 }
 
