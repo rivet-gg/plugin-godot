@@ -36,6 +36,7 @@ if (platform === "linux" && arch === "x86_64") {
 const buildCmd = new Deno.Command("cargo", {
   args: [
     "build",
+	"-vv",
     "--manifest-path",
     join(__dirname, "..", "rust", "Cargo.toml"),
   ],

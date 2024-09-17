@@ -76,7 +76,6 @@ size_flags_vertical = 3
 
 [node name="Login" parent="VBoxContainer/Control" instance=ExtResource("4_76k63")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -88,6 +87,7 @@ size_flags_vertical = 3
 
 [node name="Main" parent="VBoxContainer/Control" instance=ExtResource("5_3rpdd")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/"]]

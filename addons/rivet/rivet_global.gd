@@ -51,6 +51,13 @@ var local_backend_endpoint: String:
 	get:
 		return "http://127.0.0.1:%s" % local_backend_port
 
+# See local_backend_port
+var local_editor_port: int = 6421
+
+var local_editor_endpoint: String:
+	get:
+		return "http://127.0.0.1:%s" % local_editor_port
+
 # Endpoint to connect to.
 var backend_endpoint: String:
 	get:

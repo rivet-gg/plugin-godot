@@ -79,11 +79,13 @@ func _handle_on_output_event(event_json):
 		call_deferred('_on_log_event', event)
 	elif "result" in event:
 		_log_result = event["result"]
-	elif "set_backend_port" in event:
+	elif "port_update" in event:
 		var plugin = RivetPluginBridge.get_plugin()
-		plugin.local_backend_port = event["set_backend_port"].port
+		plugin.local_backend_port = event["port_update"].backend_port
+		plugin.local_editor_port = event["port_update"].editor_port
+
 		RivetPluginBridge.instance.save_configuration()
-		RivetPluginBridge.log("Set backend port %s" % plugin.local_backend_port)
+		RivetPluginBridge.log("Port update: backend=%s editor=%s" % [plugin.local_backend_port, plugin.local_editor_port])
 	else:
 		RivetPluginBridge.warning("Unknown event %s" % event_json)
 
