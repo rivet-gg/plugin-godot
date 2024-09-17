@@ -20,8 +20,7 @@ func _init() -> void:
 
 func _enter_tree():
 	# Setup runtime
-	var toolchain = RivetToolchain.new()
-	toolchain.setup()
+	RivetToolchain.setup()
 
 	# Global
 	#
@@ -119,8 +118,7 @@ func _exit_tree():
 	_backend_panel.free()
 
 	# Shutdown runtime
-	var toolchain = RivetToolchain.new()
-	toolchain.shutdown()
+	RivetToolchain.shutdown()
 
 func _on_add_autoload(name: String, path: String):
 	add_autoload_singleton(name, path)

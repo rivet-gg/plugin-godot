@@ -25,3 +25,6 @@ func sign_up(body: Dictionary = {}) -> RivetRequest:
 ## Sign in a user with a username and password.
 func sign_in(body: Dictionary = {}) -> RivetRequest:
 	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/auth_username_password/scripts/sign_in/call", body)
+
+
+

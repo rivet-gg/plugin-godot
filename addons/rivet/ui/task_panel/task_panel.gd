@@ -1,7 +1,5 @@
 @tool extends Node
 
-const _RivetTask = preload("../../rivet_task.gd")
-
 @onready var _task_logs: TaskLogs = %TaskLogs
 
 signal state_change(running: bool)
@@ -22,11 +20,13 @@ func _ready():
 
 	# Hook existing process (or start if auto-started)
 	var config = await get_start_config.call("StartOrHook" if auto_start else "HookOnly")
-	task = _RivetTask.new(config.name, config.input)
+	task = RivetTask.with_name_input(config.name, config.input)
+	add_child(task)
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)
+	task.start()
 
-	# Publish state chagne after defer so signals can be connected
+	# Publish state change after defer so signals can be connected
 	call_deferred("_on_state_change")
 
 func start_task(restart: bool = true):
@@ -39,9 +39,11 @@ func start_task(restart: bool = true):
 	
 	# Start new task
 	var config = await get_start_config.call("StartOrHook")
-	task = _RivetTask.new(config.name, config.input)
+	task = RivetTask.with_name_input(config.name, config.input)
+	add_child(task)
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)
+	task.start()
 
 	_on_state_change()
 
@@ -59,15 +61,17 @@ func stop_task():
 		#
 		# Save in global scope so it doesn't get dropped before getting called
 		var stop_config = await get_stop_config.call()
-		_stop_task = _RivetTask.new(stop_config.name, stop_config.input)
+		_stop_task = RivetTask.with_name_input(stop_config.name, stop_config.input)
+		add_child(_stop_task)
+		_stop_task.start()
 
 		_on_state_change()
 
 func _on_task_log(logs, type):
 	var log_type
-	if type == RivetTask.LogType.STDOUT:
+	if type == 0:
 		log_type = TaskLogs.LogType.STDOUT
-	elif type == RivetTask.LogType.STDERR:
+	elif type == 1:
 		log_type = TaskLogs.LogType.STDERR
 	else:
 		RivetPluginBridge.warning("Unknown log type")

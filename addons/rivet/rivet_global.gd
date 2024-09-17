@@ -6,8 +6,6 @@ class_name RivetGlobal
 ## @tutorial: https://rivet.gg/learn/godot
 ## @experimental
 
-const _RivetTask = preload("rivet_task.gd")
-
 # Data
 var api_endpoint: String
 var game_version: String
@@ -98,7 +96,10 @@ signal env_update()
 
 ## Helper func to spawn a task and show an alert on failure.
 func run_toolchain_task(name: String, input: Variant = {}) -> Variant:
-	var output = await _RivetTask.new(name, input).task_output
+	var task = await RivetTask.with_name_input(name, input)
+	add_child(task)
+	task.start()
+	var output = await task.task_output
 	if "Ok" in output:
 		return output["Ok"]
 	else:

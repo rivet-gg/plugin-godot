@@ -1,8 +1,6 @@
 @tool extends Window
 class_name TaskPopup
 
-const _RivetTask = preload("../../rivet_task.gd")
-
 signal task_output(output: Variant)
 
 @onready var _proc_logs: TaskLogs = %TaskLogs
@@ -12,7 +10,7 @@ var task_name: String
 var task_input: Variant
 
 # State
-var task: _RivetTask
+var task: RivetTask
 
 @onready var _done_button: Button = %Done
 
@@ -20,9 +18,11 @@ func _ready():
 	if not RivetPluginBridge.get_plugin().is_running_as_plugin(self):
 		return
 
-	task = _RivetTask.new(task_name, task_input)
+	task = RivetTask.with_name_input(task_name, task_input)
+	add_child(task)
 	task.task_log.connect(_on_task_log)
 	task.task_output.connect(_on_task_output)
+	task.start()
 
 	_update_ui()
 
@@ -42,9 +42,9 @@ func _stop_process():
 
 func _on_task_log(logs, type):
 	var log_type
-	if type == _RivetTask.LogType.STDOUT:
+	if type == 0:
 		log_type = TaskLogs.LogType.STDOUT
-	elif type == _RivetTask.LogType.STDERR:
+	elif type == 1:
 		log_type = TaskLogs.LogType.STDERR
 	else:
 		RivetPluginBridge.warning("Unknown log type")

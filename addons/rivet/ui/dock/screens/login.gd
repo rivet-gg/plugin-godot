@@ -33,18 +33,11 @@ func _on_button_pressed() -> Error:
 	OS.shell_open(result.device_link_url)
 
 	# Wait for complete
-	var task = RivetTask.new("wait_for_login", {
+	var task = RivetTask.with_name_input("wait_for_login", {
 		"api_endpoint": api_endpoint,
 		"device_link_token": result.device_link_token,
 	})
-	
-	owner.change_current_screen(owner.Screen.LinkingPending, {
-		"link": result.device_link_url, 
-		"on_cancel": func() -> void:
-			print("Killing task")
-			task.kill()
-	})
-
+	add_child(task)
 	task.task_output.connect(
 		func(result) -> void:
 			if "Ok" in result:
@@ -53,6 +46,14 @@ func _on_button_pressed() -> Error:
 				log_in_button.disabled = false
 				owner.change_current_screen(owner.Screen.Login)
 	)
+	task.start()
+
+	owner.change_current_screen(owner.Screen.LinkingPending, {
+		"link": result.device_link_url, 
+		"on_cancel": func() -> void:
+			print("Killing task")
+			task.kill()
+	})
 	
 	return OK
 
