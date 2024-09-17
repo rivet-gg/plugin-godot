@@ -75,7 +75,7 @@ func _enter_tree():
 			"name": "backend_stop",
 			"input": {}
 		}
-	add_control_to_bottom_panel(_backend_panel, "Backend")
+	add_control_to_bottom_panel(_backend_panel, "Modules")
 
 	# Add export plugin
 	_export_plugin = preload("rivet_export_plugin.gd").new()

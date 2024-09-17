@@ -1,15 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://l8cfdaru7ibw"]
+[gd_scene load_steps=9 format=3 uid="uid://l8cfdaru7ibw"]
 
 [ext_resource type="Script" path="res://addons/rivet/ui/dock/dock.gd" id="1_vjk51"]
 [ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/ui/elements/logo_container.tscn" id="2_83n20"]
-[ext_resource type="Texture2D" uid="uid://dg4dqkyupiknx" path="res://addons/rivet/images/font_awesome/right-to-bracket.svg" id="3_jfdo1"]
+[ext_resource type="Texture2D" uid="uid://dobhbjgf88iaj" path="res://addons/rivet/images/font_awesome/house.svg" id="3_30stu"]
 [ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/ui/dock/screens/login.tscn" id="4_76k63"]
-[ext_resource type="Texture2D" uid="uid://bt6drfu7s6mqv" path="res://addons/rivet/images/font_awesome/book.svg" id="4_f062m"]
 [ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/ui/dock/screens/main.tscn" id="5_3rpdd"]
 [ext_resource type="Texture2D" uid="uid://cqxfe7vdxxopy" path="res://addons/rivet/images/font_awesome/bug.svg" id="5_sixqr"]
+[ext_resource type="Texture2D" uid="uid://d036tjn7gksmn" path="res://addons/rivet/images/font_awesome/gear.svg" id="5_y1sat"]
 [ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/ui/dock/screens/linking_pending.tscn" id="6_7pk2p"]
-[ext_resource type="Texture2D" uid="uid://diwwt3x2s8rf0" path="res://addons/rivet/images/font_awesome/discord.svg" id="6_tqi4d"]
-[ext_resource type="Texture2D" uid="uid://cepgu0kb1n3vj" path="res://addons/rivet/images/font_awesome/github.svg" id="7_ydj40"]
 
 [node name="Rivet" type="MarginContainer"]
 offset_top = 92.0
@@ -32,7 +30,6 @@ layout_mode = 2
 [node name="LogoButton" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_default_cursor_shape = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -48,25 +45,9 @@ size_flags_horizontal = 3
 
 [node name="DashboardLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-tooltip_text = "Dashboard"
-mouse_default_cursor_shape = 2
-icon = ExtResource("3_jfdo1")
-flat = true
-icon_alignment = 1
-
-[node name="DocsLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
 tooltip_text = "Documentation"
 mouse_default_cursor_shape = 2
-icon = ExtResource("4_f062m")
-flat = true
-icon_alignment = 1
-
-[node name="DiscordLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-tooltip_text = "Discord"
-mouse_default_cursor_shape = 2
-icon = ExtResource("6_tqi4d")
+icon = ExtResource("3_30stu")
 flat = true
 icon_alignment = 1
 
@@ -78,12 +59,11 @@ icon = ExtResource("5_sixqr")
 flat = true
 icon_alignment = 1
 
-[node name="GitHubLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
-visible = false
+[node name="SettingsLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-tooltip_text = "Discord"
+tooltip_text = "Settings"
 mouse_default_cursor_shape = 2
-icon = ExtResource("7_ydj40")
+icon = ExtResource("5_y1sat")
 flat = true
 icon_alignment = 1
 
@@ -110,7 +90,6 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DocsLink" to="." method="_open_url" binds= ["https://rivet.gg/docs"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DiscordLink" to="." method="_open_url" binds= ["https://rivet.gg/discord"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm=godot"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/SettingsLink" to="VBoxContainer/Control/Main" method="change_tab" binds= [4]]

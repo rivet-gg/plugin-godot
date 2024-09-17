@@ -1,27 +1,12 @@
 @tool extends MarginContainer
 
-@onready var _advanced_config_button: Button = %AdvancedConfigButton
-@onready var _advanced_config: Control = %AdvancedConfig
-
 func _ready():
-	_advanced_config_button.icon = get_theme_icon("GuiTreeArrowRight", "EditorIcons")
-	_advanced_config.visible = false
-
 	# Hide by default until requirements load
 	%RequirementsContainer.visible = false
 
 	# Steps
-	%StepProjectConfig.check_setup = _project_config_check
-	%StepProjectConfig.call_setup = _project_config_call
-
-	%StepBackend.check_setup = _backend_check
-	%StepBackend.call_setup = _backend_call
-
-	%StepContainer.check_setup = _container_check
-	%StepContainer.call_setup = _container_call
-
-	%StepGenSDK.check_setup = _gen_sdk_check
-	%StepGenSDK.call_setup = _gen_sdk_call
+	%StepModules.check_setup = _moudle_check
+	%StepModules.call_setup = _module_call
 
 	%StepMultiplayer.check_setup = _multiplayer_check
 	%StepMultiplayer.call_setup = _multiplayer_call
@@ -61,17 +46,11 @@ func _check_requirements():
 	else:
 		%RequirementsContainer.visible = false
 
-
-func _on_advanced_config_button_pressed():
-	var open = !_advanced_config.visible
-	_advanced_config.visible = open
-	_advanced_config_button.icon = get_theme_icon("GuiTreeArrowDown" if open else "GuiTreeArrowRight", "EditorIcons")
-
 # MARK: Project Config
-func _project_config_check() -> bool:
+func _moudle_check() -> bool:
 	return _backend_check() && _container_check()
 
-func _project_config_call():
+func _module_call():
 	if !_backend_check():
 		_backend_call()
 	if !_container_check():
@@ -80,7 +59,7 @@ func _project_config_call():
 # MARK: Backend Config
 const BACKEND_FILES = {
 	"rivet.json": "rivet.json",
-	"backend.dev.json": "backend.dev.json",
+	"rivet.dev.json": "rivet.dev.json",
 }
 
 func _backend_check() -> bool:
@@ -101,19 +80,6 @@ func _container_check() -> bool:
 func _container_call():
 	_copy_files(CONTAINER_FILES)
 
-# MARK: Gen SDK
-func _gen_sdk_check() -> bool:
-	# Check if addons/rivet_sdk exists
-	return DirAccess.dir_exists_absolute("res://addons/rivet_sdk")
-
-func _gen_sdk_call():
-	%StepGenSDK.loading = true
-	RivetUtil.generate_sdk(
-		self,
-		func(): %StepGenSDK.loading = false
-	)
-
-# TODO: texture_filter = nearest
 # MARK: Setup Multiplayer
 var MULTIPLAYER_FILES_TEXTURES = {
 	"template_2d/assets/crate.png": "assets/crate.png",
@@ -167,6 +133,10 @@ func _develop_call():
 # MARK: Deploy
 func _deploy_call():
 	owner.change_tab(2)
+
+# MARK: Next Steps
+func _config_modules_call():
+	owner.change_tab(3)
 
 # MARK: Helper
 func _get_plugin_path() -> String:

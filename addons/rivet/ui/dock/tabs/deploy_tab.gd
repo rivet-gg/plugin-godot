@@ -65,4 +65,3 @@ func _on_open_link(kind: String):
 
 func _on_reload_env_button_pressed():
 	RivetPluginBridge.instance.bootstrap()
-

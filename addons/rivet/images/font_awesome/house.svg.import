@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://10vqh72x3wrr"
-path="res://.godot/imported/icon-text-black.svg-10e6532df3787d7fde392c7ee5fc0deb.ctex"
+uid="uid://dobhbjgf88iaj"
+path="res://.godot/imported/house.svg-f996905ca905b1e0bf79c9920c5356b6.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/rivet/images/icon-text-black.svg"
-dest_files=["res://.godot/imported/icon-text-black.svg-10e6532df3787d7fde392c7ee5fc0deb.ctex"]
+source_file="res://addons/rivet/images/font_awesome/house.svg"
+dest_files=["res://.godot/imported/house.svg-f996905ca905b1e0bf79c9920c5356b6.ctex"]
 
 [params]
 
