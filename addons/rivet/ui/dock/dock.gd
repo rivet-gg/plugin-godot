@@ -13,6 +13,19 @@ enum Screen {
 @onready var _main: Node = %Main
 
 func _ready() -> void:
+	var dock_margin_tb = int(2 * DisplayServer.screen_get_scale())
+	var dock_margin_lr = int(2 * DisplayServer.screen_get_scale())
+	add_theme_constant_override("margin_left", dock_margin_lr)
+	add_theme_constant_override("margin_top", dock_margin_tb)
+	add_theme_constant_override("margin_right", dock_margin_lr)
+	add_theme_constant_override("margin_bottom", dock_margin_tb)
+
+	var button_margin = int(4 * DisplayServer.screen_get_scale())
+	%LogoButton.add_theme_constant_override("margin_left", button_margin)
+	%LogoButton.add_theme_constant_override("margin_top", button_margin)
+	%LogoButton.add_theme_constant_override("margin_right", button_margin)
+	%LogoButton.add_theme_constant_override("margin_bottom", button_margin)
+
 	change_current_screen(Screen.Login)
 
 func reload() -> void:

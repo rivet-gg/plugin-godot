@@ -15,6 +15,9 @@ func prepare(_args: Dictionary) -> Error:
 	return OK
 
 func _ready():
+	var sep = int(8 * DisplayServer.screen_get_scale())
+	add_theme_constant_override("separation", sep)
+
 	log_in_button.pressed.connect(_on_button_pressed)
 	advanced_options_button.pressed.connect(_on_advanced_options_button_pressed)
 	advanced_options_button.icon = get_theme_icon("arrow", "OptionButton")

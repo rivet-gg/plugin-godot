@@ -8,11 +8,8 @@
 [ext_resource type="Script" path="res://addons/rivet/ui/elements/loading_button.gd" id="3_fobli"]
 [ext_resource type="Script" path="res://addons/rivet/ui/elements/better_rich_text.gd" id="4_binbc"]
 [ext_resource type="Texture2D" uid="uid://ds0f852va30ur" path="res://addons/rivet/images/font_awesome/hammer.svg" id="6_0wdju"]
-[ext_resource type="StyleBox" uid="uid://sjqmimummhjm" path="res://addons/rivet/theme/inspector_button/normal.tres" id="6_3w0hh"]
 [ext_resource type="Texture2D" uid="uid://dxt1u0lgvmire" path="res://addons/rivet/images/font_awesome/list-check.svg" id="6_dq56b"]
 [ext_resource type="Script" path="res://addons/rivet/ui/elements/better_option_button.gd" id="6_ycbgs"]
-[ext_resource type="StyleBox" uid="uid://dyqxlgqdmd4i" path="res://addons/rivet/theme/inspector_button/hover.tres" id="7_e8hn3"]
-[ext_resource type="StyleBox" uid="uid://dx1ekjwo47cbv" path="res://addons/rivet/theme/inspector_button/pressed.tres" id="8_abhma"]
 
 [sub_resource type="Image" id="Image_5qlad"]
 data = {
@@ -1432,9 +1429,6 @@ text = "Refresh"
 
 [node name="DeployEnvSelector" parent="Deployment Fields" instance=ExtResource("2_5hxk2")]
 layout_mode = 2
-theme_override_styles/hover = ExtResource("7_e8hn3")
-theme_override_styles/pressed = ExtResource("8_abhma")
-theme_override_styles/normal = ExtResource("6_3w0hh")
 remote_only = true
 inspector_button = true
 
@@ -1460,9 +1454,6 @@ bold = true
 [node name="DeployStepsSelector" type="OptionButton" parent="Deployment Fields"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/hover = ExtResource("7_e8hn3")
-theme_override_styles/pressed = ExtResource("8_abhma")
-theme_override_styles/normal = ExtResource("6_3w0hh")
 selected = 0
 item_count = 3
 popup/item_0/text = "Deploy Game Server & Modules"
@@ -1482,9 +1473,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
-theme_override_styles/hover = ExtResource("7_e8hn3")
-theme_override_styles/pressed = ExtResource("8_abhma")
-theme_override_styles/normal = ExtResource("6_3w0hh")
 text = "Build & Deploy"
 icon = ExtResource("6_0wdju")
 script = ExtResource("3_fobli")

@@ -8,6 +8,18 @@
 @onready var _backend_restart: Button = %BackendRestart
 
 func _ready() -> void:
+	var container_margin = int(4 * DisplayServer.screen_get_scale())
+	var link_separation = int(6 * DisplayServer.screen_get_scale())
+
+	%SourceCodeMargin.add_theme_constant_override("margin_left", container_margin)
+	%SourceCodeMargin.add_theme_constant_override("margin_right", container_margin)
+	%SupportMargin.add_theme_constant_override("margin_left", container_margin)
+	%SupportMargin.add_theme_constant_override("margin_right", container_margin)
+
+	%GitHubLink1.add_theme_constant_override("separation", link_separation)
+	%GitHubLink2.add_theme_constant_override("separation", link_separation)
+	%GitHubLink3.add_theme_constant_override("separation", link_separation)
+
 	RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 	unlink_game_button.pressed.connect(_on_unlink_game_button_pressed)
 
