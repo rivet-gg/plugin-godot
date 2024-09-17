@@ -68,7 +68,6 @@ const godotNativePath = join(
   "addons",
   "rivet",
   "native",
-  "debug",
   libName,
 );
 

@@ -87,4 +87,3 @@ func bootstrap() -> Error:
 	emit_signal("bootstrapped")
 
 	return OK
-
