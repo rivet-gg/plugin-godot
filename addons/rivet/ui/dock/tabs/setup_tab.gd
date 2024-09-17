@@ -79,7 +79,7 @@ func _project_config_call():
 
 # MARK: Backend Config
 const BACKEND_FILES = {
-	"backend.json": "backend.json",
+	"rivet.json": "rivet.json",
 	"backend.dev.json": "backend.dev.json",
 }
 

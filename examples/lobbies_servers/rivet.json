@@ -1,4 +1,7 @@
 {
+  "sdks": [
+    { "target": "godot", "output": "addons/rivet_sdk" }
+  ],
 	"modules": {
 		"users": {},
 		"rate_limit": {},

@@ -1156,7 +1156,7 @@ unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("4_kjbfq")
 description = "[b]Backend Config[/b]
-Configures [url=https://opengb.dev]OpenGB[/url]. Creates [code]backend.json[/code] & [code]backend.dev.json[/code]. [url=https://rivet.gg]Learn More[/url]"
+Configures [url=https://opengb.dev]OpenGB[/url]. Creates [code]rivet.json[/code] & [code]backend.dev.json[/code]. [url=https://rivet.gg]Learn More[/url]"
 
 [node name="StepContainer" parent="Steps/AdvancedConfig/VBoxContainer" instance=ExtResource("2_cv7xv")]
 unique_name_in_owner = true
