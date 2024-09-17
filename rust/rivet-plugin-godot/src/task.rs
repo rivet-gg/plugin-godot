@@ -5,7 +5,7 @@ use godot::{
 use tokio::sync::mpsc;
 use toolchain::util::task;
 
-use crate::util::runtime;
+use crate::util::{log, runtime};
 
 #[derive(GodotClass)]
 #[class(tool, no_init, base = Node)]
@@ -48,7 +48,7 @@ impl RivetTask {
     #[func]
     fn with_name_input(name: String, input: Variant) -> Option<Gd<Self>> {
         if name.is_empty() || input.is_nil() {
-            godot_error!("RivetTask initiated without required args");
+            log::error("RivetTask initiated without required args");
             return None;
         }
 
@@ -67,17 +67,17 @@ impl RivetTask {
     #[func]
     fn start(&mut self) {
         if self.is_started {
-            godot_warn!("[{}] Task already started", self.name);
+            log::warning(format!("[{}] Task already started", self.name));
             return;
         }
         if !self.base().is_inside_tree() {
-            godot_error!("need to add RivetTask to the tree before calling start()");
+            log::error("need to add RivetTask to the tree before calling start()");
             return;
         }
 
         // Serialize input
         let input_json = Json::stringify(self.input.clone()).to_string();
-        godot_print!("[{}] Request: {input_json}", self.name);
+        log::log(format!("[{}] Request: {input_json}", self.name));
 
         // Setup task
         let (run_config, handles) = task::RunConfig::build();
@@ -105,7 +105,7 @@ impl RivetTask {
         } else if let Some(log_result) = self.result_event.clone() {
             log_result
         } else {
-            godot_error!("Received no output from task");
+            log::error("Received no output from task");
             dict! {
                 "Err": "Received no output from task"
             }
@@ -115,14 +115,14 @@ impl RivetTask {
             .emit_signal("task_output".into(), &[output_result.to_variant()]);
 
         if let Some(ok_value) = output_result.get("Ok") {
-            godot_print!("[{}] Success: {}", self.name, ok_value.to_string());
+            log::log(format!("[{}] Success: {}", self.name, ok_value.to_string()));
             self.base_mut().emit_signal("task_ok".into(), &[ok_value]);
         } else if let Some(err_value) = output_result.get("Err") {
-            godot_warn!("[{}] Error: {}", self.name, err_value.to_string());
+            log::warning(format!("[{}] Error: {}", self.name, err_value.to_string()));
             self.base_mut()
                 .emit_signal("task_error".into(), &[err_value]);
         } else {
-            godot_error!("[{}] Result does not have Ok or Err", self.name);
+            log::error(format!("[{}] Result does not have Ok or Err", self.name));
         }
 
         self.base_mut().queue_free();
@@ -143,7 +143,7 @@ impl RivetTask {
         let abort_tx = handles.abort_tx.clone();
         runtime::spawn(Box::pin(async move {
             if abort_tx.send(()).await.is_err() {
-                godot_error!("Task abort receiver dropped");
+                log::error(format!("Task abort receiver dropped"));
             }
         }));
     }
@@ -153,17 +153,21 @@ impl RivetTask {
 impl INode for RivetTask {
     fn process(&mut self, _delta: f64) {
         if !self.is_started {
-            godot_warn!("called RivetTask.process on task that's not started");
+            log::warning(format!(
+                "called RivetTask.process on task that's not started"
+            ));
             return;
         }
         if !self.is_running {
-            godot_warn!("called RivetTask.process on task that's not running");
+            log::warning(format!(
+                "called RivetTask.process on task that's not running"
+            ));
             return;
         }
 
         loop {
             let Some(handles) = self.handles.as_mut() else {
-                godot_warn!("called RivetTask.process without handles");
+                log::warning(format!("called RivetTask.process without handles"));
                 return;
             };
             match handles.event_rx.try_recv() {
@@ -181,7 +185,10 @@ impl INode for RivetTask {
                                 self.result_event = Some(x);
                             }
                             Err(err) => {
-                                godot_error!("[{}] Failed to convert result: {err}", self.name);
+                                log::error(format!(
+                                    "[{}] Failed to convert result: {err}",
+                                    self.name
+                                ));
                                 self.is_running = false;
                                 self.base_mut().queue_free();
                                 return;
@@ -201,9 +208,9 @@ impl INode for RivetTask {
                             .to::<Gd<Object>>();
                         plugin_bridge_instance.call("save_configuration".into(), &[]);
 
-                        godot_print!(
-                            "[Rivet] Port update: backend={backend_port} editor={editor_port}"
-                        );
+                        log::log(format!(
+                            "Port update: backend={backend_port} editor={editor_port}"
+                        ));
                     }
                     task::TaskEvent::BackendConfigUpdate(event) => {
                         let godot_event = serde_to_godot(&event);
@@ -211,7 +218,7 @@ impl INode for RivetTask {
                         let mut plugin = get_plugin();
                         plugin.emit_signal("backend_config_update".into(), &[godot_event]);
 
-                        godot_print!("[Rivet] Backend config update");
+                        log::log(format!("Backend config update"));
                     }
                 },
                 Err(mpsc::error::TryRecvError::Empty) => {
