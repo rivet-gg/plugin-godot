@@ -1,5 +1,5 @@
 use godot::{
-    classes::{Engine, Json},
+    classes::{Json, Script},
     prelude::*,
 };
 use tokio::sync::mpsc;
@@ -33,7 +33,6 @@ pub struct RivetTask {
 
 #[godot_api]
 impl RivetTask {
-    // fn task_log(logs: GString, type_: u8) {}
     #[signal]
     fn task_log(logs: Variant, type_: Variant) {}
 
@@ -197,10 +196,14 @@ impl INode for RivetTask {
                         plugin.set("local_backend_port".into(), backend_port.to_variant());
                         plugin.set("local_editor_port".into(), editor_port.to_variant());
 
-                        let mut plugin_bridge = get_plugin_bridge_instance();
-                        plugin_bridge.call("save_configuration".into(), &[]);
+                        let mut plugin_bridge_instance = get_plugin_bridge_script()
+                            .get("instance".into())
+                            .to::<Gd<Object>>();
+                        plugin_bridge_instance.call("save_configuration".into(), &[]);
 
-                        godot_print!("Port update: backend={backend_port} editor={editor_port}");
+                        godot_print!(
+                            "[Rivet] Port update: backend={backend_port} editor={editor_port}"
+                        );
                     }
                     task::TaskEvent::BackendConfigUpdate(event) => {
                         let godot_event = serde_to_godot(&event);
@@ -208,7 +211,7 @@ impl INode for RivetTask {
                         let mut plugin = get_plugin();
                         plugin.emit_signal("backend_config_update".into(), &[godot_event]);
 
-                        godot_print!("Backend config update");
+                        godot_print!("[Rivet] Backend config update");
                     }
                 },
                 Err(mpsc::error::TryRecvError::Empty) => {
@@ -225,20 +228,12 @@ impl INode for RivetTask {
     }
 }
 
-fn get_plugin_bridge_singleton() -> Gd<Object> {
-    Engine::singleton()
-        .get_singleton("RivetPluginBridge".into())
-        .expect("cannot get RivetPluginBridge")
-}
-
-fn get_plugin_bridge_instance() -> Gd<Object> {
-    get_plugin_bridge_singleton()
-        .get("instance".into())
-        .to::<Gd<Object>>()
+fn get_plugin_bridge_script() -> Gd<Script> {
+    load::<Script>("res://addons/rivet/rivet_plugin_bridge.gd")
 }
 
 fn get_plugin() -> Gd<Object> {
-    get_plugin_bridge_singleton()
+    get_plugin_bridge_script()
         .call("get_plugin".into(), &[])
         .to::<Gd<Object>>()
 }
