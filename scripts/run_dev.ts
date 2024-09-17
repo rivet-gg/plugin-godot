@@ -42,7 +42,7 @@ async function main() {
   const projectPath = join(__dirname, "..", "examples", "lobbies_servers");
 
   const command = new Deno.Command(godotPath, {
-    args: ["--editor", "--path", projectPath],
+    args: ["--editor", "--path", projectPath, "--verbose"],
     stdin: "inherit",
     stdout: "inherit",
     stderr: "inherit",

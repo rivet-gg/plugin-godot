@@ -3,6 +3,8 @@
 func _ready() -> void:
 	RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 
+	%AddButton.pressed.connect(_open_editor)
+
 	_on_backend_state_change.call_deferred(false)
 
 # MARK: Backend
@@ -26,3 +28,7 @@ func _on_backend_edit_config_pressed():
 
 func _on_modules_logs_pressed():
 	RivetPluginBridge.get_plugin().focus_backend.emit()
+
+func _open_editor():
+	var plugin = RivetPluginBridge.get_plugin()
+	OS.shell_open(plugin.local_editor_endpoint)

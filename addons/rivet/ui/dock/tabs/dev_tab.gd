@@ -3,23 +3,22 @@
 const _RivetGlobal = preload("../../../rivet_global.gd")
 
 # Environments
-@onready var _env_description: RichTextLabel = %EnvironmentDescription
 @onready var _warning: RichTextLabel = %WarningLabel
 @onready var _env_selector = %EnvSelector
 
-# Game Server
-@onready var _gs_description: RichTextLabel = %GSDescription
+# Play
+@onready var _play_type_option: OptionButton = %PlayTypeOption
+@onready var _client_count_slider: Slider = %ClientCountSlider
+@onready var _client_count_label: Label = %ClientCountLabel
 @onready var _gs_start: Button = %GSStart
 @onready var _gs_stop: Button = %GSStop
 @onready var _gs_restart: Button = %GSRestart
-
-# Backend
-@onready var _backend_sdk_gen: Button = %BackendGenerateSdk
 
 func _ready() -> void:
 	if get_tree().edited_scene_root == self:
 		return # This is the scene opened in the editor!
 
+	# Warning
 	_warning.add_theme_color_override(&"default_color", get_theme_color(&"warning_color", &"Editor"))
 	_warning.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
 	var warning_text = _warning.text
@@ -30,12 +29,32 @@ func _ready() -> void:
 	
 	_warning.visible = false
 
+	# General
 	RivetPluginBridge.instance.bootstrapped.connect(_on_bootstrapped)
-	RivetPluginBridge.get_plugin().game_server_state_change.connect(_on_gs_state_change)
+
+	# Env
 	RivetPluginBridge.get_plugin().env_update.connect(_update_selected_env)
+
+	%RefreshEnvButton.pressed.connect(_on_reload_env_button_pressed)
 	_env_selector.item_selected.connect(_on_env_selector_item_selected)
 
+	# Play
+	RivetPluginBridge.get_plugin().game_server_state_change.connect(_on_gs_state_change)
+
+	# TODO: Play type
+
+	_play_type_option.item_selected.connect(_update_play_type)
+	_client_count_slider.value_changed.connect(_update_client_count)
+
+	_gs_start.pressed.connect(_on_gs_start_pressed)
+	_gs_stop.pressed.connect(_on_gs_stop_pressed)
+	_gs_restart.pressed.connect(_on_gs_start_pressed)
+
+	%ServerLogs.pressed.connect(_on_gs_logs_pressed)
+
+	_on_client_count_change.call_deferred()
 	_on_gs_state_change.call_deferred(false)
+	_update_play_type.call_deferred(0)
 
 func _on_bootstrapped() -> void:
 	_update_selected_env()
@@ -74,11 +93,74 @@ func _on_reload_env_button_pressed():
 	RivetPluginBridge.instance.bootstrap()
 
 # MARK: Game server
+var _enable_play_client: bool:
+	get:
+		return _play_type_option.selected == 0 || _play_type_option.selected == 1
+
+var _enable_play_server: bool:
+	get:
+		return _play_type_option.selected == 0 || _play_type_option.selected == 2
+	
+func _update_play_type(_id: int):
+	%ClientConfigContainer.visible = _enable_play_client
+
+func _update_client_count(count: float):
+	# Convert to int
+	count = round(count)
+
+	var editor_interface = EditorInterface.get_editor_settings()
+	if count == 1:
+		editor_interface.set_project_metadata("debug_options", "multiple_instances_enabled", false)
+	else:
+		editor_interface.set_project_metadata("debug_options", "multiple_instances_enabled", true)
+		var run_config: Array = editor_interface.get_project_metadata("debug_options", "run_instances_config")
+		var default_entry = { "arguments": "", "features": "", "override_args": false, "override_features": false }
+		
+		# Add entries if needed
+		while run_config.size() < count:
+			run_config.append(default_entry.duplicate())
+		
+		# Remove entries if needed
+		while run_config.size() > count:
+			run_config.pop_back()
+		
+		editor_interface.set_project_metadata("debug_options", "run_instances_config", run_config)
+	
+	_on_client_count_change()
+
+func _on_client_count_change():
+	# Read config
+	var editor_interface = EditorInterface.get_editor_settings()
+	var instances_enabled: bool = editor_interface.get_project_metadata("debug_options", "multiple_instances_enabled")
+	var run_config: Array = editor_interface.get_project_metadata("debug_options", "run_instances_config")
+
+	var count = 0
+	if instances_enabled:
+		count = run_config.size()
+	else:
+		count = 1
+
+	_client_count_slider.value = count
+	_client_count_label.text = "%s" % count
+
 func _on_gs_start_pressed():
-	RivetPluginBridge.get_plugin().start_game_server.emit()
-	RivetPluginBridge.get_plugin().focus_game_server.emit()
+	# Start client
+	if _enable_play_client:
+		if EditorInterface.is_playing_scene():
+			EditorInterface.stop_playing_scene()
+
+		EditorInterface.play_main_scene()
+
+	# Start server
+	if _enable_play_server:
+		RivetPluginBridge.get_plugin().start_game_server.emit()
+		RivetPluginBridge.get_plugin().focus_game_server.emit()
 
 func _on_gs_stop_pressed():
+	# Stop client
+	EditorInterface.stop_playing_scene()
+	
+	# Stop server
 	RivetPluginBridge.get_plugin().stop_game_server.emit()
 	RivetPluginBridge.get_plugin().focus_game_server.emit()
 
@@ -90,10 +172,5 @@ func _on_gs_state_change(running: bool):
 	_gs_stop.visible = running
 	_gs_restart.visible = running
 
-# MARK: Backend
-func _on_backend_generate_sdk_pressed():
-	_backend_sdk_gen.loading = true
-	RivetUtil.generate_sdk(
-		self,
-		func(): _backend_sdk_gen.loading = false
-	)
+func _on_customize_clients_pressed():
+	pass # Replace with function body.
