@@ -1,15 +1,21 @@
 @tool extends Control
 
+@onready var _modules_label: RichTextLabel = %ModulesLabel
+
 func _ready() -> void:
-	RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
+	var plugin = RivetPluginBridge.get_plugin()
+	plugin.backend_config_update.connect(_on_backend_config_update)
 
 	%AddButton.pressed.connect(_open_editor)
 
-	_on_backend_state_change.call_deferred(false)
-
 # MARK: Backend
-func _on_backend_state_change(running: bool):
-	pass
+func _on_backend_config_update(config):
+	var modules_text = ""
+	for module in config.modules:
+		modules_text += "[b]%s[/b]\n" % module.name
+		modules_text += "[[url=%s]Configure[/url]] [[url=%s]Documentation[/url]]\n" % [module.config_url, module.docs_url]
+		modules_text += "\n"
+	_modules_label.text = modules_text
 
 func _on_backend_edit_config_pressed():
 	var backend_json = load("res://rivet.json")

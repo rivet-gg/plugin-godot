@@ -33,6 +33,10 @@ const _RivetLobbies := preload("modules/lobbies.gd")
 
 const _RivetRivet := preload("modules/rivet.gd")
 
+const _RivetUserPasswords := preload("modules/user_passwords.gd")
+
+const _RivetAuthUsernamePassword := preload("modules/auth_username_password.gd")
+
 
 
 var users: _RivetUsers
@@ -44,6 +48,10 @@ var tokens: _RivetTokens
 var lobbies: _RivetLobbies
 
 var rivet: _RivetRivet
+
+var user_passwords: _RivetUserPasswords
+
+var auth_username_password: _RivetAuthUsernamePassword
 
 
 
@@ -58,6 +66,10 @@ func _init_modules():
 	self.lobbies = _RivetLobbies.new(self.client)
 
 	self.rivet = _RivetRivet.new(self.client)
+
+	self.user_passwords = _RivetUserPasswords.new(self.client)
+
+	self.auth_username_password = _RivetAuthUsernamePassword.new(self.client)
 
 
 
