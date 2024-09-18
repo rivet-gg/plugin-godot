@@ -26,6 +26,8 @@ var loading: bool:
 var _check_timer: Timer
 
 func _ready():
+	%IconContainer.add_theme_constant_override("margin_top", int(4 * DisplayServer.screen_get_scale()))
+
 	_icon.texture = icon
 	_description.text = description
 	_setup.text = setup_text

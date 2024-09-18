@@ -6,6 +6,9 @@
 var _on_cancel: Callable
 
 func _ready() -> void:
+	var sep = int(8 * DisplayServer.screen_get_scale())
+	add_theme_constant_override("separation", sep)
+
 	%CancelButton.pressed.connect(_on_cancel_button_pressed)
 
 func prepare(args: Dictionary) -> void:

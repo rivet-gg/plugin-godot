@@ -28,6 +28,8 @@ func _ready() -> void:
 	if get_tree().edited_scene_root == self:
 		return # This is the scene opened in the editor!
 
+	%ClientCountSliderContainer.add_theme_constant_override("separation", int(2 * DisplayServer.screen_get_scale()))
+
 	# Warning
 	_warning.add_theme_color_override(&"default_color", get_theme_color(&"warning_color", &"Editor"))
 	_warning.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))

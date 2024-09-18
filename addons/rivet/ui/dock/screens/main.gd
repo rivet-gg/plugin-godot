@@ -7,6 +7,15 @@
 @onready var deploy_tab = %Deploy
 
 func _ready():
+	add_theme_constant_override("separation", int(2 * DisplayServer.screen_get_scale()))
+
+	var tab_container_margin = int(5 * DisplayServer.screen_get_scale())
+	for node in [%Setup, %Develop, %Deploy, %Modules]:
+		node.add_theme_constant_override("margin_left", tab_container_margin)
+		node.add_theme_constant_override("margin_top", tab_container_margin)
+		node.add_theme_constant_override("margin_right", tab_container_margin)
+		node.add_theme_constant_override("margin_bottom", tab_container_margin)
+
 	%TabContainer.add_theme_stylebox_override("panel", get_theme_stylebox("panel", "Tree"))
 	
 func prepare(_args: Dictionary) -> void:

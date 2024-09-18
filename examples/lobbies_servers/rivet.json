@@ -6,7 +6,6 @@
 		}
 	],
 	"modules": {
-		"users": {},
 		"rate_limit": {},
 		"tokens": {},
 		"lobbies": {
@@ -15,6 +14,16 @@
 					"regions": [
 						"local"
 					],
+					"destroyOnEmptyAfter": 60000,
+					"unreadyExpireAfter": 300000,
+					"maxPlayers": 16,
+					"maxPlayersDirect": 16,
+					"enableCreate": false,
+					"enableDestroy": false,
+					"enableFind": true,
+					"enableFindOrCreate": true,
+					"enableJoin": true,
+					"enableList": true,
 					"backend": {
 						"localDevelopment": {
 							"tags": {
@@ -28,6 +37,13 @@
 							}
 						}
 					}
+				},
+				"lobbyRules": [],
+				"players": {
+					"maxPerIp": 8,
+					"maxUnconnected": 128,
+					"unconnectedExpireAfter": 60000,
+					"autoDestroyAfter": 4147200000
 				}
 			}
 		},
@@ -39,8 +55,6 @@
 				"gameIdVariable": "RIVET_GAME_ID",
 				"environmentIdVariable": "RIVET_ENVIRONMENT_ID"
 			}
-		},
-		"user_passwords": {},
-		"auth_username_password": {}
+		}
 	}
 }
