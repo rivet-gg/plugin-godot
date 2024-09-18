@@ -11,39 +11,24 @@
 		"lobbies": {
 			"config": {
 				"lobbies": {
-					"regions": [
-						"local"
-					],
-					"destroyOnEmptyAfter": 60000,
-					"unreadyExpireAfter": 300000,
-					"maxPlayers": 16,
-					"maxPlayersDirect": 16,
-					"enableCreate": false,
-					"enableDestroy": false,
-					"enableFind": true,
-					"enableFindOrCreate": true,
-					"enableJoin": true,
-					"enableList": true,
+					"regions": ["atl", "fra", "lax"],
 					"backend": {
-						"localDevelopment": {
-							"tags": {
-								"test": "5"
+						"server": {
+							"environment": {
+								"SERVER_HOSTNAME": "0.0.0.0"
 							},
 							"ports": {
 								"game": {
 									"protocol": "udp",
-									"port": 7777
+									"internalPort": 7777
 								}
+							},
+							"resources": {
+								"cpu": 500,
+								"memory": 500
 							}
 						}
 					}
-				},
-				"lobbyRules": [],
-				"players": {
-					"maxPerIp": 8,
-					"maxUnconnected": 128,
-					"unconnectedExpireAfter": 60000,
-					"autoDestroyAfter": 4147200000
 				}
 			}
 		},
