@@ -13,17 +13,24 @@ var auto_start: bool = false
 # State
 var task
 var _stop_task
+var _restart_timer: Timer
 
 func _ready():
 	# Init
 	_task_logs.add_log_line(init_message, TaskLogs.LogType.META)
 
+	_restart_timer = Timer.new()
+	_restart_timer.wait_time = 2.0
+	_restart_timer.one_shot = true
+	_restart_timer.timeout.connect(_on_restart_delay)
+	add_child(_restart_timer)
+
 	# Hook existing process (or start if auto-started)
 	var config = await get_start_config.call("StartOrHook" if auto_start else "HookOnly")
 	task = RivetTask.with_name_input(config.name, config.input)
 	add_child(task)
-	task.task_log.connect(_on_task_log)
-	task.task_output.connect(_on_task_output)
+	task.task_log.connect(_on_task_log.bind(task))
+	task.task_output.connect(_on_task_output.bind(task))
 	task.start()
 
 	# Publish state change after defer so signals can be connected
@@ -41,8 +48,8 @@ func start_task(restart: bool = true):
 	var config = await get_start_config.call("StartOrHook")
 	task = RivetTask.with_name_input(config.name, config.input)
 	add_child(task)
-	task.task_log.connect(_on_task_log)
-	task.task_output.connect(_on_task_output)
+	task.task_log.connect(_on_task_log.bind(task))
+	task.task_output.connect(_on_task_output.bind(task))
 	task.start()
 
 	_on_state_change()
@@ -52,8 +59,9 @@ func start_task(restart: bool = true):
 func stop_task():
 	if task != null:
 		# Abort running task
-		task.kill()
+		var local_task = task
 		task = null
+		local_task.kill()
 
 		_task_logs.add_log_line("Stop", TaskLogs.LogType.META)
 
@@ -67,7 +75,10 @@ func stop_task():
 
 		_on_state_change()
 
-func _on_task_log(logs, type):
+func _on_task_log(logs, type, source_task):
+	if source_task != task:
+		return
+
 	var log_type
 	if type == 0:
 		log_type = TaskLogs.LogType.STDOUT
@@ -79,7 +90,10 @@ func _on_task_log(logs, type):
 
 	_task_logs.add_log_line(logs, log_type)
 
-func _on_task_output(output):
+func _on_task_output(output, source_task):
+	if source_task != task:
+		return
+
 	task = null
 	_on_state_change()
 
@@ -92,11 +106,13 @@ func _on_task_output(output):
 	# Restart if needed
 	if auto_start:
 		_task_logs.add_log_line("Restarting in 2 seconds", TaskLogs.LogType.META)
-		await get_tree().create_timer(2.0).timeout
-		start_task()
+		_restart_timer.start()
 
 func _on_clear_logs_pressed():
 	_task_logs.clear_logs()
 
 func _on_state_change():
 	state_change.emit(task != null)
+
+func _on_restart_delay():
+	start_task()
