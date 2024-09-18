@@ -24,52 +24,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
 
-  # build:
-  #   needs: release-please
-  #   if: needs.release-please.outputs.release_created == 'true'
-  #   name: Build for ${{ matrix.os }} ${{ matrix.arch }}
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - os: ubuntu-latest
-  #           target: x86_64-unknown-linux-gnu
-  #           arch: x86_64
-  #           artifact_name: librivet_plugin_godot.so
-  #         - os: macos-latest
-  #           target: x86_64-apple-darwin
-  #           arch: x86_64
-  #           artifact_name: librivet_plugin_godot.dylib
-  #         - os: macos-latest
-  #           target: aarch64-apple-darwin
-  #           arch: arm64
-  #           artifact_name: librivet_plugin_godot.dylib
-  #         - os: windows-latest
-  #           target: x86_64-pc-windows-msvc
-  #           arch: x86_64
-  #           artifact_name: rivet_plugin_godot.dll
-
-  #   steps:
-  #   - uses: actions/checkout@v2
-    
-  #   - name: Install Rust
-  #     uses: actions-rs/toolchain@v1
-  #     with:
-  #       toolchain: stable
-  #       target: ${{ matrix.target }}
-  #       override: true
-    
-  #   - name: Build
-  #     run: |
-  #       cd rust/rivet-plugin-godot
-  #       cargo build --release --target ${{ matrix.target }}
-    
-  #   - name: Upload artifact
-  #     uses: actions/upload-artifact@v2
-  #     with:
-  #       name: ${{ matrix.os }}-${{ matrix.arch }}-cdylib
-  #       path: rust/target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
-
   publish:
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
@@ -79,57 +33,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          lfs: true
 
-      # - name: Download all artifacts
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     path: artifacts
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: 1.46.1
 
-      # - name: Prepare release assets
-      #   run: |
-      #     rm -rf godot/addons/rivet/native/
-      #     mkdir -p godot/addons/rivet/native/
-      #     mkdir -p addons/rivet/native/linux-x86_64
-      #     mkdir -p addons/rivet/native/windows-x86_64
-      #     mkdir -p addons/rivet/native/macos-x86_64
-      #     mkdir -p addons/rivet/native/macos-arm64
-      #     cp artifacts/ubuntu-latest-x86_64-cdylib/* godot/addons/rivet/native/linux-x86_64/
-      #     cp artifacts/windows-latest-x86_64-cdylib/* godot/addons/rivet/native/windows-x86_64/
-      #     cp artifacts/macos-latest-x86_64-cdylib/* godot/addons/rivet/native/macos-x86_64/
-      #     cp artifacts/macos-latest-arm64-cdylib/* godot/addons/rivet/native/macos-arm64/
-      #     sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
-      #     sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
-
-      - name: Run build-cross script
+      - name: Build & Release
+        env:
+          OUTPUT_DIR: /tmp/artifacts/
+          ASSET_VERSION: ${{ needs.release-please.outputs.tag_name }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          GODOT_ASSET_LIB_USERNAME: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
+          GODOT_ASSET_LIB_USERNAME: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
         run: |
-          ./scripts/build_cross.sh
-
-      - name: Replace placeholders in asset template
-        run: |
-          sed -i 's/{{ context.release.tag_name }}/${{ needs.release-please.outputs.tag_name }}/g' .asset-template.json
-          sed -i 's/{{ env.GITHUB_SHA }}/${{ needs.release-please.outputs.release_sha }}/g' .asset-template.json
-      
-      - name: Delete unnecessary files
-        run: |
-          find . -type f -not -path "./addons/rivet/*" -not -name ".asset-template.json" -not -name "LICENSE" -delete
-
-      - name: Create ZIP archive
-        run: |
-          mkdir -p /tmp/artifacts
-          zip -r /tmp/artifacts/plugin-rivet.zip .
+          ./scripts/release.ts
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v3
         with:
           name: rivet-plugin
-          path: /tmp/artifacts/plugin-rivet.zip
+          path: /tmp/artifacts/rivet-plugin-godot.zip
 
-      - name: Godot Asset Lib
-        uses: deep-entertainment/godot-asset-lib-action@v0.4.0
-        with:
-          action: addEdit
-          username: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
-          password: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
-          assetId: 1881
-          assetTemplate: .asset-template.json
-          baseUrl: https://godotengine.org/asset-library/api
