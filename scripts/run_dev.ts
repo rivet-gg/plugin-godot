@@ -8,10 +8,12 @@ const __dirname = dirname(fromFileUrl(Deno.mainModule));
 
 async function findGodotExecutable(): Promise<string | null> {
   const possiblePaths = [
+    "C:\\\Users\\micro\\Downloads\\Godot_v4.3-stable_mono_win64\\Godot_v4.3-stable_mono_win64\\Godot_v4.3-stable_mono_win64.exe",
     "godot",
     "/usr/bin/godot",
     "/usr/local/bin/godot",
     "/Applications/Godot.app/Contents/MacOS/Godot",
+    "/Applications/Godot_mono.app/Contents/MacOS/Godot",
     "/Applications/Godot_mono.app/Contents/MacOS/Godot",
     "C:\\Program Files\\Godot\\Godot.exe",
     "C:\\Program Files (x86)\\Godot\\Godot.exe",

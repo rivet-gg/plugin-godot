@@ -126,15 +126,18 @@ func setup_multiplayer():
 			
 			peer = ENetMultiplayerPeer.new()
 			peer.set_bind_ip(_server_hostname)
-			peer.create_server(_server_port)
-			# TODO:	crash if create server fails
+			if peer.create_server(_server_port) != OK:
+				OS.crash("Failed to create ENet server")
+
 			multiplayer.set_multiplayer_peer(peer)
 		elif transport == Transport.WEB_SOCKET:
 			RivetLogger.log("Starting WebSocket server: %s:%s" % [_server_hostname, _server_port])
 			
 			peer = WebSocketMultiplayerPeer.new()
 			peer.create_server(_server_port, _server_hostname)
-			# TODO:	crash if create server fails
+			if peer.create_server(_server_port, _server_hostname) != OK:
+				OS.crash("Failed to create WebSocket server")
+
 			multiplayer.set_multiplayer_peer(peer)
 		else:
 			RivetLogger.error("Unsupported transport: %s" % transport)
@@ -150,8 +153,11 @@ func setup_multiplayer():
 		if response.is_ok():
 			RivetLogger.log("Lobby ready")
 		else:
-			RivetLogger.warning("Lobby ready failed failed: %s" % response.body)
+			RivetLogger.error("Lobby ready failed failed: %s" % response.body)
+
+			# Crash the server so Rivet stops waiting for the server to start
 			OS.crash("Lobby ready failed")
+
 			return
 
 ## Connect to a lobby returned from the backend.

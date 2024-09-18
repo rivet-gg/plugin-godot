@@ -79,19 +79,16 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 8
 
 [node name="LinkingPending" parent="VBoxContainer/Control" instance=ExtResource("6_7pk2p")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 8
 
 [node name="Main" parent="VBoxContainer/Control" instance=ExtResource("5_3rpdd")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 2
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm=godot"]]
