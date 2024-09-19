@@ -76,7 +76,7 @@ impl RivetTask {
         }
 
         // Serialize input
-        let input_json = Json::stringify(self.input.clone()).to_string();
+        let input_json = Json::stringify(&self.input.clone()).to_string();
         log::log(format!("[{}] Request: {input_json}", self.name));
 
         // Setup task
@@ -200,8 +200,8 @@ impl INode for RivetTask {
                         editor_port,
                     } => {
                         let mut plugin = get_plugin();
-                        plugin.set("local_backend_port".into(), backend_port.to_variant());
-                        plugin.set("local_editor_port".into(), editor_port.to_variant());
+                        plugin.set("local_backend_port".into(), &backend_port.to_variant());
+                        plugin.set("local_editor_port".into(), &editor_port.to_variant());
 
                         let mut plugin_bridge_instance = get_plugin_bridge_script()
                             .get("instance".into())
