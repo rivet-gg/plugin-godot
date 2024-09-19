@@ -48,7 +48,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           GODOT_ASSET_LIB_USERNAME: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
-          GODOT_ASSET_LIB_USERNAME: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
+          GODOT_ASSET_LIB_PASSWORD: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
         run: |
           ./scripts/release.ts
 
