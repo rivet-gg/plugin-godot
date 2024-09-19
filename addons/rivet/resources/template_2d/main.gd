@@ -1,4 +1,4 @@
-extends BackendMultiplayerManager
+extends RivetMultiplayerManager
 
 const player_scene = preload("player.tscn")
 
@@ -41,22 +41,28 @@ func _on_client_disconnected(id: int):
 		sync_parent.call_deferred("remove_child", player)
 
 func _on_find_lobby_pressed():
-	# Get or create a lobby from the backend
-	var response = await Backend.lobbies.find_or_create({
-		# "version": Backend.configuration.game_version,
-		# "regions": ["atl"],
-		"version": "default",
-	"regions": ["local"],
+	# Select a region
+	var regions = await Rivet.lobbies.list_regions({}).async()
+	if !regions.is_ok():
+		push_error("Failed to list regions")
+		return
+
+	# Find a lobby
+	var response = await Rivet.lobbies.find_or_create({
+		"version": Rivet.configuration.game_version,
 		"tags": {},
 		"players": [{}],
 		"createConfig": {
-			"region": "atl",
+			"region": regions.body.regions[0].id,
 			"tags": {},
 			"maxPlayers": 32,
 			"maxPlayersDirect": 32,
 		}
 	}).async()
+	if !response.is_ok():
+		push_error("Failed to find lobby")
+		return
 
-	# Open a network connection to the server
-	if response.is_ok():
-		connect_to_lobby(response.body.lobby, response.body.players[0])
+	# Open a netowrk connection to the server
+	connect_to_lobby(response.body.lobby, response.body.players[0])
+
