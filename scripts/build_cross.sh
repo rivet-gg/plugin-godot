@@ -21,6 +21,14 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js LTS
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
+
+# Install Yarn
+RUN corepack enable
+RUN corepack prepare yarn@stable --activate
+
 # Install Deno
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 ENV PATH="/root/.deno/bin:$PATH"
