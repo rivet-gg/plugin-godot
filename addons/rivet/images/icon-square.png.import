@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8lfek3odxbyr"
-path="res://.godot/imported/icon-square.png-0c142a3d11f17029ea6dc0f424e2a6cd.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://addons/rivet/images/icon-square.png"
-dest_files=["res://.godot/imported/icon-square.png-0c142a3d11f17029ea6dc0f424e2a6cd.ctex"]
 
 [params]
 

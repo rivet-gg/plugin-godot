@@ -31,6 +31,10 @@ const _RivetLobbies := preload("modules/lobbies.gd")
 
 const _RivetRivet := preload("modules/rivet.gd")
 
+const _RivetUsers := preload("modules/users.gd")
+
+const _RivetCurrency := preload("modules/currency.gd")
+
 
 
 var rate_limit: _RivetRateLimit
@@ -40,6 +44,10 @@ var tokens: _RivetTokens
 var lobbies: _RivetLobbies
 
 var rivet: _RivetRivet
+
+var users: _RivetUsers
+
+var currency: _RivetCurrency
 
 
 
@@ -52,6 +60,10 @@ func _init_modules():
 	self.lobbies = _RivetLobbies.new(self.client)
 
 	self.rivet = _RivetRivet.new(self.client)
+
+	self.users = _RivetUsers.new(self.client)
+
+	self.currency = _RivetCurrency.new(self.client)
 
 
 

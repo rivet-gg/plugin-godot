@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://duc87c0hyoyqk" path="res://addons/rivet/images/icon-text-white.svg" id="2_uknbb"]
 
 [node name="LogoContainer" type="HBoxContainer"]
-custom_minimum_size = Vector2(60, 20)
+custom_minimum_size = Vector2(240, 80)
 size_flags_horizontal = 3
 alignment = 1
 script = ExtResource("1_ynaef")
