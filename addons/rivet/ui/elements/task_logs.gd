@@ -22,8 +22,10 @@ func _ready():
 	_strip_ansi_regex = RegEx.new()
 	_strip_ansi_regex.compile("\\x1b\\[[0-9;]*[a-zA-Z]")
 
-	if init_message != null and !init_message.is_empty():
-		add_log_line(init_message, LogType.META)
+	
+	if not Engine.is_editor_hint():
+		if init_message != null and !init_message.is_empty():
+			add_log_line(init_message, LogType.META)
 
 func _notification(what):
 	if what == NOTIFICATION_THEME_CHANGED:

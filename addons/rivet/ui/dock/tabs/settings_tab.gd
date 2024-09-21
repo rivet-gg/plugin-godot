@@ -20,10 +20,11 @@ func _ready() -> void:
 	%GitHubLink2.add_theme_constant_override("separation", link_separation)
 	%GitHubLink3.add_theme_constant_override("separation", link_separation)
 
-	RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 	unlink_game_button.pressed.connect(_on_unlink_game_button_pressed)
 
-	_on_backend_state_change.call_deferred(false)
+	if not Engine.is_editor_hint():
+		RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
+		_on_backend_state_change.call_deferred(false)
 
 # MARK: Auth
 func _on_unlink_game_button_pressed() -> Error:

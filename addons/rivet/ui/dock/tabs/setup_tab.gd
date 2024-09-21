@@ -10,7 +10,10 @@ func _ready():
 
 	%StepDevelop.call_setup = _develop_call
 
-	%StepDeploy.call_setup = _deploy_call
+	%StepDeploy.call_setup = _develop_call
+	
+	%GitHubHolder.add_theme_constant_override("margin_top", int(8 * DisplayServer.screen_get_scale()))
+	%GitHubLink.add_theme_constant_override("separation", int(6 * DisplayServer.screen_get_scale()))
 
 # MARK: Project Config
 func _moudle_check() -> bool:
@@ -96,13 +99,9 @@ func _multiplayer_call():
 func _develop_call():
 	owner.change_tab(1)
 
-# MARK: Deploy
-func _deploy_call():
-	owner.change_tab(2)
-
 # MARK: Next Steps
 func _config_modules_call():
-	owner.change_tab(3)
+	owner.change_tab(2)
 
 # MARK: Helper
 func _get_plugin_path() -> String:
