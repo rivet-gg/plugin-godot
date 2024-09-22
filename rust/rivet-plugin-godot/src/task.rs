@@ -1,11 +1,15 @@
+use std::path::Path;
+
 use godot::{
-    classes::{Json, Script},
+    classes::{Json, ProjectSettings, Script},
     prelude::*,
 };
 use tokio::sync::mpsc;
 use toolchain::util::task;
 
 use crate::util::{log, runtime};
+
+const RIVET_SDK_SINGLETON_NAME: &str = "Rivet";
 
 #[derive(GodotClass)]
 #[class(tool, no_init, base = Node)]
@@ -200,9 +204,12 @@ impl INode for RivetTask {
                         editor_port,
                     } => {
                         let mut plugin = get_plugin();
+
+                        // Set value
                         plugin.set("local_backend_port".into(), &backend_port.to_variant());
                         plugin.set("local_editor_port".into(), &editor_port.to_variant());
 
+                        // Publish event
                         let mut plugin_bridge_instance = get_plugin_bridge_script()
                             .get("instance".into())
                             .to::<Gd<Object>>();
@@ -213,9 +220,29 @@ impl INode for RivetTask {
                         ));
                     }
                     task::TaskEvent::BackendConfigUpdate(event) => {
+                        let mut plugin = get_plugin();
+
                         let godot_event = serde_to_godot(&event);
 
-                        let mut plugin = get_plugin();
+                        // Add autoload
+                        if let Some(sdk) = event.sdks.iter().find(|x| x.target == "godot") {
+                            let absolute_autoload_path = Path::new(&sdk.output)
+                                .join("rivet.gd")
+                                .display()
+                                .to_string();
+                            let local_autoload_path = ProjectSettings::singleton()
+                                .localize_path(absolute_autoload_path.into());
+
+                            plugin.emit_signal(
+                                "add_autoload".into(),
+                                &[
+                                    RIVET_SDK_SINGLETON_NAME.to_variant(),
+                                    local_autoload_path.to_variant(),
+                                ],
+                            );
+                        }
+
+                        // Publish event
                         plugin.emit_signal("backend_config_update".into(), &[godot_event]);
 
                         log::log(format!("Backend config update"));

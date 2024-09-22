@@ -14,6 +14,7 @@ func _ready() -> void:
 
 # MARK: Backend
 func _on_backend_config_update(config):
+	# Update module list
 	var modules_text = ""
 	for module in config.modules:
 		modules_text += "[b]%s[/b]\n" % module.name

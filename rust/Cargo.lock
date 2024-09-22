@@ -1729,7 +1729,7 @@ dependencies = [
 [[package]]
 name = "rivet-api-ee"
 version = "0.0.1"
-source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=00a7b3346bc53645bd4c058c364713b94864070d#00a7b3346bc53645bd4c058c364713b94864070d"
 dependencies = [
  "reqwest",
  "serde",
@@ -1743,10 +1743,11 @@ dependencies = [
 [[package]]
 name = "rivet-backend-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=00a7b3346bc53645bd4c058c364713b94864070d#00a7b3346bc53645bd4c058c364713b94864070d"
 dependencies = [
  "anyhow",
  "include_dir",
+ "rivet-deno-embed",
  "sha2",
  "tempfile",
  "tokio",
@@ -1756,7 +1757,7 @@ dependencies = [
 [[package]]
 name = "rivet-deno-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=00a7b3346bc53645bd4c058c364713b94864070d#00a7b3346bc53645bd4c058c364713b94864070d"
 dependencies = [
  "anyhow",
  "dirs",
@@ -1781,7 +1782,7 @@ dependencies = [
 [[package]]
 name = "rivet-process-runner-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=00a7b3346bc53645bd4c058c364713b94864070d#00a7b3346bc53645bd4c058c364713b94864070d"
 dependencies = [
  "anyhow",
  "sha2",
@@ -1790,12 +1791,12 @@ dependencies = [
 [[package]]
 name = "rivet-process-runner-shared"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=00a7b3346bc53645bd4c058c364713b94864070d#00a7b3346bc53645bd4c058c364713b94864070d"
 
 [[package]]
 name = "rivet-toolchain"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=00a7b3346bc53645bd4c058c364713b94864070d#00a7b3346bc53645bd4c058c364713b94864070d"
 dependencies = [
  "anyhow",
  "async-posthog",
