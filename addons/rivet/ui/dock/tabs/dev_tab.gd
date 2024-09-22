@@ -61,6 +61,9 @@ func _ready() -> void:
 
 		_on_gs_state_change.call_deferred(false)
 		_update_play_type.call_deferred(0)
+
+	# Deploy
+	deploy_button.pressed.connect(_on_deploy_button_pressed)
 	
 	# Find instances dailog
 	if RivetPluginBridge.is_running_as_plugin(self):

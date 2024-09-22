@@ -1,5 +1,6 @@
 # Docker
 Dockerfile
+*.Dockerfile
 .dockerignore
 
 # Godot specific ignores
