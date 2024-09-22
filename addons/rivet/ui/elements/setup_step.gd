@@ -33,7 +33,7 @@ func _ready():
 	_description.text = description
 	_setup.text = setup_text
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		# Check status periodically in case file system changed
 		_check_timer = Timer.new()
 		add_child(_check_timer)

@@ -23,7 +23,7 @@ func _ready():
 	_strip_ansi_regex.compile("\\x1b\\[[0-9;]*[a-zA-Z]")
 
 	
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		if init_message != null and !init_message.is_empty():
 			add_log_line(init_message, LogType.META)
 

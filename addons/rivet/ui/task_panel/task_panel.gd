@@ -19,7 +19,7 @@ func _ready():
 	# Init
 	_task_logs.add_log_line(init_message, TaskLogs.LogType.META)
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		_restart_timer = Timer.new()
 		_restart_timer.wait_time = 2.0
 		_restart_timer.one_shot = true

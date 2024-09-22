@@ -8,6 +8,7 @@ signal task_output(output: Variant)
 # Config
 var task_name: String
 var task_input: Variant
+var ok_message: String
 
 # State
 var task: RivetTask
@@ -15,7 +16,7 @@ var task: RivetTask
 @onready var _done_button: Button = %Done
 
 func _ready():
-	if not Engine.is_editor_hint():
+	if not RivetPluginBridge.is_running_as_plugin(self):
 		return
 
 	task = RivetTask.with_name_input(task_name, task_input)
@@ -59,7 +60,10 @@ func _on_task_output(output):
 
 	task_output.emit(output)
 
-	if "Err" in output:
+	if "Ok" in output:
+		if ok_message != null:
+			_proc_logs.add_log_line(ok_message, TaskLogs.LogType.STDOUT)
+	elif "Err" in output:
 		_proc_logs.add_log_line(output["Err"], TaskLogs.LogType.STDERR)
 
 func _on_done_pressed():
