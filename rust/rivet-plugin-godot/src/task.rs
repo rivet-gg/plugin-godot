@@ -226,22 +226,28 @@ impl INode for RivetTask {
 
                         // Scan for new SDK & add autoload automatically
                         if let Some(sdk) = event.sdks.iter().find(|x| x.target == "godot") {
-                            // Reload file tree, since Godot usually doesn't pick up on this file
-                            // automatically
-                            let absolute_autoload_path = Path::new(&sdk.output)
-                                .join("rivet.gd")
-                                .display()
-                                .to_string();
-                            let local_autoload_path = ProjectSettings::singleton()
-                                .localize_path(absolute_autoload_path.into())
-                                .to_string();
+                            // Validate SDK exists
+                            let sdk_exists = match std::fs::metadata(&sdk.output) {
+                                Ok(x) => x.is_dir(),
+                                Err(_) => false,
+                            };
+                            if sdk_exists {
+                                // Reload file tree, since Godot usually doesn't pick up on this file
+                                // automatically
+                                let absolute_autoload_path = Path::new(&sdk.output)
+                                    .join("rivet.gd")
+                                    .display()
+                                    .to_string();
+                                let local_autoload_path = ProjectSettings::singleton()
+                                    .localize_path(absolute_autoload_path.into())
+                                    .to_string();
 
-                            // Add autoload on file change
-                            log::log("Reloading file system to scan for new SDK");
-                            let mut resource_filesystem = EditorInterface::singleton()
-                                .get_resource_filesystem()
-                                .expect("get_resource_filesystem");
-                            resource_filesystem
+                                // Add autoload on file change
+                                log::log("Reloading file system to scan for new SDK");
+                                let mut resource_filesystem = EditorInterface::singleton()
+                                    .get_resource_filesystem()
+                                    .expect("get_resource_filesystem");
+                                resource_filesystem
                                 .connect_ex(
                                     "sources_changed".into(),
                                     Callable::from_fn("add_rivet_sdk_autoload", move |_| {
@@ -268,8 +274,11 @@ impl INode for RivetTask {
                                 .flags(ConnectFlags::ONE_SHOT.ord() as u32)
                                 .done();
 
-                            // Re-scan file system for new SDk
-                            resource_filesystem.scan();
+                                // Re-scan file system for new SDk
+                                resource_filesystem.scan();
+                            } else {
+                                log::log("SDK does not exist yet");
+                            }
                         }
 
                         // Publish event
