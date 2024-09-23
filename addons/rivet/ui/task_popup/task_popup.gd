@@ -12,6 +12,7 @@ var ok_message: String
 
 # State
 var task: RivetTask
+var is_running = true
 
 @onready var _done_button: Button = %Done
 
@@ -54,6 +55,7 @@ func _on_task_log(logs, type):
 	_proc_logs.add_log_line(logs, log_type)
 
 func _on_task_output(output):
+	is_running = false
 	_update_ui()
 
 	_proc_logs.add_log_line("Exited with %s" % output, TaskLogs.LogType.META)
@@ -75,7 +77,6 @@ func _on_close_requested():
 	hide()
 
 func _update_ui():
-	var running = task.is_running
-	_done_button.text = "Cancel" if running else "Done"
+	_done_button.text = "Cancel" if is_running else "Done"
 
 
