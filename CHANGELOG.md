@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.2.0](https://github.com/rivet-gg/plugin-godot/compare/v2.1.0...v2.2.0) (2024-09-23)
+
+
+### Features
+
+* auto-load sdk on generate ([#255](https://github.com/rivet-gg/plugin-godot/issues/255)) ([1aed430](https://github.com/rivet-gg/plugin-godot/commit/1aed4304f5f51c65e0333bf008aaf9c458340fd6))
+
+
+### Bug Fixes
+
+* add back lockfile ([#249](https://github.com/rivet-gg/plugin-godot/issues/249)) ([8870abb](https://github.com/rivet-gg/plugin-godot/commit/8870abb8f28760e0f43345683641ab8c0c34434f))
+* check for sdk updates to update autoload ([#261](https://github.com/rivet-gg/plugin-godot/issues/261)) ([55030ac](https://github.com/rivet-gg/plugin-godot/commit/55030ac69726898dc6b4a811a0aea514d8657a90))
+* correctly handle task complete state on task popup ([#256](https://github.com/rivet-gg/plugin-godot/issues/256)) ([3e10e6f](https://github.com/rivet-gg/plugin-godot/commit/3e10e6fed8b8a55f735a2e18c6da96236d433583))
+* **layout:** correct margins on setup tab ([#252](https://github.com/rivet-gg/plugin-godot/issues/252)) ([ddb5319](https://github.com/rivet-gg/plugin-godot/commit/ddb5319875116c1d06a60c760a9d3a9ab7b71350))
+* **setup:** fix setup step on windows by forcing absolute paths for copying resources ([#264](https://github.com/rivet-gg/plugin-godot/issues/264)) ([b3ce7b8](https://github.com/rivet-gg/plugin-godot/commit/b3ce7b802b029d38a22a3f5d8aaf1fad306abcea))
+* **template:** use new RivetMultiplayerManager ([#251](https://github.com/rivet-gg/plugin-godot/issues/251)) ([7d13eaa](https://github.com/rivet-gg/plugin-godot/commit/7d13eaa36936f8b267ba58d739e21dc803ddffe9))
+
+
+### Chores
+
+* add better instal instructions in readme ([#258](https://github.com/rivet-gg/plugin-godot/issues/258)) ([45fae9b](https://github.com/rivet-gg/plugin-godot/commit/45fae9bc684abee6af80f983e60553240251fa8b))
+* **develop:** auto-rename buttons based on selected env ([#254](https://github.com/rivet-gg/plugin-godot/issues/254)) ([aa9c40d](https://github.com/rivet-gg/plugin-godot/commit/aa9c40d3cbef94c2789e3659818abe85ec31e69c))
+* rename Dockerfile -&gt; game_server.Dockerfile ([#257](https://github.com/rivet-gg/plugin-godot/issues/257)) ([4ddd2e8](https://github.com/rivet-gg/plugin-godot/commit/4ddd2e8614d2feddab5280273d34f408b7a1cf26))
+* update demo configs ([#259](https://github.com/rivet-gg/plugin-godot/issues/259)) ([6ee03d5](https://github.com/rivet-gg/plugin-godot/commit/6ee03d5c95c5828419a317e54375cfaf69cb3166))
+* update description ([#248](https://github.com/rivet-gg/plugin-godot/issues/248)) ([d6e0335](https://github.com/rivet-gg/plugin-godot/commit/d6e0335f8da98d63572cae1715a66e3e797d94e9))
+* update links ([#260](https://github.com/rivet-gg/plugin-godot/issues/260)) ([4037ef0](https://github.com/rivet-gg/plugin-godot/commit/4037ef07be49563f82e2c16ab4b1e7e16d4c1b9c))
+* update to latest gdext ([#250](https://github.com/rivet-gg/plugin-godot/issues/250)) ([143a3f6](https://github.com/rivet-gg/plugin-godot/commit/143a3f6a2a7d00573a81ac9f2a3ccbb29b2d225a))
+* update to merge develop & deploy tabs ([#253](https://github.com/rivet-gg/plugin-godot/issues/253)) ([7757b50](https://github.com/rivet-gg/plugin-godot/commit/7757b50a69099a5622f70af9ba1f9aba3f29a880))
+
 ## [2.1.0](https://github.com/rivet-gg/plugin-godot/compare/v2.0.6...v2.1.0) (2024-09-19)
 
 
