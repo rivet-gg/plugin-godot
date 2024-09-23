@@ -1,5 +1,5 @@
 # MARK: Builder
-FROM rivetgg/godot:4.2 AS builder
+FROM ghcr.io/rivet-gg/godot-docker/godot:4.2 AS builder
 WORKDIR /app
 COPY . .
 
