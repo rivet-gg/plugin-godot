@@ -15,8 +15,8 @@ strip = true
 godot = { git = "https://github.com/godot-rust/gdext", branch = "master", features = ["serde", "experimental-threads"] }
 serde = "1.0"
 serde_json = "1.0"
-tokio = { version = "1.27", default-features = false, features = ["rt"] }
+tokio = { version = "1.40.0", default-features = false, features = ["rt"] }
 # toolchain = { path = "../../../toolchain/packages/toolchain", package = "rivet-toolchain" }
-toolchain = { git = "https://github.com/rivet-gg/cli.git", rev = "05968dd43547d152aaf5a1886e3998c985989dd8", package = "rivet-toolchain" }
+toolchain = { git = "https://github.com/rivet-gg/cli.git", rev = "b808158911548eb35c36be819534c2fb2032d9b7", package = "rivet-toolchain" }
 lazy_static = "1.5"
 

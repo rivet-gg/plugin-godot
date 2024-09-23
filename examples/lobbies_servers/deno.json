@@ -16,5 +16,8 @@
     },
     "fmt": {
         "useTabs": true
+    },
+    "imports": {
+        "cloudflare:workers": "npm:@cloudflare/workers-types"
     }
 }

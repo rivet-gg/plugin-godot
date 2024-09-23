@@ -1,7 +1,8 @@
 [configuration]
 entry_symbol = "gdext_rust_init"
-compatibility_minimum = 4.1
-reloadable = true
+compatibility_minimum = 4.2
+# We store native structs inside of RivetTask, so we can't reload this plugin.
+reloadable = false
 
 [libraries]
 linux.editor.x86_64 = "res://addons/rivet/native/librivet_plugin_godot_linux_x86_64.so"

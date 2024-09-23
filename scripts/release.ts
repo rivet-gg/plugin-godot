@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run -A
 
-import { copy, emptyDir } from "jsr:@std/fs";
+import { copy } from "jsr:@std/fs";
 import { resolve } from "jsr:@std/path";
 import { assert } from "jsr:@std/assert";
 import { S3Bucket } from "https://deno.land/x/s3@0.5.0/mod.ts";
@@ -19,7 +19,7 @@ const awsSecretAccessKey = getRequiredEnvVar("AWS_SECRET_ACCESS_KEY");
 const username = getRequiredEnvVar("GODOT_ASSET_LIB_USERNAME");
 const password = getRequiredEnvVar("GODOT_ASSET_LIB_PASSWORD");
 
-assert(/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/.test(assetVersion), "ASSET_VERSION must be a valid semantic version");
+assert(/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/.test(assetVersion), "ASSET_VERSION must be a valid semantic version starting with 'v'");
 
 const REPO_DIR = resolve(import.meta.dirname!, "..");
 const OUTPUT_DIR = Deno.env.get("OUTPUT_DIR") ?? await Deno.makeTempDir({ prefix: "rivet-plugin-godot-" });
@@ -55,6 +55,12 @@ async function removeUnnecessaryFiles() {
             }
         }
     }
+}
+
+async function templateFiles() {
+  const pluginCfgPath = resolve(TEMP_DIR, "addons", "rivet", "plugin.cfg");
+  const pluginCfg = await Deno.readTextFile(pluginCfgPath);
+  await Deno.writeTextFile(pluginCfgPath, pluginCfg.replace("{{VERSION}}", assetVersion.slice(1)));
 }
 
 async function generateZipFile() {
@@ -170,6 +176,7 @@ async function main() {
     await buildCrossPlatform();
     await copyFilesToTemp();
     await removeUnnecessaryFiles();
+    await templateFiles();
     await generateZipFile();
     const { zipUrl, iconUrl } = await uploadZipToS3();
     const assetConfig = await generateAssetConfig(zipUrl, iconUrl);

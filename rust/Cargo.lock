@@ -1729,7 +1729,7 @@ dependencies = [
 [[package]]
 name = "rivet-api-ee"
 version = "0.0.1"
-source = "git+https://github.com/rivet-gg/cli.git?rev=05968dd43547d152aaf5a1886e3998c985989dd8#05968dd43547d152aaf5a1886e3998c985989dd8"
+source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
 dependencies = [
  "reqwest",
  "serde",
@@ -1743,7 +1743,7 @@ dependencies = [
 [[package]]
 name = "rivet-backend-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=05968dd43547d152aaf5a1886e3998c985989dd8#05968dd43547d152aaf5a1886e3998c985989dd8"
+source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
 dependencies = [
  "anyhow",
  "include_dir",
@@ -1756,7 +1756,7 @@ dependencies = [
 [[package]]
 name = "rivet-deno-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=05968dd43547d152aaf5a1886e3998c985989dd8#05968dd43547d152aaf5a1886e3998c985989dd8"
+source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
 dependencies = [
  "anyhow",
  "dirs",
@@ -1781,7 +1781,7 @@ dependencies = [
 [[package]]
 name = "rivet-process-runner-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=05968dd43547d152aaf5a1886e3998c985989dd8#05968dd43547d152aaf5a1886e3998c985989dd8"
+source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
 dependencies = [
  "anyhow",
  "sha2",
@@ -1790,12 +1790,12 @@ dependencies = [
 [[package]]
 name = "rivet-process-runner-shared"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=05968dd43547d152aaf5a1886e3998c985989dd8#05968dd43547d152aaf5a1886e3998c985989dd8"
+source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
 
 [[package]]
 name = "rivet-toolchain"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/cli.git?rev=05968dd43547d152aaf5a1886e3998c985989dd8#05968dd43547d152aaf5a1886e3998c985989dd8"
+source = "git+https://github.com/rivet-gg/cli.git?rev=b808158911548eb35c36be819534c2fb2032d9b7#b808158911548eb35c36be819534c2fb2032d9b7"
 dependencies = [
  "anyhow",
  "async-posthog",
@@ -2500,9 +2500,9 @@ dependencies = [
 
 [[package]]
 name = "unicode-width"
-version = "0.1.13"
+version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0336d538f7abc86d282a4189614dfaa90810dfc2c6f6427eaf88e16311dd225d"
+checksum = "7dd6e30e90baa6f72411720665d41d89b9a3d039dc45b8faea1ddd07f617f6af"
 
 [[package]]
 name = "unicode-xid"

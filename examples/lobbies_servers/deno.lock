@@ -255,5 +255,10 @@
     "https://esm.sh/v135/zod@3.23.8/denonext/zod.mjs": "b3707b03ddc01aab11b740436ab23c0fcc8d15fed072be20085c1fd611016b61",
     "https://esm.sh/zod-validation-error@3.3.0": "d8825ca67952b6adff6b35026dc465f9638d4923dbd54fe9e8e81fbfddca9630",
     "https://esm.sh/zod@3.23.8": "728819c1f651800179a5a80daf24b3e54b2ddea87828bd10e63875a604bcb94e"
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:@cloudflare/workers-types"
+    ]
   }
 }
