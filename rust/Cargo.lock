@@ -1729,6 +1729,7 @@ dependencies = [
 [[package]]
 name = "rivet-api-ee"
 version = "0.0.1"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=c0b1ab49330e2f914870b586f034d1e910597d9b#c0b1ab49330e2f914870b586f034d1e910597d9b"
 dependencies = [
  "reqwest",
  "serde",
@@ -1742,6 +1743,7 @@ dependencies = [
 [[package]]
 name = "rivet-backend-embed"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=c0b1ab49330e2f914870b586f034d1e910597d9b#c0b1ab49330e2f914870b586f034d1e910597d9b"
 dependencies = [
  "anyhow",
  "include_dir",
@@ -1755,6 +1757,7 @@ dependencies = [
 [[package]]
 name = "rivet-deno-embed"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=c0b1ab49330e2f914870b586f034d1e910597d9b#c0b1ab49330e2f914870b586f034d1e910597d9b"
 dependencies = [
  "anyhow",
  "dirs",
@@ -1779,6 +1782,7 @@ dependencies = [
 [[package]]
 name = "rivet-process-runner-embed"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=c0b1ab49330e2f914870b586f034d1e910597d9b#c0b1ab49330e2f914870b586f034d1e910597d9b"
 dependencies = [
  "anyhow",
  "sha2",
@@ -1787,10 +1791,12 @@ dependencies = [
 [[package]]
 name = "rivet-process-runner-shared"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=c0b1ab49330e2f914870b586f034d1e910597d9b#c0b1ab49330e2f914870b586f034d1e910597d9b"
 
 [[package]]
 name = "rivet-toolchain"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=c0b1ab49330e2f914870b586f034d1e910597d9b#c0b1ab49330e2f914870b586f034d1e910597d9b"
 dependencies = [
  "anyhow",
  "async-posthog",
