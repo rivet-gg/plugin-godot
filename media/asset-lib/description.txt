@@ -3,23 +3,26 @@ Build multiplayer painlessly with Game Servers, Matchmaking, and Authentication.
 Powering millions of multiplayer play sessions per day for FPS, MOBA, battle royale, MMO, racing, RTS, and turn-based games. Supports desktop, mobile, web, and console.
 
 # Dedicated Game Server Hosting
+
 - Autoscaling & instant servers
 - Includes DDoS mitigation, monitoring, & crash reporting
 - Supports TCP, UDP, WebSockets, & more
 
 # Matchmaking, Lobbies, & Parties
+
 - Supports casual, competitive, MMO, and turn-based
-- Works with server-authoritative, P2P, & async multiplayer
+- Works with server-authoritative & async multiplayer
 
 # Accounts, Friends, & Presence
+
 - Display friends online & facilitate playing together
 - Authenticate with email, username, or social
 
 # 100% Modular & Scriptable
+
 - Pick and choose modules to use
 - Easily write server-side scripts & real-time actors
 - Database included for free
-- Powered by Open Game Backend
 
 # ...and so much more
 
@@ -27,12 +30,17 @@ Powering millions of multiplayer play sessions per day for FPS, MOBA, battle roy
 - Authentication (Email Passwordless, Email/Password, Username/Password, OAuth)
 - Social (Friends, Users, Chat, Groups)
 - Economy (Currency)
-- Competitive (Achievements, Leaderboards)
 - Analytics
 - Security (Rate Limit, Tokens, Captcha)
 - Utility (Email, Contacts, Game Saves)
-- Platform (Discord Activities, Epic Online Services, Steam, Twitch)
-- Easily build your own backend modules
+- Platform (Discord Activities)
+
+# Customizable
+
+- Custom modules easily: Write backend modules with TypeScript, Postgres, and real-time actors.
+- Access to low-level APIs: Build with low-level APIs for highly custom use cases.
+- Fully automatable cloud: Build custom deploy pipelines using Rivet's cloud APIs.
+- Integrated with existing tools: Works with your favorite tools & existing backends.
 
 # Learn More
 
