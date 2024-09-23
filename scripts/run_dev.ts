@@ -45,6 +45,7 @@ async function main() {
 
   const command = new Deno.Command(godotPath, {
     args: ["--editor", "--path", projectPath, "--verbose"],
+    // args: ["--editor", "--path", projectPath, "--verbose", "--benchmark", "--benchmark-file", "/tmp/benchmark.txt", "--text-driver", "Dummy"],
     stdin: "inherit",
     stdout: "inherit",
     stderr: "inherit",

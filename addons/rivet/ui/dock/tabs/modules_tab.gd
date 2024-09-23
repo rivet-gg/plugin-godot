@@ -6,10 +6,11 @@ func _ready() -> void:
 	%ModulesContainer.add_theme_constant_override("margin_top", int(4 * DisplayServer.screen_get_scale()))
 	%ModulesContainer.add_theme_constant_override("margin_bottom", int(4 * DisplayServer.screen_get_scale()))
 
-	var plugin = RivetPluginBridge.get_plugin()
-	plugin.backend_config_update.connect(_on_backend_config_update)
-
 	%AddButton.pressed.connect(_open_editor)
+
+	if not Engine.is_editor_hint():
+		var plugin = RivetPluginBridge.get_plugin()
+		plugin.backend_config_update.connect(_on_backend_config_update)
 
 # MARK: Backend
 func _on_backend_config_update(config):

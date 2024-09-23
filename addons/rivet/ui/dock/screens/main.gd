@@ -4,13 +4,11 @@
 @onready var errorDialog: AcceptDialog = %ErrorDialog
 @onready var buttons_bar: HBoxContainer = %ButtonsBar
 
-@onready var deploy_tab = %Deploy
-
 func _ready():
 	add_theme_constant_override("separation", int(2 * DisplayServer.screen_get_scale()))
 
 	var tab_container_margin = int(5 * DisplayServer.screen_get_scale())
-	for node in [%Setup, %Develop, %Deploy, %Modules]:
+	for node in [%Setup, %Develop, %Modules, %Settings]:
 		node.add_theme_constant_override("margin_left", tab_container_margin)
 		node.add_theme_constant_override("margin_top", tab_container_margin)
 		node.add_theme_constant_override("margin_right", tab_container_margin)

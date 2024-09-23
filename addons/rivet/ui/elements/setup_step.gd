@@ -33,13 +33,14 @@ func _ready():
 	_description.text = description
 	_setup.text = setup_text
 
-	# Check status periodically in case file system changed
-	_check_timer = Timer.new()
-	add_child(_check_timer)
-	_check_timer.timeout.connect(_update_is_setup)
-	_check_timer.start(5.0)
+	if not Engine.is_editor_hint():
+		# Check status periodically in case file system changed
+		_check_timer = Timer.new()
+		add_child(_check_timer)
+		_check_timer.timeout.connect(_update_is_setup)
+		_check_timer.start(5.0)
 
-	_update_is_setup.call_deferred()
+		_update_is_setup.call_deferred()
 
 func _update_is_setup():
 	var is_setup = check_setup != null && check_setup.call()

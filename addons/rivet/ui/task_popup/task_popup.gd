@@ -15,7 +15,7 @@ var task: RivetTask
 @onready var _done_button: Button = %Done
 
 func _ready():
-	if not RivetPluginBridge.get_plugin().is_running_as_plugin(self):
+	if not Engine.is_editor_hint():
 		return
 
 	task = RivetTask.with_name_input(task_name, task_input)

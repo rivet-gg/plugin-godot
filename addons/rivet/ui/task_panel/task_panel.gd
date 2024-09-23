@@ -19,22 +19,23 @@ func _ready():
 	# Init
 	_task_logs.add_log_line(init_message, TaskLogs.LogType.META)
 
-	_restart_timer = Timer.new()
-	_restart_timer.wait_time = 2.0
-	_restart_timer.one_shot = true
-	_restart_timer.timeout.connect(_on_restart_delay)
-	add_child(_restart_timer)
+	if not Engine.is_editor_hint():
+		_restart_timer = Timer.new()
+		_restart_timer.wait_time = 2.0
+		_restart_timer.one_shot = true
+		_restart_timer.timeout.connect(_on_restart_delay)
+		add_child(_restart_timer)
 
-	# Hook existing process (or start if auto-started)
-	var config = await get_start_config.call("StartOrHook" if auto_start else "HookOnly")
-	task = RivetTask.with_name_input(config.name, config.input)
-	add_child(task)
-	task.task_log.connect(_on_task_log.bind(task))
-	task.task_output.connect(_on_task_output.bind(task))
-	task.start()
+		# Hook existing process (or start if auto-started)
+		var config = await get_start_config.call("StartOrHook" if auto_start else "HookOnly")
+		task = RivetTask.with_name_input(config.name, config.input)
+		add_child(task)
+		task.task_log.connect(_on_task_log.bind(task))
+		task.task_output.connect(_on_task_output.bind(task))
+		task.start()
 
-	# Publish state change after defer so signals can be connected
-	call_deferred("_on_state_change")
+		# Publish state change after defer so signals can be connected
+		call_deferred("_on_state_change")
 
 func start_task(restart: bool = true):
 	# Do nothing if task already running
