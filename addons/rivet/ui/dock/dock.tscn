@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/ui/dock/screens/main.tscn" id="5_3rpdd"]
 [ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/ui/dock/screens/linking_pending.tscn" id="6_7pk2p"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hx5t5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7e8ky"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -20,7 +20,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_envq5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_klna0"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -33,7 +33,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6rud"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pix4w"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -46,7 +46,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u68th"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmxla"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -59,7 +59,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03y6y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckn5j"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -72,7 +72,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e7wcx"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_00us4"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -85,7 +85,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wah1k"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njq1c"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -98,7 +98,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1brc7"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1i25g"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -111,7 +111,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73vqo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mobdu"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -124,7 +124,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk0ju"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccd67"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -137,7 +137,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl28i"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ovntm"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -150,7 +150,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd5xc"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feqdn"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -202,10 +202,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_hx5t5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_envq5")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_h6rud")
-theme_override_styles/normal = SubResource("StyleBoxFlat_u68th")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7e8ky")
+theme_override_styles/hover = SubResource("StyleBoxFlat_klna0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pix4w")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mmxla")
 text = "Hub"
 flat = true
 script = ExtResource("4_qk3rr")
@@ -215,10 +215,10 @@ inspector_button = true
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_03y6y")
-theme_override_styles/hover = SubResource("StyleBoxFlat_e7wcx")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_wah1k")
-theme_override_styles/normal = SubResource("StyleBoxFlat_1brc7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ckn5j")
+theme_override_styles/hover = SubResource("StyleBoxFlat_00us4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_njq1c")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1i25g")
 text = "Docs"
 flat = true
 script = ExtResource("4_qk3rr")
@@ -238,10 +238,10 @@ visible = false
 layout_mode = 2
 tooltip_text = "Settings"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_73vqo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fk0ju")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hl28i")
-theme_override_styles/normal = SubResource("StyleBoxFlat_dd5xc")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_mobdu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ccd67")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ovntm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_feqdn")
 text = "Settings"
 flat = true
 script = ExtResource("4_qk3rr")
@@ -272,7 +272,7 @@ theme_override_constants/separation = 16
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DocsLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/"]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_hub"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DocsLink" to="." method="_open_url" binds= ["https://rivet.gg/docs/godot"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm=godot"]]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/SettingsLink" to="VBoxContainer/Control/Main" method="change_tab" binds= [3]]

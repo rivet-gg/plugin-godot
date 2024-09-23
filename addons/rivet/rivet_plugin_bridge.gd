@@ -1,6 +1,4 @@
-@tool
-
-class_name RivetPluginBridge
+@tool class_name RivetPluginBridge
 ## Scaffolding for the plugin to be used in the editor, this is not meant to be
 ## used in the game. It's a way to get the plugin instance from the engine's
 ## perspective.
