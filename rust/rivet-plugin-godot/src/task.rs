@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use godot::{
-    classes::{Json, ProjectSettings, Script},
+    classes::{object::ConnectFlags, EditorInterface, Json, ProjectSettings, Script},
     prelude::*,
 };
 use tokio::sync::mpsc;
@@ -224,22 +224,52 @@ impl INode for RivetTask {
 
                         let godot_event = serde_to_godot(&event);
 
-                        // Add autoload
+                        // Scan for new SDK & add autoload automatically
                         if let Some(sdk) = event.sdks.iter().find(|x| x.target == "godot") {
+                            // Reload file tree, since Godot usually doesn't pick up on this file
+                            // automatically
                             let absolute_autoload_path = Path::new(&sdk.output)
                                 .join("rivet.gd")
                                 .display()
                                 .to_string();
                             let local_autoload_path = ProjectSettings::singleton()
-                                .localize_path(absolute_autoload_path.into());
+                                .localize_path(absolute_autoload_path.into())
+                                .to_string();
 
-                            plugin.emit_signal(
-                                "add_autoload".into(),
-                                &[
-                                    RIVET_SDK_SINGLETON_NAME.to_variant(),
-                                    local_autoload_path.to_variant(),
-                                ],
-                            );
+                            // Add autoload on file change
+                            log::log("Reloading file system to scan for new SDK");
+                            let mut resource_filesystem = EditorInterface::singleton()
+                                .get_resource_filesystem()
+                                .expect("get_resource_filesystem");
+                            resource_filesystem
+                                .connect_ex(
+                                    "sources_changed".into(),
+                                    Callable::from_fn("add_rivet_sdk_autoload", move |_| {
+                                        log::log("File system scan from SDK update complete, adding autoload");
+
+                                        // Add autoload (this is idempotent)
+                                        let mut plugin = get_plugin();
+                                        plugin.emit_signal(
+                                            "add_autoload".into(),
+                                            &[
+                                                RIVET_SDK_SINGLETON_NAME.to_variant(),
+                                                local_autoload_path.to_variant(),
+                                            ],
+                                        );
+
+                                        // TODO: Figure out how to emulate clearing the console
+                                        // // Clear the output since there will be a benign script
+                                        // // load error before the singleton is activated
+                                        // plugin.call("trigger_input_action".into(), &["editor/clear_output".to_variant()]);
+
+                                        Ok(Variant::nil())
+                                    }),
+                                )
+                                .flags(ConnectFlags::ONE_SHOT.ord() as u32)
+                                .done();
+
+                            // Re-scan file system for new SDk
+                            resource_filesystem.scan();
                         }
 
                         // Publish event

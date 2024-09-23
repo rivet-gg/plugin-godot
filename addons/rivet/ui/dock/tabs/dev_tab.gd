@@ -64,6 +64,8 @@ func _ready() -> void:
 
 	# Deploy
 	deploy_button.pressed.connect(_on_deploy_button_pressed)
+	%DeployServerLogsButton.pressed.connect(_open_deploy_server_logs)
+	%DeployBuildListButton.pressed.connect(_open_build_list_button)
 	
 	# Find instances dailog
 	if RivetPluginBridge.is_running_as_plugin(self):
@@ -125,6 +127,8 @@ func _update_selected_env() -> void:
 	# Update deploy
 	%DeployStepsSelector.disabled = !can_deploy
 	%DeployButton.disabled = !can_deploy
+	%DeployServerLogsButton.disabled = !can_deploy
+	%DeployBuildListButton.disabled = !can_deploy
 	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
 		%DeployButton.text = "Deploy to " + plugin.remote_env.name
 	else:
@@ -220,11 +224,12 @@ func _on_deploy_complete(output):
 			RivetPluginBridge.get_plugin().game_version = version
 			RivetPluginBridge.instance.save_configuration()
 
-func _on_open_link(kind: String):
-	var result = await RivetPluginBridge.get_plugin().run_toolchain_task("get_hub_link", {
-		"kind": kind
-	})
-	if result == null:
-		return
+func _open_deploy_server_logs():
+	var plugin = RivetPluginBridge.get_plugin()
+	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
+		OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id + "/environments/" + plugin.remote_env_id + "/servers")
 
-	OS.shell_open(result.url)
+func _open_build_list_button():
+	var plugin = RivetPluginBridge.get_plugin()
+	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
+		OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id + "/environments/" + plugin.remote_env_id + "/servers/builds")

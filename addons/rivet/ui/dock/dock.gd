@@ -55,3 +55,10 @@ func _get_screen_node(screen: Screen) -> Node:
 
 func _open_url(url: String):
 	OS.shell_open(url)
+
+func _open_hub():
+	var plugin = RivetPluginBridge.get_plugin()
+	if plugin.game_id != null:
+		OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id)
+	else:
+		OS.shell_open("https://hub.rivet.gg")
