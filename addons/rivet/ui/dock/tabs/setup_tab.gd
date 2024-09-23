@@ -107,7 +107,7 @@ func _config_modules_call():
 # MARK: Helper
 func _get_plugin_path() -> String:
 	var script_path = get_script().get_path().get_base_dir().get_base_dir().get_base_dir().get_base_dir()
-	return script_path
+	return ProjectSettings.globalize_path(script_path)
 
 # Check that all files exist. If we will overwrite one, the old one will be moved to `.old`.
 func _check_files_exist(file_map: Dictionary, source_dir: String = "resources") -> bool:
@@ -121,10 +121,12 @@ func _check_files_exist(file_map: Dictionary, source_dir: String = "resources") 
 
 func _copy_files(file_map: Dictionary, source_dir: String = "resources") -> void:
 	var full_source_dir = _get_plugin_path().path_join(source_dir)
+	print('full source dir ', full_source_dir)
 	
 	for source_file in file_map:
 		var source_path = full_source_dir.path_join(source_file)
-		var dest_path = file_map[source_file]
+		var dest_path = ProjectSettings.globalize_path("res://" + file_map[source_file])
+		RivetPluginBridge.log("Copying " + source_path + " to " + dest_path)
 		
 		# Ensure the destination directory exists
 		var dest_dir = dest_path.get_base_dir()
@@ -139,9 +141,9 @@ func _copy_files(file_map: Dictionary, source_dir: String = "resources") -> void
 		# Copy the file
 		var err = DirAccess.copy_absolute(source_path, dest_path)
 		if err != OK:
-			RivetPluginBridge.error("Failed to copy " + source_file + " to " + dest_path + ": " + str(err))
+			RivetPluginBridge.error("Failed to copy " + source_path + " to " + dest_path + ": " + str(err))
 		else:
-			RivetPluginBridge.log("Successfully copied " + source_file + " to " + dest_path)
+			RivetPluginBridge.log("Successfully copied " + source_path + " to " + dest_path)
 			EditorInterface.get_resource_filesystem().update_file(dest_path)
 			
 			# Import special file types
