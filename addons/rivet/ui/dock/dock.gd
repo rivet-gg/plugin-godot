@@ -26,7 +26,7 @@ func _ready() -> void:
 	%LogoButton.add_theme_constant_override("margin_right", button_margin)
 	%LogoButton.add_theme_constant_override("margin_bottom", button_margin)
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		change_current_screen(Screen.Login)
 
 func reload() -> void:

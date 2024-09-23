@@ -32,22 +32,18 @@ func _ready() -> void:
 	# Warning
 	_warning.add_theme_color_override(&"default_color", get_theme_color(&"warning_color", &"Editor"))
 	_warning.add_theme_stylebox_override(&"normal", get_theme_stylebox(&"bg", &"AssetLib"))
-	var warning_text = _warning.text
-	_warning.text = ""
 	_warning.add_image(get_theme_icon("StatusWarning", "EditorIcons"))
-	_warning.append_text(warning_text)	
-	
-	_warning.visible = false
+	_warning.append_text(" Make sure you deploy the game server before testing new game logic.")	
 
 	# General
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		RivetPluginBridge.instance.bootstrapped.connect(_on_bootstrapped)
 
 	# Env
 	%RefreshEnvButton.pressed.connect(_on_reload_env_button_pressed)
-	_env_selector.item_selected.connect(_on_env_selector_item_selected)
+	_env_selector.item_selected.connect(func(_id): _update_selected_env())
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		RivetPluginBridge.get_plugin().env_update.connect(_update_selected_env)
 
 	# Play
@@ -60,14 +56,14 @@ func _ready() -> void:
 	%CustomizeInstances.pressed.connect(_on_customize_instances_pressed)
 	%ServerLogs.pressed.connect(_on_gs_logs_pressed)
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		RivetPluginBridge.get_plugin().game_server_state_change.connect(_on_gs_state_change)
 
 		_on_gs_state_change.call_deferred(false)
 		_update_play_type.call_deferred(0)
 	
 	# Find instances dailog
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		for child in EditorInterface.get_base_control().get_children():
 			if child.is_class("RunInstancesDialog"):
 				_instances_dialog = child
@@ -77,28 +73,59 @@ func _on_bootstrapped() -> void:
 	_update_selected_env()
 
 # MARK: Environment
-func _on_env_selector_item_selected(_id: int) -> void:
-	_update_selected_env()
-		
 func _update_selected_env() -> void:
 	var plugin = RivetPluginBridge.get_plugin()
+
+	# HACK: Workaround dispatching bootstrap when env is null
+	if plugin.env_type == _RivetGlobal.EnvType.REMOTE && plugin.remote_env == null:
+		return
+
+	var env_name
+	var can_play_server
+	var can_deploy
 	if plugin.env_type == _RivetGlobal.EnvType.LOCAL:
 		_warning.visible = false
+		env_name = "Local"
+		can_play_server = true
+		can_deploy = false
 	elif plugin.env_type == _RivetGlobal.EnvType.REMOTE:
 		_warning.visible = true
+		env_name = plugin.remote_env.name
+		can_play_server = false
+		can_deploy = true
 	else:
 		push_error("Unknown env selector type: %s", plugin.env_type)
 
-	# Update the selected env
-	RivetPluginBridge.instance.save_configuration()
+	# Update play type
 
-func _all_actions_set_disabled(disabled: bool) -> void:
-	_env_selector.disabled = disabled
+	if can_play_server:
+		_play_type_option.set_item_text(0, "Run Client & Server (%s)" % env_name)
+		_play_type_option.set_item_disabled(0, false)
 
-func _actions_disabled_while(fn: Callable) -> void:
-	_all_actions_set_disabled(true)
-	await fn.call()
-	_all_actions_set_disabled(false)
+		_play_type_option.set_item_text(1, "Run Client Only (%s)" % env_name)
+		_play_type_option.selected = 0  # This is usually the default for local dev
+		_play_type_option.item_selected.emit(_play_type_option.selected)  # Emit to update UI
+
+		_play_type_option.set_item_text(2, "Run Server (%s)" % env_name)
+		_play_type_option.set_item_disabled(2, false)
+	else:
+		_play_type_option.set_item_text(0, "Run Client & Server (Local Environment Only)")
+		_play_type_option.set_item_disabled(0, true)
+
+		_play_type_option.set_item_text(1, "Run Client (%s)" % env_name)
+		_play_type_option.selected = 1  # Force the only available option
+		_play_type_option.item_selected.emit(_play_type_option.selected)  # Emit to update UI
+
+		_play_type_option.set_item_text(2, "Run Server (Local Environment Only)")
+		_play_type_option.set_item_disabled(2, true)
+
+	# Update deploy
+	%DeployStepsSelector.disabled = !can_deploy
+	%DeployButton.disabled = !can_deploy
+	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
+		%DeployButton.text = "Deploy to " + plugin.remote_env.name
+	else:
+		%DeployButton.text = "Deploy (Remote Environment Only)"
 
 # MARK: Environments
 func _on_reload_env_button_pressed():

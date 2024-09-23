@@ -29,18 +29,16 @@ var environments: Array:
 func _ready():
 	super()
 	
-	if RivetPluginBridge.is_part_of_edited_scene(self):
-		return
 	disabled = true
-	_update_menu_button()
 	item_selected.connect(_on_item_selected)
 
-	var plugin = RivetPluginBridge.get_plugin()
-
-	RivetPluginBridge.instance.bootstrapped.connect(_on_plugin_bootstrapped)
-	plugin.env_update.connect(func():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		_update_menu_button()
-	)
+
+		var plugin = RivetPluginBridge.get_plugin()
+		plugin.env_update.connect(_update_menu_button)
+
+		RivetPluginBridge.instance.bootstrapped.connect(_on_plugin_bootstrapped)
 
 ## Recreate environemtns and update selected index.
 func _update_menu_button() -> void:
@@ -100,6 +98,7 @@ func _select_menu_item(idx: int) -> void:
 		_open_create_remote()
 	else:
 		push_error("Mismatched env menu index %s" % idx)
+	RivetPluginBridge.instance.save_configuration()
 	
 	# Update tooltips
 	tooltip_text = "Endpoint: %s" % plugin.backend_endpoint

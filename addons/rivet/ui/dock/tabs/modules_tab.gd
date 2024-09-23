@@ -8,7 +8,7 @@ func _ready() -> void:
 
 	%AddButton.pressed.connect(_open_editor)
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		var plugin = RivetPluginBridge.get_plugin()
 		plugin.backend_config_update.connect(_on_backend_config_update)
 

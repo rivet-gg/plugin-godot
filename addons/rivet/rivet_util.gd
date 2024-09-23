@@ -14,6 +14,7 @@ static func generate_sdk(node: Node, complete: Callable):
 		"fallback_sdk_path": "addons/rivet_sdk",
 		"target": "godot",
 	}
+	popup.ok_message = "Test your game against live servers by pressing \"Develop > Run Locally > Start\" with this remote environment selected."
 	node.add_child(popup)
 	popup.popup()
 

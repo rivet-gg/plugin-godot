@@ -22,7 +22,7 @@ func _ready() -> void:
 
 	unlink_game_button.pressed.connect(_on_unlink_game_button_pressed)
 
-	if not Engine.is_editor_hint():
+	if RivetPluginBridge.is_running_as_plugin(self):
 		RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 		_on_backend_state_change.call_deferred(false)
 
