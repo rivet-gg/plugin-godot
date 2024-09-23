@@ -4,17 +4,29 @@
 		<img src="./addons/rivet/images/icon-text-black.svg">
 	</picture>
 </p>
-<h1 align="center">Rivet Godot Plugin</h1>
+<h1 align="center">Rivet Godot 4 Plugin</h1>
 <p align="center">
 	<a href="https://rivet.gg/discord"><img src="https://img.shields.io/discord/822914074136018994"></a>
 </p>
 
 ---
 
-> [!WARNING]
-> _Godot 3 is not supported at the moment._
-
 ## 📦 Installation
+
+### Godot Asset Library
+
+1. Within your Godot project, click _Asset Library_
+2. Search for "Rivet"
+3. Install the plugin
+4. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
+
+### Manual installation
+
+1. [Download and unpack the latest release](https://github.com/rivet-gg/plugin-godot/releases/latest)
+2. Copy the `plugin-godot/addons/rivet` folder to `your-godot-project/addons/rivet`.
+3. Enable this addon within the Godot settings
+   `Project > Project Settings > Plugins`
+4. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
 
 ### Using [`gd-plug`](https://github.com/imjp94/gd-plug)
 
@@ -23,48 +35,24 @@
 ```gdscript
 plug("rivet/plugin-godot")
 ```
+2. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
 
-### Manual installation
+### Build from source
 
-1. [Download the latest
-   release](https://github.com/rivet-gg/plugin-godot/releases/latest)
-2. Unpack the `addons/rivet` folder into your `/addons` folder within the Godot
-   project
-3. Enable this addon within the Godot settings
+1. Ensure the prerequisites are installed:
+    - Git LFS
+    - Rust
+    - Deno
+2. Clone this repository
+3. Build with `deno run -A scripts/build_dev.ts`
+4. Copy the `plugin-godot/addons/rivet` folder to `your-godot-project/addons/rivet`.
+5. Enable this addon within the Godot settings
    `Project > Project Settings > Plugins`
+6. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
 
 ## 🚀 Getting started
 
-Head over to our [Learning Center](https://rivet.gg/learn/godot) to get started
-with Rivet and Godot.
-
-## 🧐 Features
-
-### Link your game with Rivet
-
-One click and your game is connected! Linking your game with Rivet gives you
-one-click deployments to production, easy developing setup, and ways to
-configure your game's hosting and matchmaking.
-
-### Deploy your game
-
-Without the use of any command line commands, Rivet plugin lets you deploy your
-game server in no time.
-
-### Manage your tokens
-
-Rivet lets you test your multiplayer games in multiple ways. Don't worry about
-using any complicated commands, this plugin keeps you covered.
-
-_and much more coming soon!_
-
-## 📸 Screenshots
-
-|![Screenshot](./media/login-screen.png)<p align="center">Login screen</p>|![Screenshot](./media/local-develop-tab.png)<p align="center">Developing on your own machine</p>|
-|---|---|
-
-|![Screenshot](./media/remote-develop-tab.png)<p align="center">Developing on Rivet Servers</p>|![Screenshot](./media/deploy-tab.png)<p  align="center">Deploying your game</p>|
-|---|---|
+Head over to our [Documentation](https://rivet.gg/docs/godot) to get started with Rivet and Godot.
 
 ## 🏗️ Contributing
 
@@ -73,14 +61,19 @@ _and much more coming soon!_
    description.
 2. Submit your pull request.
 3. Rivet team will review your changes.
-4. Don't forget to join [Rivet's Discord](https://rivet.gg/discord) to hang out
-   with the devs, or to pairprogram together!
+4. Join [Rivet's Discord](https://rivet.gg/discord) to ask questions & showcase your game.
 
-## Examples
+## 📷 Examples
 
 Each folder in the `examples/` folder is its own independent Godot project.
 
-### Enabling support for symbolic links on windows
+See _Enabling support for symbolic links on Windows_ below.
+
+## Troubleshooting
+
+### Enabling support for symbolic links on Windows
+
+_Only relevant for testing examples._
 
 This repository relies on use of symbolic links in order to re-use the `addons/rivet/` folder inside of `examples/*/addons/rivet/`.
 
