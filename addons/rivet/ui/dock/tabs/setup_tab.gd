@@ -2,7 +2,7 @@
 
 func _ready():
 	# Steps
-	%StepModules.check_setup = _moudle_check
+	%StepModules.check_setup = _module_check
 	%StepModules.call_setup = _module_call
 
 	%StepMultiplayer.check_setup = _multiplayer_check
@@ -16,7 +16,7 @@ func _ready():
 	%GitHubLink.add_theme_constant_override("separation", int(6 * DisplayServer.screen_get_scale()))
 
 # MARK: Project Config
-func _moudle_check() -> bool:
+func _module_check() -> bool:
 	return _backend_check() && _container_check()
 
 func _module_call():
@@ -39,7 +39,7 @@ func _backend_call():
 
 # MARK: Container
 const CONTAINER_FILES = {
-	"Dockerfile": "Dockerfile",
+	"game_server.Dockerfile": "game_server.Dockerfile",
 	"dockerignore": ".dockerignore",
 }
 
@@ -94,6 +94,7 @@ func _multiplayer_call():
 
 	# Open scene
 	EditorInterface.open_scene_from_path(default_scene_path)
+	EditorInterface.set_main_screen_editor("2D")
 
 # MARK: Develop
 func _develop_call():
