@@ -49,6 +49,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           GODOT_ASSET_LIB_USERNAME: ${{ secrets.GODOT_ASSET_LIBRARY_USERNAME }}
           GODOT_ASSET_LIB_PASSWORD: ${{ secrets.GODOT_ASSET_LIBRARY_PASSWORD }}
+          CROSS_DELETE_TARGET: 1
         run: |
           ./scripts/release.ts
 

@@ -4,6 +4,7 @@ import { copy } from "jsr:@std/fs";
 import { resolve } from "jsr:@std/path";
 import { assert } from "jsr:@std/assert";
 import { S3Bucket } from "https://deno.land/x/s3@0.5.0/mod.ts";
+import { buildCross } from "./build_cross.ts";
 
 function getRequiredEnvVar(name: string): string {
     const value = Deno.env.get(name);
@@ -30,12 +31,11 @@ const ZIP_PATH = resolve(OUTPUT_DIR, "rivet-plugin-godot.zip");
 async function buildCrossPlatform() {
     // We build this in the repo dir in order to make sure we use the build cache
     console.log("Building cross-platform binaries");
-    const buildOutput = await (new Deno.Command(resolve(REPO_DIR, "scripts", "build_cross.sh"), {
-        cwd: REPO_DIR,
-        stdout: "inherit",
-        stderr: "inherit",
-    })).output();
-    assert(buildOutput.success, "Failed to build cross-platform binaries");
+    try {
+      await buildCross();
+    } catch (_) {
+      throw new Error("Failed to build cross-platform binaries");
+    }
 }
 
 async function copyFilesToTemp() {
