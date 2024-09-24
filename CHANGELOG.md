@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.2.1](https://github.com/rivet-gg/plugin-godot/compare/v2.2.0...v2.2.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* auto-start now works correctly ([#274](https://github.com/rivet-gg/plugin-godot/issues/274)) ([f36be1a](https://github.com/rivet-gg/plugin-godot/commit/f36be1ac0b72d8611bbad1d7cd95fddfc0d00005))
+* **modules:** correct build your own module link ([#273](https://github.com/rivet-gg/plugin-godot/issues/273)) ([32ee144](https://github.com/rivet-gg/plugin-godot/commit/32ee14444e36ab5a52004a53895c21ff14f8062d))
+* update toolchain to support aarch64 builders ([#268](https://github.com/rivet-gg/plugin-godot/issues/268)) ([cc1cd8d](https://github.com/rivet-gg/plugin-godot/commit/cc1cd8d5b362e774a19da570c26e49375d4c3b6d))
+
+
+### Continuous Integration
+
+* delete target dir after every cross-build to prevent running out of storage ([#272](https://github.com/rivet-gg/plugin-godot/issues/272)) ([e04bedc](https://github.com/rivet-gg/plugin-godot/commit/e04bedcd3dd5e307b11194756a1d1bd483969abf))
+
+
+### Chores
+
+* **main:** release 2.2.0 ([#267](https://github.com/rivet-gg/plugin-godot/issues/267)) ([f053309](https://github.com/rivet-gg/plugin-godot/commit/f053309476e8c052c44545856cb1f1d2861a7048))
+* update media ([#271](https://github.com/rivet-gg/plugin-godot/issues/271)) ([d8955ca](https://github.com/rivet-gg/plugin-godot/commit/d8955caf8e9372ff2b11893184c1008d3b1026ec))
+
 ## [2.2.0](https://github.com/rivet-gg/plugin-godot/compare/v2.1.0...v2.2.0) (2024-09-23)
 
 
