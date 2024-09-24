@@ -38,12 +38,11 @@ func _enter_tree():
 	# Game server
 	_game_server_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_game_server_panel.init_message = "Open \"Develop\" and press \"Start\" to start game server."
-	_game_server_panel.get_start_config = func(start_mode):
+	_game_server_panel.get_start_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
 			"name": "game_server_start",
 			"input": {
-				"start_mode": start_mode,
 				"cwd": project_path,
 				"cmd": OS.get_executable_path(),
 				"args": ["--project", project_path, "--headless", "--", "--server"]
@@ -60,12 +59,11 @@ func _enter_tree():
 	_backend_panel = preload("ui/task_panel/task_panel.tscn").instantiate()
 	_backend_panel.auto_start = true
 	_backend_panel.init_message = "Auto-started by Rivet plugin."
-	_backend_panel.get_start_config = func(start_mode):
+	_backend_panel.get_start_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
 			"name": "backend_start",
 			"input": {
-				"start_mode": start_mode,
 				"cwd": project_path,
 			}
 		}

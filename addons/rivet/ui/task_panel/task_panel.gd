@@ -26,13 +26,14 @@ func _ready():
 		_restart_timer.timeout.connect(_on_restart_delay)
 		add_child(_restart_timer)
 
-		# Hook existing process (or start if auto-started)
-		var config = await get_start_config.call("StartOrHook" if auto_start else "HookOnly")
-		task = RivetTask.with_name_input(config.name, config.input)
-		add_child(task)
-		task.task_log.connect(_on_task_log.bind(task))
-		task.task_output.connect(_on_task_output.bind(task))
-		task.start()
+		# Start process
+		if auto_start:
+			var config = await get_start_config.call()
+			task = RivetTask.with_name_input(config.name, config.input)
+			add_child(task)
+			task.task_log.connect(_on_task_log.bind(task))
+			task.task_output.connect(_on_task_output.bind(task))
+			task.start()
 
 		# Publish state change after defer so signals can be connected
 		call_deferred("_on_state_change")
@@ -46,7 +47,7 @@ func start_task(restart: bool = true):
 	stop_task()
 	
 	# Start new task
-	var config = await get_start_config.call("StartOrHook")
+	var config = await get_start_config.call()
 	task = RivetTask.with_name_input(config.name, config.input)
 	add_child(task)
 	task.task_log.connect(_on_task_log.bind(task))
