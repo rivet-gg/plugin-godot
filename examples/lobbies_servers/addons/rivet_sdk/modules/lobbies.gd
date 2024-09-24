@@ -74,17 +74,5 @@ func find(body: Dictionary = {}) -> RivetRequest:
 func list_regions(body: Dictionary = {}) -> RivetRequest:
 	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/list_regions/call", body)
 
-## Fetch Lobby Manager State
-## 
-## See full state of the lobby manager for debugging.
-func fetch_lobby_manager_state(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/fetch_lobby_manager_state/call", body)
-
-## Reset Lobby Manager State
-## 
-## Reset lobby manager state. For debugging only.
-func reset_lobby_manager_state(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/reset_lobby_manager_state/call", body)
-
 
 
