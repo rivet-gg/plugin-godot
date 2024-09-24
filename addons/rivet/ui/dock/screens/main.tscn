@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bdabu2ie8j4is" path="res://addons/rivet/images/font_awesome/puzzle.svg" id="6_de7yl"]
 [ext_resource type="PackedScene" uid="uid://dpbt1rjht2tef" path="res://addons/rivet/ui/dock/tabs/modules_tab.tscn" id="11_oo0gp"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t4fx4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihkjg"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -82,7 +82,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_t4fx4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ihkjg")
 current_tab = 0
 tabs_visible = false
 
