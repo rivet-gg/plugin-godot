@@ -33,8 +33,8 @@ async function buildCrossPlatform() {
     console.log("Building cross-platform binaries");
     try {
       await buildCross();
-    } catch (_) {
-      throw new Error("Failed to build cross-platform binaries");
+    } catch (err) {
+      throw new Error(`Failed to build cross-platform binaries: ${err}`);
     }
 }
 
