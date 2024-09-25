@@ -104,10 +104,9 @@ func _select_menu_item(idx: int) -> void:
 	tooltip_text = "Endpoint: %s" % plugin.backend_endpoint
 
 func _open_create_remote():
-	# TODO: Update this to pull hub origin from bootstrap endpoint
 	# Open create URL
 	var plugin = RivetPluginBridge.get_plugin()
-	OS.shell_open("https://hub.rivet.gg/games/%s/backend?modal=create-environment" % plugin.game_id)
+	OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id + "?modal=create-environment")
 
 	# Reset selection to local
 	select(0)
