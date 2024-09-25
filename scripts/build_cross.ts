@@ -81,102 +81,109 @@ ar = "aarch64-apple-darwin20.4-ar"\\n\\
 `;
 
 async function buildDockerImage() {
-  console.log("Building Docker image...");
-  const command = new Deno.Command("docker", {
-    args: ["build", "-t", DOCKER_IMAGE, "-"],
-    stdin: "piped",
-  });
-  const process = command.spawn();
-  const writer = process.stdin.getWriter();
-  await writer.write(new TextEncoder().encode(DOCKERFILE));
-  await writer.close();
-  const { code } = await process.output();
-  if (code !== 0) {
-    throw new Error("Docker build failed");
-  }
+	console.log("Building Docker image...");
+	const command = new Deno.Command("docker", {
+		args: ["build", "-t", DOCKER_IMAGE, "-"],
+		stdin: "piped",
+	});
+	const process = command.spawn();
+	const writer = process.stdin.getWriter();
+	await writer.write(new TextEncoder().encode(DOCKERFILE));
+	await writer.close();
+	const { code } = await process.output();
+	if (code !== 0) {
+		throw new Error("Docker build failed");
+	}
 }
 
-
 async function buildAndCopyCrossPlatform() {
-    console.log("Building and copying cross-platform...");
-    const nativeDir = "addons/rivet/native";
-    await Deno.remove(nativeDir, { recursive: true }).catch(() => {});
-    await ensureDir(nativeDir);
-  
-    const platforms = [
-      {
-        name: "x86 Linux",
-        target: "x86_64-unknown-linux-gnu",
-        srcFile: "librivet_plugin_godot.so",
-        destFile: "librivet_plugin_godot_linux_x86_64.so",
-      },
-      {
-        name: "x86 Windows",
-        target: "x86_64-pc-windows-gnu",
-        srcFile: "rivet_plugin_godot.dll",
-        destFile: "librivet_plugin_godot_windows_x86_64.dll",
-      },
-      {
-        name: "x86 macOS",
-        target: "x86_64-apple-darwin",
-        srcFile: "librivet_plugin_godot.dylib",
-        destFile: "librivet_plugin_godot_macos_x86_64.dylib",
-      },
-      {
-        name: "ARM macOS",
-        target: "aarch64-apple-darwin",
-        srcFile: "librivet_plugin_godot.dylib",
-        destFile: "librivet_plugin_godot_macos_arm64.dylib",
-      },
-    ];
-  
-    for (const platform of platforms) {
-      console.log(`Building for ${platform.name}...`);
-      const command = new Deno.Command("docker", {
-        args: [
-          "run",
-          "--rm",
-          "-v",
-          `${REPO_DIR}:/app`,
-          "-e", `OVERRIDE_TARGET=${platform.target}`,
-          DOCKER_IMAGE,
-          "/bin/sh",
-          "-c",
-          `cargo build --manifest-path rust/Cargo.toml --target ${platform.target} --release`,
-        ],
-        stdin: "inherit",
-        stdout: "inherit",
-        stderr: "inherit",
-      });
-  
-      const { code } = await command.output();
-      
-      if (code !== 0) {
-        throw new Error(`Build failed for ${platform.name}`);
-      }
-  
-      // Copy the built file using Deno's native file system API
-      const srcPath = resolve(REPO_DIR, "rust", "target", platform.target, "release", platform.srcFile);
-      const destPath = resolve(REPO_DIR, nativeDir, platform.destFile);
-      await Deno.copyFile(srcPath, destPath);
-      console.log(`Copied ${srcPath} to ${destPath}`);
+	console.log("Building and copying cross-platform...");
+	const nativeDir = "addons/rivet/native";
+	await Deno.remove(nativeDir, { recursive: true }).catch(() => {});
+	await ensureDir(nativeDir);
 
-      // Delete target if needed
-      //
-      // This is useful for saving space on the machine
-      if (Deno.env.get("CROSS_DELETE_TARGET") == "1") {
-        const targetPath = resolve(REPO_DIR, "rust", "target", platform.target);
-        await Deno.remove(targetPath, { recursive: true });
-        console.log(`Deleted ${targetPath}`);
-      }
-    }
-  }
+	const platforms = [
+		{
+			name: "x86 Linux",
+			target: "x86_64-unknown-linux-gnu",
+			srcFile: "librivet_plugin_godot.so",
+			destFile: "librivet_plugin_godot_linux_x86_64.so",
+		},
+		{
+			name: "x86 Windows",
+			target: "x86_64-pc-windows-gnu",
+			srcFile: "rivet_plugin_godot.dll",
+			destFile: "librivet_plugin_godot_windows_x86_64.dll",
+		},
+		{
+			name: "x86 macOS",
+			target: "x86_64-apple-darwin",
+			srcFile: "librivet_plugin_godot.dylib",
+			destFile: "librivet_plugin_godot_macos_x86_64.dylib",
+		},
+		{
+			name: "ARM macOS",
+			target: "aarch64-apple-darwin",
+			srcFile: "librivet_plugin_godot.dylib",
+			destFile: "librivet_plugin_godot_macos_arm64.dylib",
+		},
+	];
+
+	for (const platform of platforms) {
+		console.log(`Building for ${platform.name}...`);
+		const command = new Deno.Command("docker", {
+			args: [
+				"run",
+				"--rm",
+				"-v",
+				`${REPO_DIR}:/app`,
+				"-e",
+				`OVERRIDE_TARGET=${platform.target}`,
+				DOCKER_IMAGE,
+				"/bin/sh",
+				"-c",
+				`cargo build --manifest-path rust/Cargo.toml --target ${platform.target} --release && chown -R ${Deno.uid()}:${Deno.gid()} /app/rust/target`,
+			],
+			stdin: "inherit",
+			stdout: "inherit",
+			stderr: "inherit",
+		});
+
+		const { code } = await command.output();
+
+		if (code !== 0) {
+			throw new Error(`Build failed for ${platform.name}`);
+		}
+
+		// Copy the built file using Deno's native file system API
+		const srcPath = resolve(
+			REPO_DIR,
+			"rust",
+			"target",
+			platform.target,
+			"release",
+			platform.srcFile,
+		);
+		const destPath = resolve(REPO_DIR, nativeDir, platform.destFile);
+		await Deno.copyFile(srcPath, destPath);
+		console.log(`Copied ${srcPath} to ${destPath}`);
+
+		// Delete target if needed
+		//
+		// This is useful for saving space on the machine
+		if (Deno.env.get("CROSS_DELETE_TARGET") == "1") {
+			const targetPath = resolve(REPO_DIR, "rust", "target", platform.target);
+			await Deno.remove(targetPath, { recursive: true });
+			console.log(`Deleted ${targetPath}`);
+		}
+	}
+}
 
 export async function buildCross() {
-  await buildDockerImage();
-  await buildAndCopyCrossPlatform();
+	await buildDockerImage();
+	await buildAndCopyCrossPlatform();
 }
 
 if (import.meta.main) {
-  buildCross();
+	buildCross();
 }

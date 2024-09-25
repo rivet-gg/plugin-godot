@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/ui/dock/screens/main.tscn" id="5_3rpdd"]
 [ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/ui/dock/screens/linking_pending.tscn" id="6_7pk2p"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yb006"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vejrv"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -20,7 +20,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1pt2"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ag4x5"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -33,7 +33,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ua081"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02i1y"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -46,7 +46,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jrs4u"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lt1eg"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -59,7 +59,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_22f0w"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lju3a"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -72,7 +72,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a76a4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twge5"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -85,7 +85,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5goy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mjldg"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -98,7 +98,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_assx4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pk5e8"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -111,7 +111,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gt4xb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8u7s5"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -124,7 +124,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cs2ls"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxfac"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -137,7 +137,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohbpq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lju8"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -150,7 +150,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evrvv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3n74t"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -202,10 +202,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_yb006")
-theme_override_styles/hover = SubResource("StyleBoxFlat_b1pt2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ua081")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jrs4u")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vejrv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ag4x5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_02i1y")
+theme_override_styles/normal = SubResource("StyleBoxFlat_lt1eg")
 text = "Hub"
 flat = true
 script = ExtResource("4_qk3rr")
@@ -215,10 +215,10 @@ inspector_button = true
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_22f0w")
-theme_override_styles/hover = SubResource("StyleBoxFlat_a76a4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_w5goy")
-theme_override_styles/normal = SubResource("StyleBoxFlat_assx4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_lju3a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_twge5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mjldg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pk5e8")
 text = "Docs"
 flat = true
 script = ExtResource("4_qk3rr")
@@ -238,10 +238,10 @@ visible = false
 layout_mode = 2
 tooltip_text = "Settings"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_gt4xb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_cs2ls")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ohbpq")
-theme_override_styles/normal = SubResource("StyleBoxFlat_evrvv")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_8u7s5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lxfac")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5lju8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3n74t")
 text = "Settings"
 flat = true
 script = ExtResource("4_qk3rr")
