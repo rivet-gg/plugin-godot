@@ -1,13 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://l8cfdaru7ibw"]
+[gd_scene load_steps=29 format=3 uid="uid://l8cfdaru7ibw"]
 
 [ext_resource type="Script" path="res://addons/rivet/ui/dock/dock.gd" id="1_vjk51"]
 [ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/ui/elements/logo_container.tscn" id="2_83n20"]
-[ext_resource type="PackedScene" uid="uid://mag2n5yvyus8" path="res://addons/rivet/ui/dock/screens/login.tscn" id="4_76k63"]
 [ext_resource type="Script" path="res://addons/rivet/ui/elements/better_button.gd" id="4_qk3rr"]
-[ext_resource type="PackedScene" uid="uid://ceovepvn1782o" path="res://addons/rivet/ui/dock/screens/main.tscn" id="5_3rpdd"]
-[ext_resource type="PackedScene" uid="uid://cpiafwq88eamc" path="res://addons/rivet/ui/dock/screens/linking_pending.tscn" id="6_7pk2p"]
+[ext_resource type="Texture2D" uid="uid://7h4mg0r3rm16" path="res://addons/rivet/images/font_awesome/rocket-launch.svg" id="5_nsbhv"]
+[ext_resource type="Texture2D" uid="uid://c8gt0bj71muky" path="res://addons/rivet/images/font_awesome/code.svg" id="6_7hm4y"]
+[ext_resource type="Texture2D" uid="uid://bdabu2ie8j4is" path="res://addons/rivet/images/font_awesome/puzzle.svg" id="7_244mg"]
+[ext_resource type="Texture2D" uid="uid://d036tjn7gksmn" path="res://addons/rivet/images/font_awesome/gear.svg" id="8_1ih11"]
+[ext_resource type="PackedScene" uid="uid://cjox20fmx81m2" path="res://addons/rivet/ui/dock/tabs/setup_tab.tscn" id="9_bl8jo"]
+[ext_resource type="PackedScene" uid="uid://dvgoy5fid7fr5" path="res://addons/rivet/ui/dock/tabs/dev_tab.tscn" id="10_8rei5"]
+[ext_resource type="PackedScene" uid="uid://dpbt1rjht2tef" path="res://addons/rivet/ui/dock/tabs/modules_tab.tscn" id="11_pb42a"]
+[ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/ui/dock/tabs/settings_tab.tscn" id="12_6b005"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vejrv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxfq0"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -20,7 +25,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ag4x5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhjln"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -33,7 +38,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02i1y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_db2es"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -46,7 +51,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lt1eg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jduma"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -59,7 +64,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lju3a"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v1muk"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -72,7 +77,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twge5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkkgp"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -85,7 +90,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mjldg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6gx4"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -98,7 +103,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pk5e8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eg7n2"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -111,7 +116,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8u7s5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tskxr"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -124,7 +129,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxfac"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ngm6b"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -137,7 +142,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lju8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mw7r5"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -150,7 +155,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3n74t"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvq2j"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -162,6 +167,70 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1x1v"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_upojo"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdk0x"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wre4u"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nxh0u"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 5.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="Rivet" type="MarginContainer"]
 offset_top = 92.0
@@ -175,13 +244,13 @@ theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_vjk51")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Header" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2
 
-[node name="LogoButton" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+[node name="LogoButton" type="MarginContainer" parent="MainContainer/Header"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 8
@@ -189,42 +258,59 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="LogoContainer" parent="VBoxContainer/HBoxContainer2/LogoButton" instance=ExtResource("2_83n20")]
+[node name="LogoContainer" parent="MainContainer/Header/LogoButton" instance=ExtResource("2_83n20")]
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
 size_flags_horizontal = 1
 
-[node name="Filler" type="Control" parent="VBoxContainer/HBoxContainer2"]
+[node name="Filler" type="Control" parent="MainContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DashboardLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="DashboardLink" type="Button" parent="MainContainer/Header"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_vejrv")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ag4x5")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_02i1y")
-theme_override_styles/normal = SubResource("StyleBoxFlat_lt1eg")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_rxfq0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bhjln")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_db2es")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jduma")
 text = "Hub"
 flat = true
 script = ExtResource("4_qk3rr")
 inspector_button = true
 
-[node name="DocsLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="SignInLink" type="Button" parent="MainContainer/Header"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_lju3a")
-theme_override_styles/hover = SubResource("StyleBoxFlat_twge5")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_mjldg")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pk5e8")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_v1muk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nkkgp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f6gx4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_eg7n2")
+text = "Sign In"
+flat = true
+script = ExtResource("4_qk3rr")
+inspector_button = true
+
+[node name="DocsLink" type="Button" parent="MainContainer/Header"]
+layout_mode = 2
+tooltip_text = "Dashboard"
+mouse_default_cursor_shape = 2
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tskxr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ngm6b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mw7r5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kvq2j")
 text = "Docs"
 flat = true
 script = ExtResource("4_qk3rr")
 inspector_button = true
 
-[node name="BugLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="BugLink" type="Button" parent="MainContainer/Header"]
 layout_mode = 2
 tooltip_text = "Report Bug & Feedback"
 mouse_default_cursor_shape = 2
@@ -233,46 +319,110 @@ flat = true
 icon_alignment = 1
 script = ExtResource("4_qk3rr")
 
-[node name="SettingsLink" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="SettingsLink" type="Button" parent="MainContainer/Header"]
 visible = false
 layout_mode = 2
 tooltip_text = "Settings"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_8u7s5")
-theme_override_styles/hover = SubResource("StyleBoxFlat_lxfac")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5lju8")
-theme_override_styles/normal = SubResource("StyleBoxFlat_3n74t")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_g1x1v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_upojo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bdk0x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wre4u")
 text = "Settings"
 flat = true
 script = ExtResource("4_qk3rr")
 inspector_button = true
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MainContainer"]
 layout_mode = 2
 
-[node name="Control" type="VBoxContainer" parent="VBoxContainer"]
+[node name="TabParent" type="VBoxContainer" parent="MainContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 4
 
-[node name="Login" parent="VBoxContainer/Control" instance=ExtResource("4_76k63")]
+[node name="TabBar" type="HBoxContainer" parent="MainContainer/TabParent"]
+layout_mode = 2
+
+[node name="SetupButton" type="Button" parent="MainContainer/TabParent/TabBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_pressed = true
+text = "Setup"
+icon = ExtResource("5_nsbhv")
+flat = true
+
+[node name="DevelopButton" type="Button" parent="MainContainer/TabParent/TabBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Develop"
+icon = ExtResource("6_7hm4y")
+flat = true
+
+[node name="ModulesButton" type="Button" parent="MainContainer/TabParent/TabBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Modules"
+icon = ExtResource("7_244mg")
+flat = true
+
+[node name="SettingsButton" type="Button" parent="MainContainer/TabParent/TabBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Settings"
+icon = ExtResource("8_1ih11")
+flat = true
+
+[node name="TabContainer" type="PanelContainer" parent="MainContainer/TabParent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nxh0u")
+
+[node name="Setup" parent="MainContainer/TabParent/TabContainer" instance=ExtResource("9_bl8jo")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Develop" parent="MainContainer/TabParent/TabContainer" instance=ExtResource("10_8rei5")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 16
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="LinkingPending" parent="VBoxContainer/Control" instance=ExtResource("6_7pk2p")]
+[node name="Modules" parent="MainContainer/TabParent/TabContainer" instance=ExtResource("11_pb42a")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 16
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="Main" parent="VBoxContainer/Control" instance=ExtResource("5_3rpdd")]
+[node name="Settings" parent="MainContainer/TabParent/TabContainer" instance=ExtResource("12_6b005")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DashboardLink" to="." method="_open_hub"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/DocsLink" to="." method="_open_url" binds= ["https://rivet.gg/docs/godot"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/BugLink" to="." method="_open_url" binds= ["https://hub.rivet.gg/?modal=feedback&utm=godot"]]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer2/SettingsLink" to="VBoxContainer/Control/Main" method="change_tab" binds= [3]]
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5

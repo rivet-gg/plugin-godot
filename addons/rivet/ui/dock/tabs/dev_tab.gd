@@ -1,7 +1,7 @@
 @tool extends MarginContainer
 
 const _RivetGlobal = preload("../../../rivet_global.gd")
-const _task_popup = preload("../../task_popup/task_popup.tscn")
+const _TaskPopup = preload("../../task_popup/task_popup.tscn")
 const _LoadingButton = preload("../../elements/loading_button.gd")
 
 # MARK: Environment
@@ -102,7 +102,6 @@ func _update_selected_env() -> void:
 		push_error("Unknown env selector type: %s", plugin.env_type)
 
 	# Update play type
-
 	if can_play_server:
 		_play_type_option.set_item_text(0, "Run Client & Server (%s)" % env_name)
 		_play_type_option.set_item_disabled(0, false)
@@ -129,10 +128,13 @@ func _update_selected_env() -> void:
 	%DeployButton.disabled = !can_deploy
 	%DeployServerLogsButton.disabled = !can_deploy
 	%DeployBuildListButton.disabled = !can_deploy
-	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
-		%DeployButton.text = "Deploy to " + plugin.remote_env.name
+	if plugin.is_authenticated:
+		if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
+			%DeployButton.text = "Deploy to " + plugin.remote_env.name
+		else:
+			%DeployButton.text = "Deploy (Remote Environment Only)"
 	else:
-		%DeployButton.text = "Deploy (Remote Environment Only)"
+		%DeployButton.text = "Deploy (Sign In Required)"
 
 # MARK: Environments
 func _on_reload_env_button_pressed():
@@ -200,7 +202,7 @@ func _on_deploy_button_pressed() -> void:
 	plugin.env_update.emit()
 
 	# Run deploy
-	var popup = _task_popup.instantiate()
+	var popup = _TaskPopup.instantiate()
 	popup.task_name = "deploy"
 	popup.task_input = {
 		"environment_id": plugin.remote_env.id,
@@ -226,10 +228,16 @@ func _on_deploy_complete(output):
 
 func _open_deploy_server_logs():
 	var plugin = RivetPluginBridge.get_plugin()
+	if !plugin.is_authenticated:
+		RivetPluginBridge.warning("Cannot open build list if unauthenticated")
+		return
 	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
-		OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id + "/environments/" + plugin.remote_env_id + "/servers")
+		OS.shell_open("https://hub.rivet.gg/games/" + plugin.cloud_data.game_id + "/environments/" + plugin.remote_env_id + "/servers")
 
 func _open_build_list_button():
 	var plugin = RivetPluginBridge.get_plugin()
+	if !plugin.is_authenticated:
+		RivetPluginBridge.warning("Cannot open build list if unauthenticated")
+		return
 	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
-		OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id + "/environments/" + plugin.remote_env_id + "/servers/builds")
+		OS.shell_open("https://hub.rivet.gg/games/" + plugin.cloud_data.game_id + "/environments/" + plugin.remote_env_id + "/servers/builds")

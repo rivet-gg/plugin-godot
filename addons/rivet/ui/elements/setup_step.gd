@@ -36,9 +36,9 @@ func _ready():
 	if RivetPluginBridge.is_running_as_plugin(self):
 		# Check status periodically in case file system changed
 		_check_timer = Timer.new()
-		add_child(_check_timer)
 		_check_timer.timeout.connect(_update_is_setup)
 		_check_timer.start(5.0)
+		add_child(_check_timer)
 
 		_update_is_setup.call_deferred()
 

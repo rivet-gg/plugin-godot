@@ -1,6 +1,9 @@
 @tool extends Control
 
-@onready var unlink_game_button: Button = %UnlinkGameButton
+const _SignIn = preload("../../sign_in/sign_in.tscn")
+
+@onready var _sign_in_button: Button = %SignInButton
+@onready var _sign_out_button: Button = %SignOutButton
 
 @onready var _backend_description: RichTextLabel = %BackendDescription
 @onready var _backend_start: Button = %BackendStart
@@ -20,26 +23,36 @@ func _ready() -> void:
 	%GitHubLink2.add_theme_constant_override("separation", link_separation)
 	%GitHubLink3.add_theme_constant_override("separation", link_separation)
 
-	unlink_game_button.pressed.connect(_on_unlink_game_button_pressed)
-
+	_sign_in_button.pressed.connect(_on_sign_in_pressed)
+	_sign_out_button.pressed.connect(_on_sign_out_pressed)
+	
+	# Wait until bootstrapped to show the appropriate button
+	_sign_in_button.visible = false
+	_sign_out_button.visible = false
+	
 	if RivetPluginBridge.is_running_as_plugin(self):
+		RivetPluginBridge.instance.bootstrapped.connect(_on_plugin_bootstrapped)
 		RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 		_on_backend_state_change.call_deferred(false)
 
+func _on_plugin_bootstrapped():
+	var plugin = RivetPluginBridge.get_plugin()
+	_sign_in_button.visible = !plugin.is_authenticated
+	_sign_out_button.visible = plugin.is_authenticated
+
 # MARK: Auth
-func _on_unlink_game_button_pressed() -> Error:
-	unlink_game_button.disabled = true
+func _on_sign_in_pressed():
+	var popup = _SignIn.instantiate()
+	add_child(popup)
+	popup.popup()
 
-	var result = await RivetPluginBridge.get_plugin().run_toolchain_task("unlink")
-	if result == null:
-		unlink_game_button.disabled = false
-		return FAILED
+func _on_sign_out_pressed():
+	# Sign out
+	var result = await RivetPluginBridge.get_plugin().run_toolchain_task("auth.sign_out")
 
-	unlink_game_button.disabled = false
-	owner.owner.reload()
-	owner.owner.change_current_screen(owner.owner.Screen.Login)
-	
-	return OK
+	# Update bootstrap data with signed out data. This will emit the
+	# bootstrapped signal to update the UI.
+	await RivetPluginBridge.instance.bootstrap()
 
 # MARK: Plugin
 func _on_edit_settings(type: String):

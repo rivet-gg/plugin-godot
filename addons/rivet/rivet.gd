@@ -41,7 +41,7 @@ func _enter_tree():
 	_game_server_panel.get_start_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
-			"name": "game_server_start",
+			"name": "game_server.start",
 			"input": {
 				"cwd": project_path,
 				"cmd": OS.get_executable_path(),
@@ -50,7 +50,7 @@ func _enter_tree():
 		}
 	_game_server_panel.get_stop_config = func():
 		return {
-			"name": "game_server_stop",
+			"name": "game_server.stop",
 			"input": {}
 		}
 	add_control_to_bottom_panel(_game_server_panel, "Game Server")
@@ -62,14 +62,14 @@ func _enter_tree():
 	_backend_panel.get_start_config = func():
 		var project_path = ProjectSettings.globalize_path("res://")
 		return {
-			"name": "backend_start",
+			"name": "backend.start",
 			"input": {
 				"cwd": project_path,
 			}
 		}
 	_backend_panel.get_stop_config = func():
 		return {
-			"name": "backend_stop",
+			"name": "backend.stop",
 			"input": {}
 		}
 	add_control_to_bottom_panel(_backend_panel, "Modules")
