@@ -61,7 +61,7 @@ func save_configuration():
 	var script: GDScript = GDScript.new()
 	script.source_code = RivetConstants.SCRIPT_TEMPLATE.format({
 		"backend_endpoint": plugin.backend_endpoint,
-		"game_version": plugin.game_version,
+		"game_version": plugin.current_build_slug,
 	})
 	var err: Error = ResourceSaver.save(script, RivetConstants.RIVET_CONFIGURATION_FILE_PATH)
 	if err: 

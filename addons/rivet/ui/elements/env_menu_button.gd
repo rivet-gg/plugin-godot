@@ -55,7 +55,14 @@ func _update_menu_button() -> void:
 		add_separator("Remote")
 
 	for env in environments:
-		add_item("%s (%s)" % [env.name, env.slug])
+		var name = env.name
+
+		if plugin.is_authenticated:
+			var current_build = plugin.cloud_data.current_builds.get(env.id)
+			if current_build != null:
+				name += " (%s)" % current_build.name
+
+		add_item(name)
 	
 	# Add create button
 	if plugin.is_authenticated:
