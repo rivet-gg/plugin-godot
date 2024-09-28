@@ -18,61 +18,61 @@ func _init(client: RivetClient):
 ## 
 ## Creates a new lobby on-demand.
 func create(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/create/call", body)
+	return self._client.build_request("lobbies.create", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/create/call", body)
 
 ## Destroy Lobby
 ## 
 ## Destroys an existing lobby.
 func destroy(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/destroy/call", body)
+	return self._client.build_request("lobbies.destroy", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/destroy/call", body)
 
 ## Find Or Create Lobby
 ## 
 ## Finds a lobby or creates one if there are no available spots for players.
 func find_or_create(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/find_or_create/call", body)
+	return self._client.build_request("lobbies.find_or_create", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/find_or_create/call", body)
 
 ## Join Lobby
 ## 
 ## Add a player to an existing lobby.
 func join(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/join/call", body)
+	return self._client.build_request("lobbies.join", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/join/call", body)
 
 ## List Lobbies
 ## 
 ## List & query all lobbies.
 func list(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/list/call", body)
+	return self._client.build_request("lobbies.list", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/list/call", body)
 
 ## Set Lobby Ready
 ## 
 ## Called on lobby startup after initiation to notify it can start accepting player. This should be called after operations like loading maps are complete.
 func set_lobby_ready(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/set_lobby_ready/call", body)
+	return self._client.build_request("lobbies.set_lobby_ready", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/set_lobby_ready/call", body)
 
 ## Set Player Connected
 ## 
 ## Called when a player connects to the lobby.
 func set_player_connected(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/set_player_connected/call", body)
+	return self._client.build_request("lobbies.set_player_connected", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/set_player_connected/call", body)
 
 ## Set Player Disconnected
 ## 
 ## Called when a player disconnects from the lobby.
 func set_player_disconnected(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/set_player_disconnected/call", body)
+	return self._client.build_request("lobbies.set_player_disconnected", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/set_player_disconnected/call", body)
 
 ## Find Lobby
 ## 
 ## Finds an existing lobby with a given query. This will not create a new lobby, see `find_or_create` instead.
 func find(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/find/call", body)
+	return self._client.build_request("lobbies.find", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/find/call", body)
 
 ## List Regions
 ## 
 ## List available regions.
 func list_regions(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/lobbies/scripts/list_regions/call", body)
+	return self._client.build_request("lobbies.list_regions", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/list_regions/call", body)
 
 
 

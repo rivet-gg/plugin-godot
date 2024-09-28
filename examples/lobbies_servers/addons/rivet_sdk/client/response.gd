@@ -9,29 +9,23 @@ class_name RivetResponse
 
 enum Result {
 	OK = 0,
-	BAD_REQUEST = 1,
-	INTERNAL_ERROR = 2,
-	UNKNOWN_RESPONSE_CODE = 3,
-	HTTP_ERROR = 4,
-	JSON_PARSE_ERROR = 5,
-	UNKNOWN = 6
+	HTTP_RESPONSE_ERROR = 1,
+	HTTP_ERROR = 2,
+	JSON_PARSE_ERROR = 3,
+	UNKNOWN = 4
 }
 
 var result: Result:
 	get:
 		if http_status != HTTPClient.Status.STATUS_DISCONNECTED:
 			return Result.HTTP_ERROR
-		elif response_code >= 500 and response_code < 600:
-			return Result.INTERNAL_ERROR
-		elif response_code >= 400 and response_code < 500:
-			return Result.BAD_REQUEST
-		elif response_code == 200 and response_code < 500:
+		elif response_code == 200:
 			if body != null:
 				return Result.OK
 			else:
 				return Result.JSON_PARSE_ERROR
 		elif response_code > 0:
-			return Result.UNKNOWN_RESPONSE_CODE
+			return Result.HTTP_RESPONSE_ERROR
 		else:
 			return Result.UNKNOWN
 

@@ -26,7 +26,7 @@ func _build_url(path: String) -> String:
 	return self.configuration.endpoint + "/" + "/".join(path_segments)
 
 ## Creates a request
-func build_request(method: HTTPClient.Method, path: String, body: Dictionary) -> _ApiRequest:
+func build_request(request_name: String, method: HTTPClient.Method, path: String, body: Dictionary) -> _ApiRequest:
 	if !self.is_inside_tree():
 		push_error("RivetClient node not added to tree, cannot make http requests")
 
@@ -36,4 +36,5 @@ func build_request(method: HTTPClient.Method, path: String, body: Dictionary) ->
 	return _ApiRequest.new(self, method, url, { 
 		"headers": self._build_headers(), 
 		"body": body_json,
+		"request_name": request_name,
 	})
