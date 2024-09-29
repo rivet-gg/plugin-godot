@@ -315,4 +315,3 @@ func _on_peer_authentication_failed(id):
 
 	RivetLogger.warning("Client authentication failed %s" % id)
 	multiplayer.set_multiplayer_peer(null)
-

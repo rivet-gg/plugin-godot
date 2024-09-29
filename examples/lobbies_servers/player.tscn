@@ -17,3 +17,11 @@ replication_config = SubResource("SceneReplicationConfig_nnjrh")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_xitsr")
+
+[node name="@Sprite2D@17940" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_xitsr")
+
+[node name="@Sprite2D@20401" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_xitsr")

@@ -74,5 +74,23 @@ func find(body: Dictionary = {}) -> RivetRequest:
 func list_regions(body: Dictionary = {}) -> RivetRequest:
 	return self._client.build_request("lobbies.list_regions", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/list_regions/call", body)
 
+## Force Garbage Collection
+## 
+## Rarely used. Forces the matchmaker to purge lobbies & players.
+func force_gc(body: Dictionary = {}) -> RivetRequest:
+	return self._client.build_request("lobbies.force_gc", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/force_gc/call", body)
+
+## Fetch Lobby Manager State
+## 
+## See full state of the lobby manager for debugging.
+func fetch_lobby_manager_state(body: Dictionary = {}) -> RivetRequest:
+	return self._client.build_request("lobbies.fetch_lobby_manager_state", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/fetch_lobby_manager_state/call", body)
+
+## Reset Lobby Manager State
+## 
+## Reset lobby manager state. For debugging only.
+func reset_lobby_manager_state(body: Dictionary = {}) -> RivetRequest:
+	return self._client.build_request("lobbies.reset_lobby_manager_state", HTTPClient.METHOD_POST, "/modules/lobbies/scripts/reset_lobby_manager_state/call", body)
+
 
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bfovnb0y6i6mr"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_bfam1"]
-[ext_resource type="PackedScene" path="res://crate.tscn" id="3_que67"]
+[ext_resource type="PackedScene" uid="uid://d3eqk7x018tyk" path="res://crate.tscn" id="3_que67"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_bfam1")
@@ -36,6 +36,19 @@ unique_name_in_owner = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="LobbyStatus" type="RichTextLabel" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 43.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "Status"
+fit_content = true
+
 [node name="Menu" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
 offset_right = 1132.0
@@ -44,6 +57,10 @@ offset_bottom = 637.0
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu"]
 layout_mode = 2
 alignment = 1
+
+[node name="RegionOption" type="OptionButton" parent="CanvasLayer/Menu/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="FindLobby" type="Button" parent="CanvasLayer/Menu/VBoxContainer"]
 layout_mode = 2
