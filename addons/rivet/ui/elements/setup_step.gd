@@ -2,11 +2,14 @@
 
 const _RivetLoadingButton = preload("loading_button.gd")
 
+signal step_complete()
+
 # Config
 @export var icon: Texture2D
 @export_multiline var description: String
 @export var setup_text: String = "Setup"
 
+var check_enabled = null
 var check_setup
 var call_setup
 
@@ -16,7 +19,7 @@ var loading: bool:
 		_setup.loading = value
 
 		# Fix setup button disabled state
-		_update_is_setup()
+		await update_state()
 
 # Elements
 @onready var _icon: TextureRect = %Icon
@@ -36,19 +39,35 @@ func _ready():
 	if RivetPluginBridge.is_running_as_plugin(self):
 		# Check status periodically in case file system changed
 		_check_timer = Timer.new()
-		_check_timer.timeout.connect(_update_is_setup)
-		_check_timer.start(5.0)
+		_check_timer.timeout.connect(update_state)
+		_check_timer.wait_time = 5.0
+		_check_timer.autostart = true
 		add_child(_check_timer)
 
-		_update_is_setup.call_deferred()
+		update_state.call_deferred()
 
-func _update_is_setup():
-	var is_setup = check_setup != null && check_setup.call()
+func update_state():
+	var is_enabled = await check_enabled.call() if check_enabled != null else true
+	var is_setup = check_setup != null && await check_setup.call()
 
-	_setup.disabled = is_setup || loading
-	_setup.text = "Complete" if is_setup else setup_text
+	_setup.disabled = !is_enabled || is_setup || loading
+	if loading:
+		_setup.text = "Running"
+	elif is_setup:
+		_setup.text = "Complete"
+	else:
+		_setup.text = setup_text
 
 func _on_setup_pressed():
 	if call_setup != null:
-		call_setup.call()
-		_update_is_setup()
+		# Setup
+		loading = true
+		await call_setup.call()
+		loading = false
+
+		# Re-check state
+		await update_state()
+
+		# Notify complete
+		step_complete.emit()
+

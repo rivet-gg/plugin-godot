@@ -263,6 +263,10 @@ impl INode for RivetTask {
                                             ],
                                         );
 
+                                        // Notify SDK updated
+                                        plugin.set("backend_sdk_exists".into(), &true.to_variant());
+                                        plugin.emit_signal("backend_sdk_update".into(), &[]);
+
                                         // TODO: Figure out how to emulate clearing the console
                                         // // Clear the output since there will be a benign script
                                         // // load error before the singleton is activated

@@ -1,19 +1,37 @@
 @tool extends MarginContainer
 
+@onready var _all_steps = [%StepModules, %StepMultiplayer, %StepDevelop, %StepDeploy]
+
 func _ready():
 	# Steps
 	%StepModules.check_setup = _module_check
 	%StepModules.call_setup = _module_call
 
-	%StepMultiplayer.check_setup = _multiplayer_check
+	%StepMultiplayer.check_enabled = _module_check_sdk
+	%StepMultiplayer.check_setup = _multiplayer_check_setup
 	%StepMultiplayer.call_setup = _multiplayer_call
 
+	%StepDevelop.check_enabled = _module_check_sdk
 	%StepDevelop.call_setup = _develop_call
 
+	%StepDeploy.check_enabled = _module_check_sdk
 	%StepDeploy.call_setup = _develop_call
+
+	# Glboal steps
+	for step in _all_steps:
+		step.step_complete.connect(_update_all)
+
+	# Reload on events
+	var plugin = RivetPluginBridge.get_plugin()
+	plugin.backend_sdk_update.connect(_update_all)
 	
+	# Links
 	%GitHubHolder.add_theme_constant_override("margin_top", int(8 * DisplayServer.screen_get_scale()))
 	%GitHubLink.add_theme_constant_override("separation", int(6 * DisplayServer.screen_get_scale()))
+
+func _update_all():
+	for step in _all_steps:
+		step.update_state()
 
 # MARK: Project Config
 func _module_check() -> bool:
@@ -24,6 +42,16 @@ func _module_call():
 		_backend_call()
 	if !_container_check():
 		_container_call()
+
+	# Wait for SDK to generate
+	var plugin = RivetPluginBridge.get_plugin()
+	if plugin.backend_sdk_exists:
+		return false
+	await plugin.backend_sdk_update
+
+func _module_check_sdk():
+	var plugin = RivetPluginBridge.get_plugin()
+	return plugin.backend_sdk_exists
 
 # MARK: Backend Config
 const BACKEND_FILES = {
@@ -66,7 +94,8 @@ var MULTIPLAYER_FILES_SCRIPTS = {
 	"template_2d/main.tscn": "main.tscn",
 }
 
-func _multiplayer_check() -> bool:
+func _multiplayer_check_setup() -> bool:
+	# Check files
 	var all_files = {}
 	all_files.merge(MULTIPLAYER_FILES_TEXTURES)
 	all_files.merge(MULTIPLAYER_FILES_SCENES)

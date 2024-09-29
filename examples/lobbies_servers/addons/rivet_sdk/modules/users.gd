@@ -16,13 +16,13 @@ func _init(client: RivetClient):
 
 ## Fetch User
 func fetch(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/users/scripts/fetch/call", body)
+	return self._client.build_request("users.fetch", HTTPClient.METHOD_POST, "/modules/users/scripts/fetch/call", body)
 
 ## Authenticate User Token
 ## 
 ## Validate a user token. Throws an error if the token is invalid.
 func authenticate_token(body: Dictionary = {}) -> RivetRequest:
-	return self._client.build_request(HTTPClient.METHOD_POST, "/modules/users/scripts/authenticate_token/call", body)
+	return self._client.build_request("users.authenticate_token", HTTPClient.METHOD_POST, "/modules/users/scripts/authenticate_token/call", body)
 
 
 

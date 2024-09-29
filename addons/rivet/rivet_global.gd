@@ -85,6 +85,9 @@ static func get_remote_env_endpoint(env) -> String:
 	else:
 		return "unknown"
 
+## If the Rivet SDK has been generated.
+var backend_sdk_exists = false
+
 # Root nodes of all the plugin UI elements
 var plugin_nodes = []
 
@@ -101,6 +104,7 @@ signal stop_backend()
 signal focus_backend()
 signal backend_state_change(running: bool)
 signal backend_config_update(event)
+signal backend_sdk_update()
 
 signal env_update()
 
