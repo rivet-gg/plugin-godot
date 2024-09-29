@@ -40,7 +40,7 @@ func _ready():
 
 func start_task(restart: bool = true):
 	# Do nothing if task already running
-	if !restart && task != null:
+	if !restart && (task != null || _stop_task != null):
 		return
 
 	# Kill old task
@@ -59,19 +59,20 @@ func start_task(restart: bool = true):
 	_task_logs.add_log_line("Start", TaskLogs.LogType.META)
 
 func stop_task():
-	if task != null:
+	if task != null && _stop_task == null:
 		# Abort running task
 		var local_task = task
 		task = null
 		local_task.kill()
 
-		_task_logs.add_log_line("Stop", TaskLogs.LogType.META)
+		_task_logs.add_log_line("Stopping", TaskLogs.LogType.META)
 
 		# Run stop task
 		#
 		# Save in global scope so it doesn't get dropped before getting called
 		var stop_config = await get_stop_config.call()
 		_stop_task = RivetTask.with_name_input(stop_config.name, stop_config.input)
+		_stop_task.task_output.connect(_on_stop_finish)
 		add_child(_stop_task)
 		_stop_task.start()
 
@@ -110,11 +111,16 @@ func _on_task_output(output, source_task):
 		_task_logs.add_log_line("Restarting in 2 seconds", TaskLogs.LogType.META)
 		_restart_timer.start()
 
+func _on_stop_finish(_output):
+	_task_logs.add_log_line("Stopped", TaskLogs.LogType.META)
+	_stop_task = null
+	_on_state_change()
+
 func _on_clear_logs_pressed():
 	_task_logs.clear_logs()
 
 func _on_state_change():
-	state_change.emit(task != null)
+	state_change.emit(task != null || _stop_task != null)
 
 func _on_restart_delay():
 	start_task()
