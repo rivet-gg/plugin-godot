@@ -8,9 +8,6 @@ class_name RivetGlobal
 
 enum EnvType { LOCAL, REMOTE }
 
-# Current game version
-var game_version: String
-
 # Data from the bootstrap
 #
 # Will be null if not bootstrapped yet
@@ -73,20 +70,37 @@ var backend_endpoint: String:
 		if env_type == EnvType.LOCAL:
 			return local_backend_endpoint
 		elif env_type == EnvType.REMOTE:
-			return get_remote_env_endpoint(remote_env)
+			if is_authenticated:
+				return cloud_data.backends[remote_env_id].endpoint
+			else:
+				push_error("backeend: not authenticated")
+				return ""
 		else:
 			push_error("backend_endpoint: unreachable")
 			return ""
 
-static func get_remote_env_endpoint(env) -> String:
-	var plugin = RivetPluginBridge.get_plugin()
-	if plugin.is_authenticated && env != null:
-		return plugin.cloud_data.backends[env.id].endpoint
-	else:
-		return "unknown"
-
 ## If the Rivet SDK has been generated.
 var backend_sdk_exists = false
+
+## The current deployed build slug.
+var current_build_slug: String:
+	get:
+		if env_type == EnvType.LOCAL:
+			return "local"
+		elif env_type == EnvType.REMOTE:
+			if is_authenticated:
+				var current_build = cloud_data.current_builds.get(remote_env_id)
+				if current_build != null && "version" in current_build.tags:
+					return current_build.tags.version
+				else:
+					push_warning("current_build_slug: no current build or no version in build")
+					return ""
+			else:
+				push_error("current_build_slug: not authenticated")
+				return ""
+		else:
+			push_error("current_build_slug: unreachable")
+			return ""
 
 # Root nodes of all the plugin UI elements
 var plugin_nodes = []
@@ -134,3 +148,4 @@ func is_running_as_plugin(node: Node) -> bool:
 			return true
 
 	return false
+

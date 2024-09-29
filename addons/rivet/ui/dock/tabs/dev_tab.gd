@@ -86,18 +86,27 @@ func _update_selected_env() -> void:
 		return
 
 	var env_name
+	var can_play_client
 	var can_play_server
 	var can_deploy
 	if plugin.env_type == _RivetGlobal.EnvType.LOCAL:
 		_warning.visible = false
 		env_name = "Local"
+		can_play_client = true
 		can_play_server = true
 		can_deploy = false
 	elif plugin.env_type == _RivetGlobal.EnvType.REMOTE:
-		_warning.visible = true
 		env_name = plugin.remote_env.name
-		can_play_server = false
-		can_deploy = true
+		if plugin.is_authenticated && plugin.remote_env_id in plugin.cloud_data.current_builds:
+			_warning.visible = true
+			can_play_client = true
+			can_play_server = false
+			can_deploy = true
+		else:
+			_warning.visible = false
+			can_play_client = false
+			can_play_server = false
+			can_deploy = true
 	else:
 		push_error("Unknown env selector type: %s", plugin.env_type)
 
@@ -122,6 +131,14 @@ func _update_selected_env() -> void:
 
 		_play_type_option.set_item_text(2, "Run Server (Local Environment Only)")
 		_play_type_option.set_item_disabled(2, true)
+
+	# Update play button
+	_gs_start.disabled = !can_play_client
+	_gs_restart.disabled = !can_play_client
+	if can_play_client:
+		_gs_start.text = "Start"
+	else:
+		_gs_start.text = "Start (Server Not Deployed)"
 
 	# Update deploy
 	%DeployStepsSelector.disabled = !can_deploy
@@ -223,8 +240,7 @@ func _on_deploy_complete(output):
 		if game_server != null:
 			var version = output["Ok"]["game_server"].version_name
 			RivetPluginBridge.log("Version updated: %s" % version)
-			RivetPluginBridge.get_plugin().game_version = version
-			RivetPluginBridge.instance.save_configuration()
+			await RivetPluginBridge.instance.bootstrap()
 
 func _open_deploy_server_logs():
 	var plugin = RivetPluginBridge.get_plugin()
