@@ -6,15 +6,26 @@ class_name RivetGlobal
 ## @tutorial: https://rivet.gg/learn/godot
 ## @experimental
 
-# Data
-var api_endpoint: String
-var game_version: String
-var cloud_token: String
-var game_id: String
-var envs
-var backends
-
 enum EnvType { LOCAL, REMOTE }
+
+# Current game version
+var game_version: String
+
+# Data from the bootstrap
+#
+# Will be null if not bootstrapped yet
+var bootstrap_data = null
+var cloud_data:
+	get:
+		if bootstrap_data != null:
+			return bootstrap_data.cloud
+		else:
+			return null
+
+## If the user has the credentials required to connect to Rivet Cloud.
+var is_authenticated: bool:
+	get:
+		return cloud_data != null
 
 ## The type of env to connect to.
 var env_type = EnvType.LOCAL:
@@ -31,8 +42,8 @@ var remote_env_id = null:
 ## The full data of the env being connected to.
 var remote_env = null:
 	get:
-		if env_type == EnvType.REMOTE:
-			for x in envs:
+		if is_authenticated && env_type == EnvType.REMOTE:
+			for x in bootstrap_data.cloud.envs:
 				if x.id == remote_env_id:
 					return x
 
@@ -68,10 +79,9 @@ var backend_endpoint: String:
 			return ""
 
 static func get_remote_env_endpoint(env) -> String:
-	if env != null:
-		# TODO: Replace with data from API endpoint
-		var plugin = RivetPluginBridge.get_plugin()
-		return plugin.backends[env.id].endpoint
+	var plugin = RivetPluginBridge.get_plugin()
+	if plugin.is_authenticated && env != null:
+		return plugin.cloud_data.backends[env.id].endpoint
 	else:
 		return "unknown"
 

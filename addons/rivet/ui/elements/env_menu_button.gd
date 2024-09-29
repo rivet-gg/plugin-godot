@@ -3,6 +3,7 @@ class_name EnvMenuButton
 ## A control that displays a list of environments and allows the user to select one.
 
 const _RivetGlobal = preload("../../rivet_global.gd")
+const _SignIn = preload("../sign_in/sign_in.tscn")
 
 # MARK: Config
 ## What type of envs to show
@@ -21,8 +22,8 @@ var _envs_idx_offset:
 var environments: Array: 
 	get:
 		var plugin = RivetPluginBridge.get_plugin()
-		if plugin.envs != null:
-			return plugin.envs
+		if plugin.is_authenticated && plugin.cloud_data.envs != null:
+			return plugin.cloud_data.envs
 		else:
 			return []
 
@@ -42,9 +43,11 @@ func _ready():
 
 ## Recreate environemtns and update selected index.
 func _update_menu_button() -> void:
+	var plugin = RivetPluginBridge.get_plugin()
+
 	# Insert values
 	clear()
-
+	
 	if !remote_only:
 		add_separator("Local")
 		add_item("Local")
@@ -53,12 +56,14 @@ func _update_menu_button() -> void:
 
 	for env in environments:
 		add_item("%s (%s)" % [env.name, env.slug])
-	add_item("+ Create Environment")
+	
+	# Add create button
+	if plugin.is_authenticated:
+		add_item("+ Create Environment")
+	else:
+		add_item("+ Create Environment (Sign In Required)")
 
 	# Update selected
-	var plugin = RivetPluginBridge.get_plugin()
-
-
 	if plugin.env_type == _RivetGlobal.EnvType.REMOTE:
 		var remote_env_idx = null
 		for i in environments.size():
@@ -104,12 +109,19 @@ func _select_menu_item(idx: int) -> void:
 	tooltip_text = "Endpoint: %s" % plugin.backend_endpoint
 
 func _open_create_remote():
-	# Open create URL
 	var plugin = RivetPluginBridge.get_plugin()
-	OS.shell_open("https://hub.rivet.gg/games/" + plugin.game_id + "?modal=create-environment")
 
 	# Reset selection to local
 	select(0)
+
+	if plugin.is_authenticated:
+		# Open create URL
+		OS.shell_open("https://hub.rivet.gg/games/" + plugin.cloud_data.game_id + "?modal=create-environment")
+	else:
+		# Open sign in
+		var popup = _SignIn.instantiate()
+		add_child(popup)
+		popup.popup()
 
 func _on_plugin_bootstrapped() -> void:
 	disabled = false

@@ -30,6 +30,7 @@ static func get_plugin() -> _global:
 	var plugin = _find_plugin()
 	if plugin:
 		return plugin.global
+	RivetPluginBridge.error("Could not find plugin")
 	return null
 
 static func log(str: String):
@@ -67,24 +68,19 @@ func save_configuration():
 		push_warning("Error saving Rivet data: %s" % err)
 
 func bootstrap() -> Error:
-	var plugin = get_plugin()
-	if not plugin:
-		return FAILED
-
 	# Bootstrap
+	var plugin = get_plugin()
 	var result = await plugin.run_toolchain_task("get_bootstrap_data")
 	if result == null:
+		plugin.bootstrapped = null
+		bootstrapped.emit()
 		return FAILED
 
-	# Update config
-	plugin.api_endpoint = result.api_endpoint
-	plugin.cloud_token = result.token
-	plugin.game_id = result.game_id
-	plugin.envs = result.envs
-	plugin.backends = result.backends
-
+	# Update bootstrap data
+	plugin.bootstrap_data = result
 	save_configuration()
 
-	emit_signal("bootstrapped")
+	# Emit event
+	bootstrapped.emit()
 
 	return OK

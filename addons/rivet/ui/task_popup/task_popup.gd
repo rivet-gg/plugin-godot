@@ -78,5 +78,3 @@ func _on_close_requested():
 
 func _update_ui():
 	_done_button.text = "Cancel" if is_running else "Done"
-
-
