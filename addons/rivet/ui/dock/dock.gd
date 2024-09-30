@@ -1,7 +1,6 @@
 @tool extends Control
+class_name RivetDock
 ## Mainpoint of the plugin's UI
-
-const _SignIn = preload("../sign_in/sign_in.tscn")
 
 enum Tab {
 	Setup,
@@ -20,6 +19,11 @@ enum Tab {
 @onready var _sign_in_link = %SignInLink
 @onready var _dashboard_link = %DashboardLink
 
+# Expose API endpoint from settings
+var api_endpoint: String:
+	get:
+		return %Settings.api_endpoint
+
 func _ready() -> void:
 	# Dock
 	var dock_margin_tb = int(2 * DisplayServer.screen_get_scale())
@@ -33,7 +37,7 @@ func _ready() -> void:
 	_sign_in_link.visible = false
 	_dashboard_link.visible = false
 	
-	_sign_in_link.pressed.connect(_open_sign_in)
+	_sign_in_link.pressed.connect(func(): RivetPluginBridge.instance.sign_in())
 	_dashboard_link.pressed.connect(_open_hub)
 	%DocsLink.pressed.connect(_open_url.bind("https://rivet.gg/docs/godot"))
 	%FeedbackLink.pressed.connect(_open_url.bind("https://hub.rivet.gg/?modal=feedback&utm=godot"))
@@ -79,11 +83,6 @@ func reload() -> void:
 # MARK: Links
 func _open_url(url: String):
 	OS.shell_open(url)
-	
-func _open_sign_in():
-	var popup = _SignIn.instantiate()
-	add_child(popup)
-	popup.popup()
 
 func _open_hub():
 	var plugin = RivetPluginBridge.get_plugin()
