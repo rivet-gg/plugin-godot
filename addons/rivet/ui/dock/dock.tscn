@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://l8cfdaru7ibw"]
+[gd_scene load_steps=25 format=3 uid="uid://l8cfdaru7ibw"]
 
 [ext_resource type="Script" path="res://addons/rivet/ui/dock/dock.gd" id="1_vjk51"]
 [ext_resource type="PackedScene" uid="uid://dldxcm1l8nnnf" path="res://addons/rivet/ui/elements/logo_container.tscn" id="2_83n20"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dpbt1rjht2tef" path="res://addons/rivet/ui/dock/tabs/modules_tab.tscn" id="11_pb42a"]
 [ext_resource type="PackedScene" uid="uid://dxoly5h64g3ul" path="res://addons/rivet/ui/dock/tabs/settings_tab.tscn" id="12_6b005"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smaoj"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_34ud0"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -25,7 +25,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3g758"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mpqwl"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -38,7 +38,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58yni"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0xtg"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -51,7 +51,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wkrd1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7lly7"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -64,7 +64,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqjco"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vkyv6"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -77,7 +77,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h4bpy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5eip"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -90,7 +90,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77lge"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05a5o"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -103,7 +103,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g44il"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2aofr"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -116,7 +116,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g412y"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tteum"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -129,7 +129,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_agqjf"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_33otm"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -142,7 +142,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4f3xr"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f8ppj"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -155,7 +155,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lr2ta"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iepa7"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -168,59 +168,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gay6y"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 0.365, 0.365, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_detail = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtyvs"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 0.365, 0.365, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_detail = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5ejc"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 0.365, 0.365, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_detail = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tet4s"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 0.365, 0.365, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_detail = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yr3p"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_75eth"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -238,10 +186,10 @@ offset_right = 544.0
 offset_bottom = 950.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 script = ExtResource("1_vjk51")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
@@ -253,10 +201,10 @@ layout_mode = 2
 [node name="LogoButton" type="MarginContainer" parent="MainContainer/Header"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="LogoContainer" parent="MainContainer/Header/LogoButton" instance=ExtResource("2_83n20")]
 custom_minimum_size = Vector2(120, 40)
@@ -273,10 +221,10 @@ visible = false
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_smaoj")
-theme_override_styles/hover = SubResource("StyleBoxFlat_3g758")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_58yni")
-theme_override_styles/normal = SubResource("StyleBoxFlat_wkrd1")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_34ud0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mpqwl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g0xtg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7lly7")
 text = "Hub"
 flat = true
 script = ExtResource("4_qk3rr")
@@ -288,29 +236,31 @@ visible = false
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_wqjco")
-theme_override_styles/hover = SubResource("StyleBoxFlat_h4bpy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_77lge")
-theme_override_styles/normal = SubResource("StyleBoxFlat_g44il")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vkyv6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k5eip")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_05a5o")
+theme_override_styles/normal = SubResource("StyleBoxFlat_2aofr")
 text = "Sign In"
 flat = true
 script = ExtResource("4_qk3rr")
 inspector_button = true
 
 [node name="DocsLink" type="Button" parent="MainContainer/Header"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Dashboard"
 mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_g412y")
-theme_override_styles/hover = SubResource("StyleBoxFlat_agqjf")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_4f3xr")
-theme_override_styles/normal = SubResource("StyleBoxFlat_lr2ta")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tteum")
+theme_override_styles/hover = SubResource("StyleBoxFlat_33otm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f8ppj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_iepa7")
 text = "Docs"
 flat = true
 script = ExtResource("4_qk3rr")
 inspector_button = true
 
-[node name="BugLink" type="Button" parent="MainContainer/Header"]
+[node name="FeedbackLink" type="Button" parent="MainContainer/Header"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Report Bug & Feedback"
 mouse_default_cursor_shape = 2
@@ -319,20 +269,6 @@ flat = true
 icon_alignment = 1
 script = ExtResource("4_qk3rr")
 
-[node name="SettingsLink" type="Button" parent="MainContainer/Header"]
-visible = false
-layout_mode = 2
-tooltip_text = "Settings"
-mouse_default_cursor_shape = 2
-theme_override_styles/disabled = SubResource("StyleBoxFlat_gay6y")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mtyvs")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_n5ejc")
-theme_override_styles/normal = SubResource("StyleBoxFlat_tet4s")
-text = "Settings"
-flat = true
-script = ExtResource("4_qk3rr")
-inspector_button = true
-
 [node name="HSeparator" type="HSeparator" parent="MainContainer"]
 layout_mode = 2
 
@@ -340,7 +276,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 2
+theme_override_constants/separation = 4
 
 [node name="TabBar" type="HBoxContainer" parent="MainContainer/TabParent"]
 layout_mode = 2
@@ -390,7 +326,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_7yr3p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_75eth")
 
 [node name="Setup" parent="MainContainer/TabParent/TabContainer" instance=ExtResource("9_bl8jo")]
 unique_name_in_owner = true
