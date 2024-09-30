@@ -1,7 +1,6 @@
 @tool extends Control
 
-const _SignIn = preload("../../sign_in/sign_in.tscn")
-
+@onready var _api_endpoint_input: LineEdit = %ApiEndpointInput
 @onready var _sign_in_button: Button = %SignInButton
 @onready var _sign_out_button: Button = %SignOutButton
 
@@ -9,6 +8,10 @@ const _SignIn = preload("../../sign_in/sign_in.tscn")
 @onready var _backend_start: Button = %BackendStart
 @onready var _backend_stop: Button = %BackendStop
 @onready var _backend_restart: Button = %BackendRestart
+
+var api_endpoint: String:
+	get:
+		return _api_endpoint_input.text
 
 func _ready() -> void:
 	var container_margin = int(4 * DisplayServer.screen_get_scale())
@@ -26,36 +29,23 @@ func _ready() -> void:
 	%GitHubLink2.add_theme_constant_override("separation", link_separation)
 	%GitHubLink3.add_theme_constant_override("separation", link_separation)
 
-	_sign_in_button.pressed.connect(_on_sign_in_pressed)
-	_sign_out_button.pressed.connect(_on_sign_out_pressed)
-	
-	# Wait until bootstrapped to show the appropriate button
-	_sign_in_button.visible = false
-	_sign_out_button.visible = false
+	_sign_in_button.pressed.connect(func(): RivetPluginBridge.instance.sign_in())
+	_sign_out_button.pressed.connect(func(): RivetPluginBridge.instance.sign_out())
 	
 	if RivetPluginBridge.is_running_as_plugin(self):
+		# Wait until bootstrapped to show the appropriate button
+		%SignInGroup.visible = false
+		%SignOutGroup.visible = false
+		
+		# Bootstrap
 		RivetPluginBridge.instance.bootstrapped.connect(_on_plugin_bootstrapped)
 		RivetPluginBridge.get_plugin().backend_state_change.connect(_on_backend_state_change)
 		_on_backend_state_change.call_deferred(false)
 
 func _on_plugin_bootstrapped():
 	var plugin = RivetPluginBridge.get_plugin()
-	_sign_in_button.visible = !plugin.is_authenticated
-	_sign_out_button.visible = plugin.is_authenticated
-
-# MARK: Auth
-func _on_sign_in_pressed():
-	var popup = _SignIn.instantiate()
-	add_child(popup)
-	popup.popup()
-
-func _on_sign_out_pressed():
-	# Sign out
-	var result = await RivetPluginBridge.get_plugin().run_toolchain_task("auth.sign_out")
-
-	# Update bootstrap data with signed out data. This will emit the
-	# bootstrapped signal to update the UI.
-	await RivetPluginBridge.instance.bootstrap()
+	%SignInGroup.visible = !plugin.is_authenticated
+	%SignOutGroup.visible = plugin.is_authenticated
 
 # MARK: Plugin
 func _on_edit_settings(type: String):

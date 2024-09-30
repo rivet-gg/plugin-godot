@@ -148,4 +148,3 @@ func is_running_as_plugin(node: Node) -> bool:
 			return true
 
 	return false
-

@@ -6,11 +6,15 @@ class_name RivetPlugin
 const _RivetEditorSettings := preload("rivet_editor_settings.gd")
 const _RivetGlobal := preload("rivet_global.gd")
 
-var _dock: Control
+var _dock: RivetDock
 var _game_server_panel: Control
 var _backend_panel: Control
 var _export_plugin: EditorExportPlugin
 var _dialog: AcceptDialog
+
+var dock: RivetDock:
+	get:
+		return _dock
 
 ## The global singleton for the Rivet plugin, only available in the editor.
 var global: _RivetGlobal

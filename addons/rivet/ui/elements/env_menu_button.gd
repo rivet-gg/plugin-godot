@@ -3,7 +3,6 @@ class_name EnvMenuButton
 ## A control that displays a list of environments and allows the user to select one.
 
 const _RivetGlobal = preload("../../rivet_global.gd")
-const _SignIn = preload("../sign_in/sign_in.tscn")
 
 # MARK: Config
 ## What type of envs to show
@@ -126,9 +125,7 @@ func _open_create_remote():
 		OS.shell_open("https://hub.rivet.gg/games/" + plugin.cloud_data.game_id + "?modal=create-environment")
 	else:
 		# Open sign in
-		var popup = _SignIn.instantiate()
-		add_child(popup)
-		popup.popup()
+		RivetPluginBridge.instance.sign_in()
 
 func _on_plugin_bootstrapped() -> void:
 	disabled = false

@@ -84,3 +84,35 @@ func bootstrap() -> Error:
 	bootstrapped.emit()
 
 	return OK
+
+func sign_in():
+	var dock = _find_plugin().dock
+	var api_endpoint = dock.api_endpoint
+	
+	var start_result = await RivetPluginBridge.get_plugin().run_toolchain_task("auth.start_sign_in", {
+		"api_endpoint": api_endpoint,
+	})
+	if start_result == null:
+		return
+
+	OS.shell_open(start_result.device_link_url)
+	
+	# Wait for complete
+	var wait_result = await RivetPluginBridge.get_plugin().run_toolchain_task("auth.wait_for_sign_in", {
+		"api_endpoint": api_endpoint,
+		"device_link_token": start_result.device_link_token,
+	})
+	if wait_result == null:
+		return
+	
+	# Update bootstrap data with signed out data. This will emit the
+	# bootstrapped signal to update the UI.
+	await bootstrap()
+
+func sign_out():
+	# Sign out
+	var result = await RivetPluginBridge.get_plugin().run_toolchain_task("auth.sign_out")
+
+	# Update bootstrap data with signed out data. This will emit the
+	# bootstrapped signal to update the UI.
+	await bootstrap()
