@@ -13,6 +13,9 @@ const _SignIn = preload("../../sign_in/sign_in.tscn")
 func _ready() -> void:
 	var container_margin = int(4 * DisplayServer.screen_get_scale())
 	var link_separation = int(6 * DisplayServer.screen_get_scale())
+	
+	%ProjectSettingsButton.pressed.connect(_on_edit_settings.bind("project"))
+	%UserSettingsButton.pressed.connect(_on_edit_settings.bind("user"))
 
 	%SourceCodeMargin.add_theme_constant_override("margin_left", container_margin)
 	%SourceCodeMargin.add_theme_constant_override("margin_right", container_margin)
