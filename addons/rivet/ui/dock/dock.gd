@@ -35,6 +35,8 @@ func _ready() -> void:
 	
 	_sign_in_link.pressed.connect(_open_sign_in)
 	_dashboard_link.pressed.connect(_open_hub)
+	%DocsLink.pressed.connect(_open_url.bind("https://rivet.gg/docs/godot"))
+	%FeedbackLink.pressed.connect(_open_url.bind("https://hub.rivet.gg/?modal=feedback&utm=godot"))
 
 	# Logo
 	var logo_margin = int(4 * DisplayServer.screen_get_scale())
