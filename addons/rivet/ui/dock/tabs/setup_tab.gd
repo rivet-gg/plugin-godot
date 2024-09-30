@@ -150,7 +150,6 @@ func _check_files_exist(file_map: Dictionary, source_dir: String = "resources") 
 
 func _copy_files(file_map: Dictionary, source_dir: String = "resources") -> void:
 	var full_source_dir = _get_plugin_path().path_join(source_dir)
-	print('full source dir ', full_source_dir)
 	
 	for source_file in file_map:
 		var source_path = full_source_dir.path_join(source_file)

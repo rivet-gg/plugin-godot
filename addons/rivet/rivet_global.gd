@@ -73,10 +73,10 @@ var backend_endpoint: String:
 			if is_authenticated:
 				return cloud_data.backends[remote_env_id].endpoint
 			else:
-				RivetLogger.warning("backeend: not authenticated")
+				RivetPluginBridge.warning("backeend: not authenticated")
 				return ""
 		else:
-			RivetLogger.error("backend_endpoint: unreachable")
+			RivetPluginBridge.error("backend_endpoint: unreachable")
 			return ""
 
 ## If the Rivet SDK has been generated.
@@ -93,13 +93,13 @@ var current_build_slug: String:
 				if current_build != null && "version" in current_build.tags:
 					return current_build.tags.version
 				else:
-					RivetLogger.log("current_build_slug: no current build or no version in build")
+					RivetPluginBridge.log("current_build_slug: no current build or no version in build")
 					return ""
 			else:
-				RivetLogger.warning("current_build_slug: not authenticated")
+				RivetPluginBridge.warning("current_build_slug: not authenticated")
 				return ""
 		else:
-			RivetLogger.error("current_build_slug: unreachable")
+			RivetPluginBridge.error("current_build_slug: unreachable")
 			return ""
 
 # Root nodes of all the plugin UI elements
