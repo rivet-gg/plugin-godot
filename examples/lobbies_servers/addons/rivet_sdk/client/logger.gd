@@ -14,3 +14,4 @@ static func warning(args):
 static func error(args):
 	print("[Rivet] ", args)
 	push_error("[Rivet] ", args)
+

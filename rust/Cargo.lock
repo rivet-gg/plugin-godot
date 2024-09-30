@@ -2571,6 +2571,7 @@ dependencies = [
 [[package]]
 name = "rivet-api-ee"
 version = "0.0.1"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=3827b9c24ace54bbd64e30fd45f8936196703b87#3827b9c24ace54bbd64e30fd45f8936196703b87"
 dependencies = [
  "reqwest 0.11.27",
  "serde",
@@ -2584,6 +2585,7 @@ dependencies = [
 [[package]]
 name = "rivet-backend-embed"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=3827b9c24ace54bbd64e30fd45f8936196703b87#3827b9c24ace54bbd64e30fd45f8936196703b87"
 dependencies = [
  "anyhow",
  "include_dir",
@@ -2598,6 +2600,7 @@ dependencies = [
 [[package]]
 name = "rivet-deno-embed"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=3827b9c24ace54bbd64e30fd45f8936196703b87#3827b9c24ace54bbd64e30fd45f8936196703b87"
 dependencies = [
  "anyhow",
  "dirs",
@@ -2622,6 +2625,7 @@ dependencies = [
 [[package]]
 name = "rivet-toolchain"
 version = "0.1.0"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=3827b9c24ace54bbd64e30fd45f8936196703b87#3827b9c24ace54bbd64e30fd45f8936196703b87"
 dependencies = [
  "anyhow",
  "async-posthog",
