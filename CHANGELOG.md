@@ -1,5 +1,36 @@
 # Changelog
 
+## [2.3.0](https://github.com/rivet-gg/plugin-godot/compare/v2.2.1...v2.3.0) (2024-09-30)
+
+
+### Features
+
+* add loading indicator to setup while sdk is generating ([#292](https://github.com/rivet-gg/plugin-godot/issues/292)) ([9bb6841](https://github.com/rivet-gg/plugin-godot/commit/9bb68417ca4358d2fdfc191c43d7c010f0927ec7))
+* add lobby status to bootstrap script ([#298](https://github.com/rivet-gg/plugin-godot/issues/298)) ([06e0c7d](https://github.com/rivet-gg/plugin-godot/commit/06e0c7d62529b61eb0ee9d949329edd19b2de20b))
+* pull game version from cloud api & prevent running client against undeployed env ([#294](https://github.com/rivet-gg/plugin-godot/issues/294)) ([7d5678d](https://github.com/rivet-gg/plugin-godot/commit/7d5678d0066148561059d4c2c2b3347c31e11afe))
+* remove sign in requirement for plugin ([#288](https://github.com/rivet-gg/plugin-godot/issues/288)) ([2448b94](https://github.com/rivet-gg/plugin-godot/commit/2448b9495083ccb6b615603d20b6c27d65460443))
+
+
+### Bug Fixes
+
+* **dev:** 404 on create env button ([#277](https://github.com/rivet-gg/plugin-godot/issues/277)) ([400231c](https://github.com/rivet-gg/plugin-godot/commit/400231c53420fb75cfafdbc1d9a1d07c91e899bb))
+* fix docs & feedback links ([#301](https://github.com/rivet-gg/plugin-godot/issues/301)) ([e34973e](https://github.com/rivet-gg/plugin-godot/commit/e34973efb3ce5937a62efd123bc8a50d4f252b63))
+* fix release script in ci ([#281](https://github.com/rivet-gg/plugin-godot/issues/281)) ([00af98f](https://github.com/rivet-gg/plugin-godot/commit/00af98f43d50b8eca53001c0d84ec59a01ebe7ae))
+* fix settings buttons ([#302](https://github.com/rivet-gg/plugin-godot/issues/302)) ([c782264](https://github.com/rivet-gg/plugin-godot/commit/c7822649d588ac9dea069087f2c4c116931a562a))
+* wait for stop task to finish before allowing starting new task panel task ([#296](https://github.com/rivet-gg/plugin-godot/issues/296)) ([c406a37](https://github.com/rivet-gg/plugin-godot/commit/c406a3721278af630ab9bdc951f4f6ba8d856055))
+
+
+### Chores
+
+* add auth checks ([#300](https://github.com/rivet-gg/plugin-godot/issues/300)) ([91e2a84](https://github.com/rivet-gg/plugin-godot/commit/91e2a84aefea019e3b701ee052cc373119036702))
+* clarify multiplayer setup step ([#293](https://github.com/rivet-gg/plugin-godot/issues/293)) ([0a997ef](https://github.com/rivet-gg/plugin-godot/commit/0a997ef1e448e7592c1ea161e9538c4b1591f266))
+* remove extra logging ([#303](https://github.com/rivet-gg/plugin-godot/issues/303)) ([872ecd4](https://github.com/rivet-gg/plugin-godot/commit/872ecd42384549757df6ecb45fd1aae00b1f764e))
+* simplfiiy sign in flow to remove popup ([#304](https://github.com/rivet-gg/plugin-godot/issues/304)) ([5c61307](https://github.com/rivet-gg/plugin-godot/commit/5c6130720d9c1a3b322851cee339dd416a52b682))
+* strip rivet addon from server export config ([#289](https://github.com/rivet-gg/plugin-godot/issues/289)) ([bbe21a9](https://github.com/rivet-gg/plugin-godot/commit/bbe21a96ac4cdc8ff47b562111ddf07faa7b3acd))
+* update toolchain ([#280](https://github.com/rivet-gg/plugin-godot/issues/280)) ([89d4f10](https://github.com/rivet-gg/plugin-godot/commit/89d4f10e1f750fb711d49db2e8161438944cfcca))
+* update toolchain ([#305](https://github.com/rivet-gg/plugin-godot/issues/305)) ([02a5185](https://github.com/rivet-gg/plugin-godot/commit/02a51854885eee2eb94e7facf38f6e5f387c419c))
+* update toolchain (2) ([#307](https://github.com/rivet-gg/plugin-godot/issues/307)) ([0baf4fe](https://github.com/rivet-gg/plugin-godot/commit/0baf4febfdc0b0c4fac2f199476583aa1c26a7ad))
+
 ## [2.2.1](https://github.com/rivet-gg/plugin-godot/compare/v2.2.0...v2.2.1) (2024-09-24)
 
 
