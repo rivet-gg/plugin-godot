@@ -38,9 +38,9 @@ func _ready():
 		# Publish state change after defer so signals can be connected
 		call_deferred("_on_state_change")
 
-func start_task(restart: bool = true):
+func start_task():
 	# Do nothing if task already running
-	if !restart && (task != null || _stop_task != null):
+	if task != null || _stop_task != null:
 		return
 
 	# Kill old task
