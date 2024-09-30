@@ -192,26 +192,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
 
 [[package]]
-name = "bindgen"
-version = "0.69.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a00dc851838a2120612785d195287475a3ac45514741da670b735818822129a0"
-dependencies = [
- "bitflags 2.6.0",
- "cexpr",
- "clang-sys",
- "itertools",
- "lazy_static",
- "lazycell",
- "proc-macro2",
- "quote",
- "regex",
- "rustc-hash 1.1.0",
- "shlex",
- "syn 2.0.77",
-]
-
-[[package]]
 name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -324,15 +304,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6d43a04d8753f35258c91f8ec639f792891f748a1edbd759cf1dcea3382ad83c"
 
 [[package]]
-name = "cexpr"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6fac387a98bb7c37292057cffc56d62ecb629900026402633ae9160df93a8766"
-dependencies = [
- "nom",
-]
-
-[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -361,17 +332,6 @@ checksum = "773f3b9af64447d2ce9850330c473515014aa235e6a783b02db81ff39e4a3dad"
 dependencies = [
  "crypto-common",
  "inout",
-]
-
-[[package]]
-name = "clang-sys"
-version = "1.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0b023947811758c97c59bf9d1c188fd619ad4718dcaa767947df1cadb14f39f4"
-dependencies = [
- "glob",
- "libc",
- "libloading",
 ]
 
 [[package]]
@@ -977,12 +937,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "779ae4bf7e8421cf91c0b3b64e7e8b40b862fba4d393f59150042de7c4965a94"
 
 [[package]]
-name = "glob"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2fabcfbdc87f4758337ca535fb41a6d701b65693ce38287d856d1674551ec9b"
-
-[[package]]
 name = "globset"
 version = "0.4.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1492,15 +1446,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "itertools"
-version = "0.12.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
-dependencies = [
- "either",
-]
-
-[[package]]
 name = "itoa"
 version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1553,12 +1498,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 
 [[package]]
-name = "lazycell"
-version = "1.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
-
-[[package]]
 name = "libc"
 version = "0.2.158"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1574,16 +1513,6 @@ dependencies = [
  "libc",
  "libz-sys",
  "pkg-config",
-]
-
-[[package]]
-name = "libloading"
-version = "0.8.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4979f22fdb869068da03c9f7528f8297c6fd2606bc3a4affe42e6a823fdb8da4"
-dependencies = [
- "cfg-if",
- "windows-targets 0.52.6",
 ]
 
 [[package]]
@@ -1604,17 +1533,6 @@ dependencies = [
  "cc",
  "libc",
  "pkg-config",
-]
-
-[[package]]
-name = "libproc"
-version = "0.14.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae9ea4b75e1a81675429dafe43441df1caea70081e82246a8cccf514884a88bb"
-dependencies = [
- "bindgen",
- "errno",
- "libc",
 ]
 
 [[package]]
@@ -2242,7 +2160,7 @@ dependencies = [
  "pin-project-lite",
  "quinn-proto",
  "quinn-udp",
- "rustc-hash 2.0.0",
+ "rustc-hash",
  "rustls 0.23.13",
  "socket2",
  "thiserror",
@@ -2259,7 +2177,7 @@ dependencies = [
  "bytes",
  "rand",
  "ring",
- "rustc-hash 2.0.0",
+ "rustc-hash",
  "rustls 0.23.13",
  "slab",
  "thiserror",
@@ -2570,7 +2488,7 @@ dependencies = [
 [[package]]
 name = "rivet-api-ee"
 version = "0.0.1"
-source = "git+https://github.com/rivet-gg/toolchain.git?rev=25b1a6705a69ce119d7c398cb9d431d46b2b07a3#25b1a6705a69ce119d7c398cb9d431d46b2b07a3"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=dc617f928df8dfa1fc0678910b4e54cd18628fcd#dc617f928df8dfa1fc0678910b4e54cd18628fcd"
 dependencies = [
  "reqwest 0.11.27",
  "serde",
@@ -2584,7 +2502,7 @@ dependencies = [
 [[package]]
 name = "rivet-backend-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/toolchain.git?rev=25b1a6705a69ce119d7c398cb9d431d46b2b07a3#25b1a6705a69ce119d7c398cb9d431d46b2b07a3"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=dc617f928df8dfa1fc0678910b4e54cd18628fcd#dc617f928df8dfa1fc0678910b4e54cd18628fcd"
 dependencies = [
  "anyhow",
  "include_dir",
@@ -2599,7 +2517,7 @@ dependencies = [
 [[package]]
 name = "rivet-deno-embed"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/toolchain.git?rev=25b1a6705a69ce119d7c398cb9d431d46b2b07a3#25b1a6705a69ce119d7c398cb9d431d46b2b07a3"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=dc617f928df8dfa1fc0678910b4e54cd18628fcd#dc617f928df8dfa1fc0678910b4e54cd18628fcd"
 dependencies = [
  "anyhow",
  "dirs",
@@ -2624,7 +2542,7 @@ dependencies = [
 [[package]]
 name = "rivet-toolchain"
 version = "0.1.0"
-source = "git+https://github.com/rivet-gg/toolchain.git?rev=25b1a6705a69ce119d7c398cb9d431d46b2b07a3#25b1a6705a69ce119d7c398cb9d431d46b2b07a3"
+source = "git+https://github.com/rivet-gg/toolchain.git?rev=dc617f928df8dfa1fc0678910b4e54cd18628fcd#dc617f928df8dfa1fc0678910b4e54cd18628fcd"
 dependencies = [
  "anyhow",
  "async-posthog",
@@ -2640,7 +2558,6 @@ dependencies = [
  "ignore",
  "indicatif",
  "lazy_static",
- "libproc",
  "lz4",
  "mime_guess",
  "nix",
@@ -2683,12 +2600,6 @@ name = "rustc-demangle"
 version = "0.1.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "719b953e2095829ee67db738b3bfa9fa368c94900df327b3f07fe6e794d2fe1f"
-
-[[package]]
-name = "rustc-hash"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
 
 [[package]]
 name = "rustc-hash"
