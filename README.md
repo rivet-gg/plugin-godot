@@ -13,19 +13,11 @@
 
 ## 📦 Installation
 
-### Godot Asset Library
+### Godot Asset Library (recommended)
 
 1. Within your Godot project, click _Asset Library_
 2. Search for "Rivet"
 3. Install the plugin
-4. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
-
-### Manual installation
-
-1. [Download and unpack the latest release](https://github.com/rivet-gg/plugin-godot/releases/latest)
-2. Copy the `plugin-godot/addons/rivet` folder to `your-godot-project/addons/rivet`.
-3. Enable this addon within the Godot settings
-   `Project > Project Settings > Plugins`
 4. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
 
 ### Using [`gd-plug`](https://github.com/imjp94/gd-plug)
@@ -35,20 +27,31 @@
 ```gdscript
 plug("rivet/plugin-godot")
 ```
+
 2. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
 
 ### Build from source
 
 1. Ensure the prerequisites are installed:
-    - Git LFS
-    - Rust
-    - Deno
+    - [Git LFS](https://git-lfs.com/)
+    - [Rust](https://rustup.rs)
+    - [Deno](https://deno.com)
 2. Clone this repository
-3. Build with `deno run -A scripts/build_dev.ts`
+3. Build the plugin using `deno run -A scripts/build_dev.ts`
 4. Copy the `plugin-godot/addons/rivet` folder to `your-godot-project/addons/rivet`.
 5. Enable this addon within the Godot settings
    `Project > Project Settings > Plugins`
 6. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
+
+### Manual installation
+
+1. Download the desired release from: `https://releases.rivet.gg/plugin-godot/{VERSION}/rivet-plugin-godot.zip`
+    - Replace `{VERSION}` with the desired release, e.g. `v2.3.0`. See all
+      releases [here](https://github.com/rivet-gg/plugin-godot/releases).
+2. Copy the `plugin-godot/addons/rivet` folder to `your-godot-project/addons/rivet`.
+3. Enable this addon within the Godot settings
+   `Project > Project Settings > Plugins`
+4. Support the project by giving the [Rivet GitHub repo](https://github.com/rivet-gg/rivet) a star.
 
 ## 🚀 Getting started
 
