@@ -6,7 +6,7 @@ import { ensureDir } from "jsr:@std/fs";
 const REPO_DIR = resolve(import.meta.dirname!, "..");
 const DOCKER_IMAGE = "rust-cross-compiler";
 const DOCKERFILE = `
-FROM rust:1.80
+FROM rust:1.81
 RUN apt-get update && apt-get install -y \\
     gcc-mingw-w64-x86-64 \\
     gcc-x86-64-linux-gnu \\
