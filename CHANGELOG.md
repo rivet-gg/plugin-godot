@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.3.1](https://github.com/rivet-gg/plugin-godot/compare/v2.3.0...v2.3.1) (2024-10-08)
+
+
+### Chores
+
+* clarify manual installation in readme ([#310](https://github.com/rivet-gg/plugin-godot/issues/310)) ([4f6194d](https://github.com/rivet-gg/plugin-godot/commit/4f6194da691806dcb36df849506f2b9f03fd7b50))
+* update toolchain ([#313](https://github.com/rivet-gg/plugin-godot/issues/313)) ([6231a18](https://github.com/rivet-gg/plugin-godot/commit/6231a18a13998317c2134402d297aa8696f60efa))
+* update toolchain (3) ([#309](https://github.com/rivet-gg/plugin-godot/issues/309)) ([72b52c3](https://github.com/rivet-gg/plugin-godot/commit/72b52c36687e729317355984f4bd1c848cac74bb))
+
 ## [2.3.0](https://github.com/rivet-gg/plugin-godot/compare/v2.2.1...v2.3.0) (2024-09-30)
 
 
