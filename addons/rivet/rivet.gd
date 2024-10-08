@@ -49,7 +49,8 @@ func _enter_tree():
 			"input": {
 				"cwd": project_path,
 				"cmd": OS.get_executable_path(),
-				"args": ["--project", project_path, "--headless", "--", "--server"]
+				"args": ["--project", project_path, "--headless", "--", "--server"],
+				"envs": {},
 			}
 		}
 	_game_server_panel.get_stop_config = func():

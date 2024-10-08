@@ -17,6 +17,6 @@ serde = "1.0"
 serde_json = "1.0"
 tokio = { version = "1.40.0", default-features = false, features = ["rt"] }
 # toolchain = { path = "../../../toolchain/packages/toolchain", package = "rivet-toolchain" }
-toolchain = { git = "https://github.com/rivet-gg/toolchain.git", rev = "802793b63fbbc08f810b6a49f5d4b1c931ee7aa1", package = "rivet-toolchain" }
+toolchain = { git = "https://github.com/rivet-gg/toolchain.git", rev = "ad8221d5011ecc802e4b97e38d4597f44c7eda93", package = "rivet-toolchain" }
 lazy_static = "1.5"
 
